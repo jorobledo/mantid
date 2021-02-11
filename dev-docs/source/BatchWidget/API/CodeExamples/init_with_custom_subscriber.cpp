@@ -33,5 +33,5 @@ m_treeView = new JobTreeView(
     {"Heading 1", "Heading 2"}, // The table column headings.
     Cell(""), // The default style and content for the new 'empty' cells.
     this      // The parent QObject
-    );
+);
 m_childPresenter = SimplePresenter(m_treeView);

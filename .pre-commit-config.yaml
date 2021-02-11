@@ -1,0 +1,32 @@
+default_language_version:
+  python: python3.6
+
+repos:
+
+#  - repo: https://github.com/pre-commit/pre-commit-hooks
+#    rev: master
+#    hooks:
+#      # Prevent accidental commit to master, main or release-next
+#      - id: no-commit-to-branch
+#        args: [--branch, main, --branch, master, --branch, release-next]
+#      # Remove Whitespace
+#      - id: trailing-whitespace
+#        args: [--markdown-linebreak-ext=md]
+
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.1.1
+    hooks:
+      - id: clang-format
+        exclude: Testing/Tools/cxxtest|tools
+        args: [-i]
+      - id: cppcheck
+
+  # Flake8 isn't automatically parallel on Windows due to lack of multiprocessing library support. So default to 16 jobs
+  # to support 8 hyper threaded cores, In practice the drop on other OS' should be negligible
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
+      - id: flake8
+        # Have to manually copy this from the .flake8 as flake8 will just ignore the config if the file is passed
+        exclude: build|buildconfig|docs|Framework/Algorithms/test|Framework/DataObjects|Framework/MPIAlgorithms|Framework/PythonInterface/mantid|Framework/PythonInterface/test|images|installers|instrument|MantidPlot|qt/applications/workbench/workbench/app/resources.py|qt/paraview_ext|qt/python/mantidqt/resources.py|qt/python/mantidqt/dialogs/errorreports/resources_qt4.py|qt/python/mantidqt/dialogs/errorreports/resources_qt5.py|qt/scientific_interfaces|qt/widgets|Testing/PerformanceTests|Testing/SystemTests/lib|Testing/SystemTests/scripts|Testing/SystemTests/tests/framework/reference|Testing/Tools|scripts/ErrorReporter/ui_errorreport.py|scripts/Interface/ui|scripts/Interface/ui/dataprocessorinterface
+        args: ['--extend-ignore=E999,F821,E127']

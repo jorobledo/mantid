@@ -25,8 +25,8 @@ VSI Testing
 .. figure:: ../../images/vsi.png
    :alt: alternate text
    :align: right
-   
-#. Click the various tabs making sure that the interface does not crash. 
+
+#. Click the various tabs making sure that the interface does not crash.
 #. Make sure all tabs have a tool tip when you hover over them.
 #. Go into three slice mode (the star shaped tab at the top).
 #. Play with the maximum and minimum parameters at the top of the plot, make sure the colours change in the plot.
@@ -47,9 +47,9 @@ VSI Testing
 #. Switch to standard view (left of multi-slice)
 
    #. In the Rebin drop-down (above the plot) select Fast Rebin and click Slice - a new MDScaleWorkspace should appear in the list
-   #. In the Properties tab select Properties and change the X/Y/Z scaling factors, click Apply. The plot should distort accordingly. 
+   #. In the Properties tab select Properties and change the X/Y/Z scaling factors, click Apply. The plot should distort accordingly.
    #. In the properties tab click Delete and the plot alterations should be removed from the plot.
-   #. Repeat the previous three steps for the different Rebin options.  
+   #. Repeat the previous three steps for the different Rebin options.
 
 #. Close the VSI interface and then reopen as before. You are now in scatter plot mode.
 

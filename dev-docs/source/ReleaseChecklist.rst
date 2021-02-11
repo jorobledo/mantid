@@ -200,8 +200,8 @@ Once the manual testing has passed:
 * Disable release deploy jobs by executing
   `close-release-testing <https://builds.mantidproject.org/view/All/job/close-release-testing>`__
   job.
-* On the ``release-next`` branch, update the git SHA for MSlice 
-  accordingly in ``scripts/ExternalInterfaces/CMakeLists`` in 
+* On the ``release-next`` branch, update the git SHA for MSlice
+  accordingly in ``scripts/ExternalInterfaces/CMakeLists`` in
   case MSlice has to be updated.
 * On the ``release-next`` branch, update major & minor versions
   accordingly in ``buildconfig/CMake/VersionNumber.cmake``. Also

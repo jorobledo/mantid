@@ -16,7 +16,7 @@ The :ref:`algm-LoadEventNexus` algorithm is called with default
 parameters to load into an :ref:`EventWorkspace <EventWorkspace>`.
 
 After, that,  :ref:`algm-ConvertToDiffractionMDWorkspace` algorithm is called with the new
-EventWorkspace as input. The parameters are set to convert to **Q** in the lab frame, 
+EventWorkspace as input. The parameters are set to convert to **Q** in the lab frame,
 with Lorentz correction, and default size/splitting behavior parameters.
 
 Usage

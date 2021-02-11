@@ -45,7 +45,7 @@ Usage
 
 These example is for illustation only. The file used is very large and not publicly available.
 
-**Example: Adaptive Binning**  
+**Example: Adaptive Binning**
 
 .. code-block:: python
 
@@ -53,7 +53,7 @@ These example is for illustation only. The file used is very large and not publi
     demo = outputs[0]
     plotSlice(source=demo)
 
-**Example: Direct Conversion**  
+**Example: Direct Conversion**
 
 .. code-block:: python
 

@@ -127,7 +127,7 @@ class SpectrumInfoTest(unittest.TestCase):
     """
     def test_basic_iteration(self):
         info = self._ws.spectrumInfo()
-        expected_iterations = len(info) 
+        expected_iterations = len(info)
         actual_iterations = len(list(iter(info)))
         self.assertEqual(expected_iterations, actual_iterations)
 
@@ -138,10 +138,10 @@ class SpectrumInfoTest(unittest.TestCase):
         next(it) # skip first as detectors cleared
         for item in it:
             self.assertFalse(item.isMonitor)
-            
+
     def test_iterator_for_masked(self):
         info = self._ws.spectrumInfo()
-        # nothing should be masked 
+        # nothing should be masked
         it = iter(info)
         next(it) # skip first as detectors cleared
         for item in it:
@@ -149,7 +149,7 @@ class SpectrumInfoTest(unittest.TestCase):
 
     def test_iterator_for_setting_masked(self):
         info = self._ws.spectrumInfo()
-        # nothing should be masked 
+        # nothing should be masked
         it = iter(info)
         next(it) # skip first as detectors cleared
         for item in it:

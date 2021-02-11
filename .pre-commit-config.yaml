@@ -1,25 +1,26 @@
 default_language_version:
   python: python3.6
 
+exclude: ^$|instrument
+
 repos:
 
-#  - repo: https://github.com/pre-commit/pre-commit-hooks
-#    rev: master
-#    hooks:
-#      # Prevent accidental commit to master, main or release-next
-#      - id: no-commit-to-branch
-#        args: [--branch, main, --branch, master, --branch, release-next]
-#      # Remove Whitespace
-#      - id: trailing-whitespace
-#        args: [--markdown-linebreak-ext=md]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: master
+    hooks:
+      # Prevent accidental commit to master, main or release-next
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, master, --branch, release-next]
+      # Remove Whitespace
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/pocc/pre-commit-hooks
-    rev: v1.1.1
+    rev: bash
     hooks:
       - id: clang-format
         exclude: Testing/Tools/cxxtest|tools
         args: [-i]
-      - id: cppcheck
 
   # Flake8 isn't automatically parallel on Windows due to lack of multiprocessing library support. So default to 16 jobs
   # to support 8 hyper threaded cores, In practice the drop on other OS' should be negligible

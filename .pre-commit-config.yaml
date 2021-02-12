@@ -6,7 +6,6 @@ exclude: ^$|instrument
 repos:
 
   # Run fast code improvement/checks before running PR specific helpers.
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: master
     hooks:
@@ -36,7 +35,7 @@ repos:
       - id: cppcheck
         # Needs to be kept up to date manually from CppCheck_Supressions.txt.in (This is a generated file but relative
         # paths can be taken from it)
-        args: ["-j 16", --suppressions-list=buildconfig/CMake/CppCheck_Suppressions.txt.in, --enable=all, --inline-suppr, --max-configs=120, --quiet, --std=c++17]
+        args: ["-j 16", --suppressions-list=buildconfig/CMake/CppCheck_Suppressions.txt.in, --enable=all, --inline-suppr, --max-configs=120, --quiet, --std=c++14]
 
   # Flake8 isn't automatically parallel on Windows due to lack of multiprocessing library support. So default to 16 jobs
   # to support 8 hyper threaded cores, In practice the drop on other OS' should be negligible

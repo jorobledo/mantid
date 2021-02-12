@@ -15,7 +15,7 @@ from numpy.testing import assert_allclose
 
 # local imports
 from mantidqt.widgets.sliceviewer.peaksviewer.model import PeaksViewerModel, create_peaksviewermodel
-from mantidqt.widgets.sliceviewer.peaksviewer.test.modeltesthelpers import create_peaks_viewer_model, draw_peaks  # noqa
+from mantidqt.widgets.sliceviewer.peaksviewer.test.modeltesthelpers import create_peaks_viewer_model, draw_peaks
 
 
 class PeaksViewerModelTest(unittest.TestCase):

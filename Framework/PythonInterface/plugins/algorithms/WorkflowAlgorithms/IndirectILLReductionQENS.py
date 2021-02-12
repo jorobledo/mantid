@@ -11,7 +11,7 @@ from mantid.kernel import StringListValidator, Direction, FloatBoundedValidator,
     FloatArrayMandatoryValidator, IntBoundedValidator
 from mantid.api import PythonAlgorithm, MultipleFileProperty, FileProperty, \
     FileAction, WorkspaceGroupProperty, Progress
-from mantid.simpleapi import *  # noqa
+from mantid.simpleapi import *
 
 
 class IndirectILLReductionQENS(PythonAlgorithm):

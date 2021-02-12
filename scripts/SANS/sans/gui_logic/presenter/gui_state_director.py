@@ -79,7 +79,7 @@ class GuiStateDirector(object):
         self._set_data_period_entry(data_builder.set_sample_scatter_period, row_entry.sample_scatter_period)
         self._set_data_entry(data_builder.set_sample_transmission, row_entry.sample_transmission)
         self._set_data_period_entry(data_builder.set_sample_transmission_period,
-                                    row_entry.sample_transmission_period)  # noqa
+                                    row_entry.sample_transmission_period)
         self._set_data_entry(data_builder.set_sample_direct, row_entry.sample_direct)
         self._set_data_period_entry(data_builder.set_sample_direct_period, row_entry.sample_direct_period)
         self._set_data_entry(data_builder.set_can_scatter, row_entry.can_scatter)
@@ -116,7 +116,7 @@ class GuiStateDirector(object):
                 entry_as_integer = int(entry)
                 if entry_as_integer > 0:
                     func(entry_as_integer)
-            except ValueError:  # noqa
+            except ValueError:
                 pass
 
     @staticmethod

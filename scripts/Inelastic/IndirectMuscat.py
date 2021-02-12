@@ -11,7 +11,7 @@ MUSIC : Version of Minus for MIDAS
 """
 
 from IndirectImport import *
-if is_supported_f2py_platform(): # noqa
+if is_supported_f2py_platform():
     muscat = import_f2py("muscat")
 else:
     unsupported_message()

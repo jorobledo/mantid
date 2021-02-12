@@ -7,8 +7,8 @@
 # pylint: disable=invalid-name, too-many-lines, too-many-instance-attributes
 import numpy
 
-from qtpy.QtWidgets import (QFileDialog, QMainWindow, QMessageBox, QSlider, QVBoxLayout, QWidget)  # noqa
-from qtpy.QtGui import (QDoubleValidator, QDesktopServices)  # noqa
+from qtpy.QtWidgets import (QFileDialog, QMainWindow, QMessageBox, QSlider, QVBoxLayout, QWidget)
+from qtpy.QtGui import (QDoubleValidator, QDesktopServices)
 from qtpy.QtCore import QUrl
 
 

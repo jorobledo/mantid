@@ -176,15 +176,15 @@ class SData(collections.abc.Sequence):
     def __len__(self) -> int:
         return len(self._data)
 
-    @overload  # noqa F811
+    @overload  # F811
     def __getitem__(self, item: int) -> OneAtomSData:
         ...
 
-    @overload  # noqa F811
+    @overload  # F811
     def __getitem__(self, item: slice) -> List[OneAtomSData]:
         ...
 
-    def __getitem__(self, item):  # noqa F811
+    def __getitem__(self, item):  # F811
         if isinstance(item, int):
             return self._data[f"atom_{item}"]['s']
         elif isinstance(item, slice):

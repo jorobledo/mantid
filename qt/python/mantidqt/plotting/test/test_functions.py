@@ -14,7 +14,7 @@ from unittest import TestCase, main
 import matplotlib
 from matplotlib import cm
 
-matplotlib.use('AGG')  # noqa
+matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 import numpy as np
 

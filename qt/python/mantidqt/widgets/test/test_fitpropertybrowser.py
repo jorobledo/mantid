@@ -9,7 +9,7 @@
 import unittest
 
 import matplotlib
-matplotlib.use('AGG')  # noqa
+matplotlib.use('AGG')
 from numpy import zeros
 
 from mantid.api import AnalysisDataService, WorkspaceFactory

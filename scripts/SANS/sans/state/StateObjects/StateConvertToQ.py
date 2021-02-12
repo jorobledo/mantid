@@ -204,7 +204,7 @@ def is_valid_rebin_string(rebin_string):
         else:
             is_valid = False
 
-    except:  # noqa
+    except:
         is_valid = False
     return is_valid
 

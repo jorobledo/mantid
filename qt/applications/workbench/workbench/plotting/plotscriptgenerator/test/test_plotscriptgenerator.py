@@ -10,7 +10,7 @@ import unittest
 
 import matplotlib
 
-matplotlib.use("Agg")  # noqa
+matplotlib.use("Agg")
 from matplotlib.axes import Axes
 from matplotlib.legend import Legend
 from matplotlib.ticker import NullLocator

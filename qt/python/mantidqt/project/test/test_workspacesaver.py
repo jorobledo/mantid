@@ -14,12 +14,12 @@ from os.path import isdir
 from shutil import rmtree
 import tempfile
 
-from mantid.api import AnalysisDataService as ADS, IMDEventWorkspace  # noqa
+from mantid.api import AnalysisDataService as ADS, IMDEventWorkspace
 from mantid.dataobjects import MDHistoWorkspace, MaskWorkspace  # noqa
 from mantidqt.project import workspacesaver
 from unittest import mock
 from mantid.simpleapi import (CreateSampleWorkspace, CreateMDHistoWorkspace, LoadMD, LoadMask, MaskDetectors,  # noqa
-                              ExtractMask, GroupWorkspaces)  # noqa
+                              ExtractMask, GroupWorkspaces)
 
 
 class WorkspaceSaverTest(unittest.TestCase):

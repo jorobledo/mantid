@@ -9,7 +9,7 @@
 import unittest
 
 import matplotlib
-matplotlib.use("Agg")  # noqa
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from workbench.plotting.plotscriptgenerator.figure import (get_subplots_command_kwargs,

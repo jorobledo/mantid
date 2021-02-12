@@ -7,7 +7,7 @@
 import matplotlib
 import unittest
 
-matplotlib.use('AGG')  # noqa
+matplotlib.use('AGG')
 
 import matplotlib.pyplot as plt
 import numpy as np

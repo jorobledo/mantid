@@ -12,7 +12,7 @@ from mantidqt.MPLwidgets import NavigationToolbar2QT as NavigationToolbar2
 from matplotlib.figure import Figure
 import matplotlib.image
 import matplotlib.collections
-from qtpy.QtWidgets import (QWidget, QVBoxLayout, QSizePolicy)   # noqa
+from qtpy.QtWidgets import (QWidget, QVBoxLayout, QSizePolicy)
 from qtpy.QtCore import Signal as pyqtSignal
 
 

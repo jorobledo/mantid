@@ -119,15 +119,15 @@ class SANSCreateAdjustmentWorkspaces(DistributedDataProcessorAlgorithm):
         # Get the wide angle correction workspace
         # --------------------------------------
         wave_length_and_pixel_adjustment_workspace = self._get_wide_angle_correction_workspace(state,
-                                                                                               calculated_transmission_workspace)  # noqa
+                                                                                               calculated_transmission_workspace)
 
         # --------------------------------------------
         # Get the full wavelength and pixel adjustment
         # --------------------------------------------
         wave_length_adjustment_workspace, \
         pixel_length_adjustment_workspace = self._get_wavelength_and_pixel_adjustment_workspaces(monitor_normalization_workspace,
-                                                                                                 # noqa
-                                                                                                 calculated_transmission_workspace)  # noqa
+
+                                                                                                 calculated_transmission_workspace)
 
         if wave_length_adjustment_workspace:
             self.setProperty("OutputWorkspaceWavelengthAdjustment", wave_length_adjustment_workspace)

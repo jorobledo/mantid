@@ -10,8 +10,8 @@
 import math
 import numpy
 import os
-from qtpy.QtWidgets import (QDialog, QLineEdit, QVBoxLayout, QDialogButtonBox, QLabel, QPlainTextEdit)  # noqa
-from qtpy import QtCore  # noqa
+from qtpy.QtWidgets import (QDialog, QLineEdit, QVBoxLayout, QDialogButtonBox, QLabel, QPlainTextEdit)
+from qtpy import QtCore
 
 
 def convert_str_to_matrix(matrix_str, matrix_shape):

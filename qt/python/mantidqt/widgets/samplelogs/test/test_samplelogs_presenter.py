@@ -8,7 +8,7 @@
 #
 #
 import matplotlib
-matplotlib.use('Agg') # noqa: E402
+matplotlib.use('Agg')
 import unittest
 
 from unittest import mock

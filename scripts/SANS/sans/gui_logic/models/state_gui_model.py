@@ -198,7 +198,7 @@ class StateGuiModel(ModelCommon):
     @reduction_mode.setter
     def reduction_mode(self, value):
         if (value is ReductionMode.LAB or value is ReductionMode.HAB
-                or value is ReductionMode.MERGED or value is ReductionMode.ALL):  # noqa
+                or value is ReductionMode.MERGED or value is ReductionMode.ALL):
             self._all_states.reduction.reduction_mode = value
         else:
             raise ValueError("A reduction mode was expected, got instead {}".format(value))

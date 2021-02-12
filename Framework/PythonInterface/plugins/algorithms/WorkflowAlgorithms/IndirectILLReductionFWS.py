@@ -9,7 +9,7 @@ import time
 from mantid import mtd
 from mantid.kernel import StringListValidator, Direction, FloatBoundedValidator
 from mantid.api import PythonAlgorithm, MultipleFileProperty, FileProperty, FileAction, WorkspaceGroupProperty, Progress
-from mantid.simpleapi import *  # noqa
+from mantid.simpleapi import *
 
 
 class IndirectILLReductionFWS(PythonAlgorithm):

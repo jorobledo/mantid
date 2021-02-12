@@ -21,10 +21,10 @@ import os
 import warnings
 import copy
 from .Instruments import Instrument
-from qtpy.QtCore import (QEventLoop, Qt)  # noqa
+from qtpy.QtCore import (QEventLoop, Qt)
 from qtpy.QtWidgets import (QAction, QCheckBox, QComboBox, QDialog, QFileDialog, QGridLayout, QHBoxLayout, QMenu, QLabel,
                             QLineEdit, QMainWindow, QMessageBox, QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
-                            QTextEdit, QVBoxLayout, QWidget)  # noqa
+                            QTextEdit, QVBoxLayout, QWidget)
 from mantid.plots.utility import legend_set_draggable
 from mantidqt.MPLwidgets import FigureCanvasQTAgg as FigureCanvas
 from mantidqt.MPLwidgets import NavigationToolbar2QT as NavigationToolbar

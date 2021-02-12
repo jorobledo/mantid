@@ -9,7 +9,7 @@ from HFIR_4Circle_Reduction.hfctables import SinglePtIntegrationTable
 from HFIR_4Circle_Reduction.integratedpeakview import SinglePtIntegrationView
 import HFIR_4Circle_Reduction.guiutility as guiutility
 import os
-from qtpy.QtWidgets import (QMainWindow, QFileDialog)  # noqa
+from qtpy.QtWidgets import (QMainWindow, QFileDialog)
 from qtpy.QtCore import Signal as pyqtSignal
 from mantid.kernel import Logger
 try:

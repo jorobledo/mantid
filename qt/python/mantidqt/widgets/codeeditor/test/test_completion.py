@@ -9,7 +9,7 @@ import re
 import unittest
 
 import matplotlib.pyplot as plt  # noqa
-import numpy as np  # noqa
+import numpy as np
 
 from mantid.simpleapi import Rebin  # noqa  # needed so sys.modules can pick up Rebin
 from unittest.mock import Mock

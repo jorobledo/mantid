@@ -99,15 +99,15 @@ class AtomsData(collections.abc.Sequence):
     def __len__(self) -> int:
         return len(self._data)
 
-    @overload  # noqa F811
+    @overload  # F811
     def __getitem__(self, item: int) -> Dict[str, Any]:
         ...
 
-    @overload  # noqa F811
+    @overload  # F811
     def __getitem__(self, item: slice) -> List[Dict[str, Any]]:
         ...
 
-    def __getitem__(self, item):  # noqa F811
+    def __getitem__(self, item):  # F811
         return self._data[item]
 
     def extract(self):

@@ -47,7 +47,7 @@ class AlgorithmFactoryObserverTest(unittest.TestCase):
     def test_that_selector_is_refreshed_on_alg_sibscribe_from_same_thread(self):
         notifyee = MagicMock()
         # variable keeps object alive
-        _ = AlgorithmSelectorFactoryObserver(notifyee)  # noqa: F841
+        _ = AlgorithmSelectorFactoryObserver(notifyee)
 
         AlgorithmFactory.subscribe(ToyAlgorithm)
 
@@ -61,7 +61,7 @@ class AlgorithmFactoryObserverTest(unittest.TestCase):
             self, mock_qappcall):
         notifyee = MagicMock()
         # variable keeps object alive
-        _ = AlgorithmSelectorFactoryObserver(notifyee)  # noqa: F841
+        _ = AlgorithmSelectorFactoryObserver(notifyee)
         mock_qappcall.assert_called_once()
 
         subscriber = threading.Thread(target=AlgorithmFactory.subscribe, args=[ToyAlgorithm])

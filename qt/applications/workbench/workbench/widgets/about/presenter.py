@@ -11,7 +11,7 @@ from mantid.kernel import ConfigService, logger, version_str, release_notes_url,
 from mantidqt.interfacemanager import InterfaceManager
 from workbench.widgets.about.view import AboutView
 from workbench.widgets.about.usage_verification_view import UsageReportingVerificationView
-from mantidqt.widgets import manageuserdirectories  # noqa
+from mantidqt.widgets import manageuserdirectories
 
 
 class AboutPresenter(object):

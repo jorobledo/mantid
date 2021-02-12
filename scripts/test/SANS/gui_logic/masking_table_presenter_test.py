@@ -34,7 +34,7 @@ class MaskingTablePresenterTest(unittest.TestCase):
         first_call = mock.call([])
         second_call = mock.call([masking_information(first='Beam stop', second='', third='infinite-cylinder, r = 10.0'),
                                  masking_information(first='Corners', second='', third='infinite-cylinder, r = 20.0'),
-                                 masking_information(first='Phi', second='', third='L/PHI -90.0 90.0')])  # noqa
+                                 masking_information(first='Phi', second='', third='L/PHI -90.0 90.0')])
         view.set_table.assert_has_calls([first_call, second_call])
 
     def test_that_checks_display_mask_is_reenabled_after_error(self):

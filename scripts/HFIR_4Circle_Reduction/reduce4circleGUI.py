@@ -44,9 +44,9 @@ from HFIR_4Circle_Reduction.detector2dview import Detector2DView
 from HFIR_4Circle_Reduction.hfctables import KShiftTableWidget
 from HFIR_4Circle_Reduction.hfctables import MatrixTable
 from mantid.kernel import Logger
-from qtpy.QtWidgets import (QButtonGroup, QFileDialog, QMessageBox, QMainWindow, QInputDialog)  # noqa
-from qtpy.QtCore import (QSettings)  # noqa
-from qtpy import PYQT4  # noqa
+from qtpy.QtWidgets import (QButtonGroup, QFileDialog, QMessageBox, QMainWindow, QInputDialog)
+from qtpy.QtCore import (QSettings)
+from qtpy import PYQT4
 try:
     from mantidqt.utils.qt import load_ui
 except ImportError:

@@ -267,7 +267,7 @@ class SANSFunctionsTest(unittest.TestCase):
                                               reduction_mode=ReductionMode.LAB)
         # Act
         workspace, workspace_count, workspace_norm = get_reduced_can_workspace_from_ads(state, output_parts=True,
-                                                                                        reduction_mode=ReductionMode.LAB)  # noqa
+                                                                                        reduction_mode=ReductionMode.LAB)
 
         # Assert
         self.assertNotEqual(workspace, None)

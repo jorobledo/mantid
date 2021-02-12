@@ -7,9 +7,9 @@
 #pylint: disable=W0403,R0913,R0902
 import os
 from qtpy.QtCore import Signal as pyqtSignal
-from qtpy.QtCore import QThread   # noqa
-import HFIR_4Circle_Reduction.reduce4circleControl as r4c  # noqa
-from HFIR_4Circle_Reduction import peak_integration_utility  # noqa
+from qtpy.QtCore import QThread
+import HFIR_4Circle_Reduction.reduce4circleControl as r4c
+from HFIR_4Circle_Reduction import peak_integration_utility
 
 
 class AddPeaksThread(QThread):

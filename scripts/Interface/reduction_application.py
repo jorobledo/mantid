@@ -12,8 +12,8 @@ import sys
 import os
 import traceback
 from mantidqt.gui_helper import get_qapplication
-from qtpy.QtWidgets import (QAction, QDialog, QFileDialog, QMainWindow, QMessageBox)  # noqa
-from qtpy.QtCore import (QFile, QFileInfo, QSettings)  # noqa
+from qtpy.QtWidgets import (QAction, QDialog, QFileDialog, QMainWindow, QMessageBox)
+from qtpy.QtCore import (QFile, QFileInfo, QSettings)
 from mantid.kernel import Logger
 
 # Check whether Mantid is available
@@ -24,10 +24,10 @@ try:
 except ImportError:
     pass
 try:
-    from mantidqt.utils.qt import load_ui  # noqa
+    from mantidqt.utils.qt import load_ui
 except ImportError:
     Logger("ReductionGUI").information('Using legacy ui importer')
-    from mantidplot import load_ui  # noqa
+    from mantidplot import load_ui
 
 unicode = str
 
@@ -35,7 +35,7 @@ STARTUP_WARNING = ""
 
 if CAN_REDUCE:
     try:
-        import reduction  # noqa
+        import reduction
 
         if os.path.splitext(os.path.basename(reduction.__file__))[0] == "reduction":
             home_dir = os.path.expanduser('~')

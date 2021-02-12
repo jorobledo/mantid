@@ -122,7 +122,7 @@ def start_workbench(app, command_line_options):
     # Load matplotlib as early as possible and set our defaults
     # Setup our custom backend and monkey patch in custom current figure manager
     main_window.set_splash('Preloading matplotlib')
-    from workbench.plotting.config import initialize_matplotlib  # noqa
+    from workbench.plotting.config import initialize_matplotlib
     initialize_matplotlib()
 
     # Setup widget layouts etc. mantid.simple cannot be used before this

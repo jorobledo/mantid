@@ -8,9 +8,9 @@
 ################################################################################
 # This is my first attempt to make a tab from quasi-scratch
 ################################################################################
-from qtpy.QtWidgets import (QDialog, QFrame)  # noqa
-from qtpy.QtCore import (QRegExp)  # noqa
-from qtpy.QtGui import (QDoubleValidator, QIntValidator, QRegExpValidator)  # noqa
+from qtpy.QtWidgets import (QDialog, QFrame)
+from qtpy.QtCore import (QRegExp)
+from qtpy.QtGui import (QDoubleValidator, QIntValidator, QRegExpValidator)
 from reduction_gui.widgets.base_widget import BaseWidget
 from mantid.kernel import Logger
 from reduction_gui.reduction.diffraction.diffraction_run_setup_script import RunSetupScript

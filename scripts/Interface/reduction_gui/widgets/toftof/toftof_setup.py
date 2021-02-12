@@ -10,8 +10,8 @@
 """
 TOFTOF reduction workflow gui.
 """
-from qtpy.QtCore import (Qt)  # noqa
-from qtpy.QtGui import (QDoubleValidator)  # noqa
+from qtpy.QtCore import (Qt)
+from qtpy.QtGui import (QDoubleValidator)
 from qtpy.QtWidgets import (QButtonGroup, QCheckBox, QDoubleSpinBox, QFileDialog, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLayout, QLineEdit, QPushButton, QRadioButton, QSizePolicy, QSpacerItem, QWidget, QVBoxLayout)  # noqa
 from reduction_gui.widgets.base_widget import BaseWidget
 from reduction_gui.reduction.toftof.toftof_reduction import TOFTOFScriptElement, OptionalFloat

@@ -138,7 +138,7 @@ def create_action(parent, text, on_triggered=None, shortcut=None,
                                              are NOT shown on context menus. Set this to True to show them.
     :return: A new QAction object
     """
-    from ...icons import get_icon  # noqa
+    from ...icons import get_icon
     action = QAction(text, parent)
     if on_triggered is not None:
         action.triggered.connect(on_triggered)

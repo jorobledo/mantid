@@ -41,7 +41,7 @@ class LARMORMultiPeriodAddEventFilesTest_V2(systemtesting.MantidSystemTest):
                 AnalysisDataService.remove(element)
 
         paths = [os.path.join(config['defaultsave.directory'], 'LARMOR00013065-add.nxs'),
-                 os.path.join(config['defaultsave.directory'], 'SANS2D00013065.log')]  # noqa
+                 os.path.join(config['defaultsave.directory'], 'SANS2D00013065.log')]
         for path in paths:
             if os.path.exists(path):
                 os.remove(path)

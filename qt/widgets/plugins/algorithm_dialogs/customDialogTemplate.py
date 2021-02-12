@@ -20,10 +20,10 @@ import string
 args = sys.argv[1:]
 
 if len(args) != 2 :
-    print "Usage: createDialogTemplate algorithm-name yes|no\n" \
-    "\tyes - Create the class so that it can be used with Qt designer\n"\
-    "\tno  - Create the class so that the layout must be created by hand"
-    exit(1);
+    print("Usage: createDialogTemplate algorithm-name yes|no\n"
+          "\tyes - Create the class so that it can be used with Qt designer\n"
+          "\tno  - Create the class so that the layout must be created by hand")
+    exit(1)
 
 algname = args[0]
 if args[1] == "yes":

@@ -89,7 +89,7 @@ def write_export_file(headerfile, overwrite):
     """
     # Where are we writing the output
     exportfile = get_exportfile(headerfile)
-    print 'Writing export file \"%s\" '% os.path.basename(exportfile)
+    print('Writing export file \"%s\" ' % os.path.basename(exportfile))
     if os.path.exists(exportfile) and not overwrite:
         raise RuntimeError("Export file '%s' already exists, use the --overwrite option to overwrite the file." % exportfile)
 
@@ -114,10 +114,10 @@ void export_%(class)s()
     cppfile.write(cppcode % {'header':include, 'namespace':namespace,'class':classname})
     cppfile.close()
 
-    print 'Generated export file "%s"' % os.path.basename(exportfile)
-    print
-    print "  ** Add this to the EXPORT_FILES variable in '%s'" % \
-       os.path.join(get_modulepath(get_frameworkdir(headerfile), get_submodule(headerfile)), 'CMakeLists.txt')
+    print('Generated export file "%s"' % os.path.basename(exportfile))
+    print()
+    print("  ** Add this to the EXPORT_FILES variable in '%s'" %
+          os.path.join(get_modulepath(get_frameworkdir(headerfile), get_submodule(headerfile)), 'CMakeLists.txt'))
 
     return exportfile
 
@@ -126,7 +126,7 @@ def write_unittest(headerfile, overwrite):
        Write a unit test for the given header
     """
     filename = get_unittest_file(headerfile)
-    print 'Writing unit test \"%s\" '% os.path.basename(filename)
+    print('Writing unit test \"%s\" ' % os.path.basename(filename))
     if os.path.exists(filename) and not overwrite:
         raise RuntimeError("A unit test file '%s' already exists, use the --overwrite-test option to overwrite the file." % filename)
 
@@ -147,10 +147,11 @@ if __name__ == '__main__':
     unittest.write(pytest % {'classname':classname})
     unittest.close()
 
-    print 'Generated unit test file "%s"' % os.path.basename(filename)
-    print
-    print "  ** Add this to the TEST_PY_FILES variable in '%s'" % \
-        os.path.join('PythonInterface', 'CMakeLists.txt')
+    print('Generated unit test file "%s"' % os.path.basename(filename))
+    print()
+    print("  ** Add this to the TEST_PY_FILES variable in '%s'" %
+          os.path.join('PythonInterface', 'CMakeLists.txt'))
+
 
 def main():
     """Main function
@@ -180,6 +181,7 @@ def main():
     # Unit test
     if not options.export_only:
         write_unittest(os.path.abspath(headerfile), options.overwrite_test)
+
 
 if __name__ == '__main__':
     main()

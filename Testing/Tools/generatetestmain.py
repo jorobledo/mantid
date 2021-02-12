@@ -60,6 +60,7 @@ BACKMATTER = """
 }
 """
 
+
 class Writer:
     def __init__(self, filename=None, overwrite=False, debug=False):
         if debug:
@@ -68,12 +69,13 @@ class Writer:
             filename = os.path.abspath(filename)
             if os.path.exists(filename) and not overwrite:
                 raise RuntimeError("To overwrite file use '--overwrite' flag")
-            print "Creating file '%s'" % filename
+            print("Creating file '%s'" % filename)
             self.__handle = open(filename, 'w')
 
     def write(self):
         self.__handle.write(FRONTMATTER)
         self.__handle.write(BACKMATTER)
+
 
 if __name__ == "__main__":
     import optparse

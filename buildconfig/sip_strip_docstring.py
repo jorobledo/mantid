@@ -86,16 +86,16 @@ This will not be needed when RHEL5 is no longer supported
     if options.outputfile is None:
         raise Exception("Must specify an output file with -o !")
 
-    print "---- Stripping docstrings from %s ---- " % options.sipfile
+    print("---- Stripping docstrings from %s ---- " % options.sipfile)
     (out, wiki) = process_sip(options.sipfile)
 
-    print "---- Writing to %s ---- " % options.outputfile
+    print("---- Writing to %s ---- " % options.outputfile)
     f = open(options.outputfile, 'w')
     f.write('\n'.join(out))
     f.close()
 
     if not options.wikifile is None:
-        print "---- Writing wiki text to %s ---- " % options.wikifile
+        print("---- Writing wiki text to %s ---- " % options.wikifile)
         f = open(options.wikifile, 'w')
         f.write('\n'.join(wiki))
         f.close()

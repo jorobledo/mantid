@@ -47,7 +47,7 @@ def lint_jsonfiles(oclint, jsonfiles, config):
     i = 0
     result_files = []
     for file_name in jsonfiles:
-        print 'linting ... %s' %file_name
+        print('linting ... %s' % file_name)
         input_file = rename(file_name, 'compile_commands.json')
         out_file = 'oclint%02d.xml' %i
         lint(oclint, out_file, config)
@@ -63,12 +63,12 @@ def lint(oclint, out_file, config):
     %s \
     --report-type pmd \
     -o %s''' %  (oclint, config, out_file)
-    print lint_command
+    print(lint_command)
     os.system(lint_command)
 
 
 def combine_outputs(output_files):
-    print "combining output files"
+    print("combining output files")
 
     base_tree = None
     base_root = None
@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
 
     config = load_config_json(args.config)
-    print config
+    print(config)
 
     with open(args.compile_commands, 'r') as r_handler:
         json_objects = json.loads(r_handler.read())

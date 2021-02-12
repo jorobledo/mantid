@@ -25,6 +25,7 @@ import subprocess
 import tempfile
 import sqlresults
 import numpy as np
+
 try:
     import analysis
 except ImportError:
@@ -32,34 +33,34 @@ except ImportError:
 import secureemail
 
 
-#====================================================================================
+# ====================================================================================
 def run(args):
     """ Execute the program """
-    print
-    print "=============== Checking For Performance Loss ====================="
+    print()
+    print("=============== Checking For Performance Loss =====================")
     dbfile = args.db[0]
 
     if not os.path.exists(dbfile):
-        print "Database file %s not found."
+        print("Database file %s not found.")
         sys.exit(1)
 
     # Set the database to the one given
-    sqlresults.set_database_filename(dbfile);
+    sqlresults.set_database_filename(dbfile)
 
     # Convert the arguments. Will throw if the user is stupid.
     avg = int(args.avg)
     tol = float(args.tol)
     rev = sqlresults.get_latest_revison()
 
-    print "Comparing the average of the %d revisions before rev. %d. Tolerance of %g %%." % (avg, rev, tol)
-    if args.verbose: print
-
+    print("Comparing the average of the %d revisions before rev. %d. Tolerance of %g %%." % (avg, rev, tol))
+    if args.verbose:
+        print()
     # For limiting the results
-    limit = 50*avg;
+    limit = 50 * avg
 
     names = sqlresults.get_all_test_names("revision = %d" % rev)
     if len(names) == 0:
-        print "Error! No tests found at revision number %d.\n" % rev
+        print("Error! No tests found at revision number %d.\n" % rev)
         sys.exit(1)
 
     bad_results = ""
@@ -67,7 +68,7 @@ def run(args):
     num_same = 0
     num_good = 0
     num_bad = 0
-    num_notenoughstats=0
+    num_notenoughstats = 0
     # The timing resolution is different across platforms and the faster tests
     # can cause more false positives on the lower-resolution clocks. We'll
     # up the tolerance for those taking less time than 10ms.
@@ -97,9 +98,9 @@ def run(args):
         t = t[r < rev]
 
         # Keep the latest "avg" #
-        t = t[len(t)-avg:]
+        t = t[len(t) - avg:]
 
-        if (len(t) == avg):
+        if len(t) == avg:
             # This is the average
             baseline_time = np.mean(t)
 
@@ -112,15 +113,22 @@ def run(args):
             elif pct > tolerance:
                 speedup_names.append(name)
 
-    regLinks = ["http://builds.mantidproject.org/job/master_performancetests2/Master_branch_performance_tests/{}.htm".format(name) for name in regression_names]
-    speedLinks = ["http://builds.mantidproject.org/job/master_performancetests2/Master_branch_performance_tests/{}.htm".format(name) for name in speedup_names]
+    regLinks = [
+        "http://builds.mantidproject.org/job/master_performancetests2/Master_branch_performance_tests/{}.htm".format(
+            name) for name in regression_names]
+    speedLinks = [
+        "http://builds.mantidproject.org/job/master_performancetests2/Master_branch_performance_tests/{}.htm".format(
+            name) for name in speedup_names]
     email = secureemail.SendEmailSecure(args.sender, args.pwd, args.recipient, regLinks, speedLinks)
     email.send()
 
-#====================================================================================
+
+# ====================================================================================
 if __name__ == "__main__":
     # Parse the command line
-    parser = argparse.ArgumentParser(description='Reads the SQL database containing performance test results and checks that performance has not dropped.')
+    parser = argparse.ArgumentParser(
+        description='Reads the SQL database containing performance test results and checks that performance has not '
+                    'dropped.')
 
     parser.add_argument('db', metavar='DBFILE', type=str, nargs=1,
                         default="./MantidSystemTests.db",

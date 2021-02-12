@@ -36,7 +36,7 @@ def mpimethod():
     world = MPI.COMM_WORLD
 
     if world.size != len(runs)+1:
-        print "This script must be run with " + str(len(runs)+1) + " MPI processes!"
+        print("This script must be run with " + str(len(runs) + 1) + " MPI processes!")
         from sys import exit
         exit()
 

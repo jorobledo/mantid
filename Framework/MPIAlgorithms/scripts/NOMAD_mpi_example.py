@@ -25,7 +25,7 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 
 if comm.size > 99:
-    print "This script must be run with fewer than 99 MPI processes! (99 banks in NOMAD)"
+    print("This script must be run with fewer than 99 MPI processes! (99 banks in NOMAD)")
     from sys import exit
     exit()
 
@@ -67,5 +67,5 @@ GatherWorkspaces(InputWorkspace=van, OutputWorkspace="nomad")
 if comm.rank == 0:
     SumSpectra(InputWorkspace="nomad",OutputWorkspace="nomad")
     SaveNexus(InputWorkspace="nomad",Filename="NOMAD.nxs")
-print done
+print(done)
 

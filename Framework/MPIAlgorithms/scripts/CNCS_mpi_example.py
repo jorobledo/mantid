@@ -18,7 +18,7 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 
-print "Running on rank %d of %d" % (rank, size)
+print("Running on rank %d of %d" % (rank, size))
 
 eventfile="../../../../../Test/AutoTestData/CNCS_7860_event.nxs"
 wksp="partial"

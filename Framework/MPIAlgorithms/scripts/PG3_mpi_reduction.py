@@ -22,5 +22,5 @@ if comm.rank == 0:
     os.system("mv PG3_2538.gsa mpi8_event.gsa")
 
 done = "Done " + str(1+comm.rank) + "!"
-print done
+print(done)
 

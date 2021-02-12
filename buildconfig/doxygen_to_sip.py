@@ -44,7 +44,7 @@ def grab_doxygen(cppfile, method):
                     break
             # OK return the lines
             return out
-    print "WARNING: Could not find method %s" % method
+    print("WARNING: Could not find method %s" % method)
     return None
 
 
@@ -149,9 +149,9 @@ def process_sip(filename):
             # Now, we look for the .cpp file
             classcpp = find_cpp_file(root, classname)
             if classcpp is None:
-                print "WARNING: Could not find cpp file for class %s" % classname
+                print("WARNING: Could not find cpp file for class %s" % classname)
             else:
-                print "Found class '%s' .cpp file " % classname
+                print("Found class '%s' .cpp file " % classname)
 
             dirtext += "\n\n__dir__() for %s\nreturn [" % classname
 
@@ -212,17 +212,17 @@ REQUIREMENTS:
     if options.outputfile is None:
         raise Exception("Must specify an output file with -o !")
 
-    print "---- Reading from %s ---- " % options.sipfile
+    print("---- Reading from %s ---- " % options.sipfile)
     (out, dirtext) = process_sip(options.sipfile)
 
     if not (options.outputfile is None):
-        print "---- Writing to %s ---- " % options.outputfile
+        print("---- Writing to %s ---- " % options.outputfile)
         f = open(options.outputfile, 'w')
         f.write('\n'.join(out))
         f.close()
 
     if not (options.dirfile is None):
-        print "---- Writing to %s ---- " % options.dirfile
+        print("---- Writing to %s ---- " % options.dirfile)
         f = open(options.dirfile, 'w')
         f.write(dirtext)
         f.close()

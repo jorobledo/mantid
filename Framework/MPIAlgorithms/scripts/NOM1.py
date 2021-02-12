@@ -23,7 +23,7 @@ van      = sys.argv[3]
 van_back = 0
 outputDir='/home/vel/scripts'
 if rank == 0:
-    print str(size)," mpi tasks"
+    print(str(size), " mpi tasks")
 
 SNSPowderReduction(Instrument="NOM", RunNumber=runNumber, Extension="_event.nxs",
                    PreserveEvents=False, PushDataPositive='AddMinimum',

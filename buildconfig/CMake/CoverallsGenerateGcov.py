@@ -83,11 +83,11 @@ def main(argv):
     for gcovFile in gcovAllFiles:
         sourceWithPath = getSourcePathFromGcovFile(gcovFile)
         if sourceWithPath in sourcesToCheck:
-            print "YES: ",sourceWithPath.strip()," WAS FOUND"
+            print("YES: ", sourceWithPath.strip(), " WAS FOUND")
             gcovCheckedFiles.append(gcovFile)
             uncheckedSources.remove(sourceWithPath)
         else:
-            print "NO: ",sourceWithPath.strip()," WAS NOT FOUND"
+            print("NO: ", sourceWithPath.strip(), " WAS NOT FOUND")
 
     coverageList = []
     for gcovFilename in gcovCheckedFiles:
@@ -95,7 +95,7 @@ def main(argv):
         #get name for json file
         sourceWithPath = getSourcePathFromGcovFile(gcovFilename)
         fileCoverage['name'] = os.path.relpath(sourceWithPath,PROJECT_ROOT)
-        print "Generating JSON file for "+fileCoverage['name']
+        print("Generating JSON file for " + fileCoverage['name'])
         fileCoverage['source_digest'] = hashlib.md5(open(sourceWithPath, 'rb').read()).hexdigest()
         lineCoverage = []
         gcovFile = open(gcovFilename,'r')

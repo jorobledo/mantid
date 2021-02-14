@@ -168,10 +168,6 @@ void extractShapeInformation(const Json::Value &shape,
         extractDatasetValues<uint32_t>(child, windingOrder);
     }
 
-    if (windingOrder.size() != verts.size() / 3)
-      throw std::invalid_argument("Invalid off geometry provided in JSON " +
-                                  name + ".");
-
     isOffGeometry = true;
   }
 
@@ -466,10 +462,17 @@ void JSONGeometryParser::extractDetectorContent() {
         extractDatasetValues<double>(child, y);
       else if (child[NAME] == Z_PIXEL_OFFSET)
         extractDatasetValues<double>(child, z);
-      else if (child[NAME] == PIXEL_SHAPE)
+      else if (child[NAME] == PIXEL_SHAPE || child[NAME] == DETECTOR_SHAPE) {
         extractShapeInformation(child, cylinders, faces, vertices, windingOrder,
                                 isOffGeometry);
-      else if (child[NAME] == DEPENDS_ON)
+        if (child[NAME] == DETECTOR_SHAPE) {
+          // The shape information describes the full detector bank
+          m_detectorShape.push_back(DetectorShape::full_detector);
+        } else {
+          // The shape information should be repeated for each pixel in the bank
+          m_detectorShape.push_back(DetectorShape::single_pixel);
+        }
+      } else if (child[NAME] == DEPENDS_ON)
         verifyDependency(*m_root, child);
       else if (validateNXAttribute(child[ATTRIBUTES], NX_TRANSFORMATIONS)) {
         m_translations.emplace_back(Eigen::Vector3d());

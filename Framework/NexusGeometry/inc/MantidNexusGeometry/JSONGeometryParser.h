@@ -19,6 +19,10 @@ class Value;
 namespace Mantid {
 
 namespace NexusGeometry {
+// To record whether the geometry information describes a single pixel or the
+// full detector bank
+enum class DetectorShape { full_detector, single_pixel };
+
 struct Chopper {
   std::string componentName;
   std::string name;
@@ -132,6 +136,11 @@ public:
     return m_pixelShapeCylinders[index];
   }
 
+  [[nodiscard]] std::vector<DetectorShape>
+  getDetectorShapeType() const noexcept {
+    return m_detectorShape;
+  }
+
   double degreesToRadians(const double degrees) noexcept;
 
 private:
@@ -174,12 +183,13 @@ private:
   std::vector<std::vector<double>> m_x;
   std::vector<std::vector<double>> m_y;
   std::vector<std::vector<double>> m_z;
-  // pixel shapes
+  // pixel shapes - element for each detector bank
   std::vector<std::vector<uint32_t>> m_pixelShapeFaces;
   std::vector<std::vector<uint32_t>> m_pixelShapeCylinders;
   std::vector<std::vector<Eigen::Vector3d>> m_pixelShapeVertices;
   std::vector<std::vector<uint32_t>> m_pixelShapeWindingOrder;
   std::vector<bool> m_isOffGeometry;
+  std::vector<DetectorShape> m_detectorShape;
 
   std::vector<Eigen::Vector3d> m_translations;
   std::vector<Eigen::Quaterniond> m_orientations;

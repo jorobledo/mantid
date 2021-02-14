@@ -130,7 +130,6 @@ std::string getJSONGeometryNoXPixelOffset();
 std::string getJSONGeometryNoYPixelOffset();
 std::string getJSONGeometryNoPixelShape();
 std::string getJSONGeometryEmptyOffGeometry();
-std::string getJSONGeometryInvalidOffGeometry();
 std::string getJSONGeometryEmptyCylindricalGeometry();
 std::string getJSONGeometryInvalidCylindricalGeometry();
 std::string getJSONGeometryMissingTransformations();
@@ -145,6 +144,7 @@ std::string getFullJSONInstrumentSimpleWithChopper();
 std::string getFullJSONInstrumentSimpleWithMonitorNoShape();
 std::string getFullJSONInstrumentSimpleWithMonitor();
 std::string getFullJSONInstrumentSimpleWithZPixelOffset();
+std::string getFullJSONInstrumentSimpleWithFullDetectorShape();
 
 } // namespace TestHelpers
 } // namespace Mantid

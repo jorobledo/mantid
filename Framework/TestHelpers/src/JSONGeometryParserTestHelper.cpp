@@ -505,31 +505,6 @@ std::string getJSONGeometryEmptyOffGeometry() {
   return JSONTestInstrumentBuilder::convertToString(root);
 }
 
-std::string getJSONGeometryInvalidOffGeometry() {
-  Json::Value root;
-  JSONTestInstrumentBuilder::initialiseRoot(root, "nexus_structure");
-  auto &entry = JSONTestInstrumentBuilder::addNXEntry(root, "entry");
-  JSONTestInstrumentBuilder::addNXSample(entry, "sample");
-  auto &instrument =
-      JSONTestInstrumentBuilder::addNXInstrument(entry, "instrument");
-  auto &detectorBank =
-      JSONTestInstrumentBuilder::addNXDetector(instrument, "detector_1");
-
-  JSONTestInstrumentBuilder::addDetectorNumbers(
-      detectorBank, {2, 2}, std::vector<int32_t>{1, 2, 3, 4});
-  JSONTestInstrumentBuilder::addXPixelOffset(detectorBank, {2, 2},
-                                             {-0.299, -0.297, -0.299, -0.297});
-  JSONTestInstrumentBuilder::addYPixelOffset(detectorBank, {2, 2},
-                                             {-0.299, -0.299, -0.297, -0.297});
-  auto &pixelShape = JSONTestInstrumentBuilder::addOffShape(detectorBank);
-  JSONTestInstrumentBuilder::addOffShapeFaces(pixelShape);
-  JSONTestInstrumentBuilder::addOffShapeVertices(pixelShape);
-  JSONTestInstrumentBuilder::addOffShapeWindingOrder(pixelShape, {3},
-                                                     {0, 1, 2}); // invalid
-
-  return JSONTestInstrumentBuilder::convertToString(root);
-}
-
 std::string getJSONGeometryEmptyCylindricalGeometry() {
   Json::Value root;
   JSONTestInstrumentBuilder::initialiseRoot(root, "nexus_structure");
@@ -1042,6 +1017,47 @@ std::string getFullJSONInstrumentSimpleWithZPixelOffset() {
   JSONTestInstrumentBuilder::addOffShapeFaces(pixelShape);
   JSONTestInstrumentBuilder::addOffShapeVertices(pixelShape);
   JSONTestInstrumentBuilder::addOffShapeWindingOrder(pixelShape);
+
+  // Add dependency but no transformations
+  JSONTestInstrumentBuilder::addNXTransformationDependency(
+      detectorBank, "/entry/instrument/detector_1/transformations/location");
+
+  auto &transformation = JSONTestInstrumentBuilder::addNXTransformation(
+      detectorBank, "transformations");
+  JSONTestInstrumentBuilder::addNXTransformationLocation(transformation);
+  JSONTestInstrumentBuilder::addNXTransformationBeamDirectionOffset(
+      transformation);
+  JSONTestInstrumentBuilder::addNXTransformationOrientation(transformation);
+  return JSONTestInstrumentBuilder::convertToString(root);
+}
+
+std::string getFullJSONInstrumentSimpleWithFullDetectorShape() {
+  // This example has an NXoff_geometry group which describes the full detector
+  // bank geometry rather than a single pixel in the bank
+  Json::Value root;
+  JSONTestInstrumentBuilder::initialiseRoot(root, "nexus_structure");
+  auto &entry = JSONTestInstrumentBuilder::addNXEntry(root, "entry");
+  JSONTestInstrumentBuilder::addNXSample(entry, "sample");
+  auto &instrument =
+      JSONTestInstrumentBuilder::addNXInstrument(entry, "instrument");
+  JSONTestInstrumentBuilder::addNXInstrumentName(instrument,
+                                                 "SimpleInstrument");
+  auto &detectorBank =
+      JSONTestInstrumentBuilder::addNXDetector(instrument, "detector_1");
+
+  JSONTestInstrumentBuilder::addDetectorNumbers(
+      detectorBank, {2, 2}, std::vector<int32_t>{1, 2, 3, 4});
+  JSONTestInstrumentBuilder::addXPixelOffset(detectorBank, {2, 2},
+                                             {-0.299, -0.297, -0.299, -0.297});
+  JSONTestInstrumentBuilder::addYPixelOffset(detectorBank, {2, 2},
+                                             {-0.299, -0.299, -0.297, -0.297});
+  JSONTestInstrumentBuilder::addZPixelOffset(
+      detectorBank, {2, 2}, {-0.0405, -0.0405, -0.0405, -0.0405});
+  auto &detectorShape =
+      JSONTestInstrumentBuilder::addOffShape(detectorBank, "detector_shape");
+  JSONTestInstrumentBuilder::addOffShapeFaces(detectorShape);
+  JSONTestInstrumentBuilder::addOffShapeVertices(detectorShape);
+  JSONTestInstrumentBuilder::addOffShapeWindingOrder(detectorShape);
 
   // Add dependency but no transformations
   JSONTestInstrumentBuilder::addNXTransformationDependency(

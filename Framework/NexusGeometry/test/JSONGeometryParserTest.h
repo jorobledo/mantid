@@ -90,12 +90,6 @@ public:
         json, "Insufficient pixel shape information found in detector_1.");
   }
 
-  void test_parse_fail_for_invalid_off_geometry_in_JSON() {
-    std::string json = Mantid::TestHelpers::getJSONGeometryInvalidOffGeometry();
-    attemptParseInvalidArgument(
-        json, "Invalid off geometry provided in JSON pixel_shape.");
-  }
-
   void test_parse_fail_for_empty_cylindrical_geometry_in_JSON() {
     std::string json =
         Mantid::TestHelpers::getJSONGeometryEmptyCylindricalGeometry();
@@ -187,6 +181,8 @@ public:
     TS_ASSERT_EQUALS(testWindingOrderVec, parser.windingOrder(0));
     const auto &cylinders = parser.cylinders(0);
     TS_ASSERT(cylinders.empty());
+    TS_ASSERT_EQUALS(parser.getDetectorShapeType()[0],
+                     Mantid::NexusGeometry::DetectorShape::single_pixel);
   }
 
   void test_load_full_instrument_simple_with_source() {
@@ -423,6 +419,14 @@ public:
     TS_ASSERT_EQUALS(zPixelOffsets.size(), 4);
     TS_ASSERT_EQUALS(zPixelOffsets,
                      (std::vector<double>{-0.0405, -0.0405, -0.0405, -0.0405}));
+  }
+
+  void test_load_instrument_with_full_detector_shape() {
+    std::string json =
+        Mantid::TestHelpers::getFullJSONInstrumentSimpleWithFullDetectorShape();
+    JSONGeometryParser parser(json);
+    TS_ASSERT_EQUALS(parser.getDetectorShapeType()[0],
+                     Mantid::NexusGeometry::DetectorShape::full_detector);
   }
 
 private:

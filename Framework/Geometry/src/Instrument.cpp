@@ -1075,7 +1075,7 @@ std::shared_ptr<const ReferenceFrame> Instrument::getReferenceFrame() const {
  * Set the default type of the instrument view.
  * @param type :: A string with one of the values:
  *    3D, CYLINDRICAL_X, CYLINDRICAL_Y, CYLINDRICAL_Z, SPHERICAL_X, SPHERICAL_Y,
- * SPHERICAL_Z
+ * SPHERICAL_Z, SIDE_BY_SIDE
  *    Caseless. If a wrong value is given logs a warning and sets the view to
  * "3D"
  */
@@ -1085,7 +1085,7 @@ void Instrument::setDefaultView(const std::string &type) {
   if (typeUC == "3D" || typeUC == "CYLINDRICAL_X" ||
       typeUC == "CYLINDRICAL_Y" || typeUC == "CYLINDRICAL_Z" ||
       typeUC == "SPHERICAL_X" || typeUC == "SPHERICAL_Y" ||
-      typeUC == "SPHERICAL_Z") {
+      typeUC == "SPHERICAL_Z" || typeUC == "SIDE_BY_SIDE") {
     m_defaultView = typeUC;
   } else {
     m_defaultView = "3D";

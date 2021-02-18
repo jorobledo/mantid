@@ -11,7 +11,7 @@ import pip
 import shutil
 import site
 import subprocess
-import urllib2
+import urllib.request as urlr
 
 
 FAILED_DOWNLOAD_MESSAGE = "Could not download the GSAS installation package. " \
@@ -36,12 +36,12 @@ def download_bootstrap(revision_number, target_location):
     if revision_number:
         url += "?r={}".format(revision_number)
 
-    response = urllib2.urlopen(url)
+    response = urlr.urlopen(url)
     bootstrap_file = response.read()
     response.close()
 
     with open(target_location, "w") as out_file:
-        out_file.write(bootstrap_file)
+        out_file.write(str(bootstrap_file))
 
 
 def package_is_installed(package_name):
@@ -60,7 +60,7 @@ def install_gsasii(install_directory, revision_number, force_overwrite):
     gsas_home_dir = os.path.join(install_directory, GSAS_HOME_DIR_NAME, "GSASII")
 
     if force_overwrite and os.path.exists(gsas_home_dir):
-        print("Removing {}".format(gsas_home_dir))
+        print(("Removing {}".format(gsas_home_dir)))
         shutil.rmtree(gsas_home_dir)
 
     if not os.path.exists(gsas_home_dir):
@@ -76,7 +76,7 @@ def install_gsasii(install_directory, revision_number, force_overwrite):
 
     print("Installing GSAS-II")
     bootstrap_process = subprocess.Popen(["python", bootstrap_file_name], stdin=subprocess.PIPE)
-    bootstrap_process.communicate(input="\n\n")
+    bootstrap_process.communicate(input=b'\n\n')
 
 
 if __name__ == "__main__":

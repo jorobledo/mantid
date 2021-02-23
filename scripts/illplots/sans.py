@@ -5,7 +5,9 @@
 #     & Institut Laue - Langevin
 # SPDX - License - Identifier: GPL - 3.0 +
 
-from mantid import mtd, config, logger
+from ._common import getWorkspaces
+
+from mantid import config, logger
 from mantid import plots
 
 import matplotlib.pyplot as plt
@@ -14,19 +16,9 @@ import os
 import math
 
 
-def _getWorkspaces(names):
-    if isinstance(names, str):
-        return [mtd[names]]
-    if isinstance(names, list):
-        return [mtd[name] for name in names]
-    else:
-        raise ValueError('"' + str(names) + '"' + " is not a workspace name or "
-                         "a list of workspace names.")
-
-
 def plotIQ(wsNames, filename=None):
     try:
-        wss = _getWorkspaces(wsNames)
+        wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot I(Q), check your input : " + str(ex))
         return
@@ -49,7 +41,7 @@ def plotIQ(wsNames, filename=None):
 
 def plotIQxQy(wsNames, filename=None):
     try:
-        wss = _getWorkspaces(wsNames)
+        wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot I(Qx, Qy), check your input : " + str(ex))
         return

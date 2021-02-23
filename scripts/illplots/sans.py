@@ -66,9 +66,12 @@ def plotIQxQy(wsNames, filename=None):
             nc += 1
         fig, axs = plt.subplots(nr, nc, subplot_kw={'projection':'mantid'})
         axs = axs.flatten()
-        for i in range(n):
-            axs[i].pcolormesh(wss[i])
-            axs[i].set_title(wss[i].getName())
+        for i in range(len(axs)):
+            if i < n:
+                axs[i].pcolormesh(wss[i])
+                axs[i].set_title(wss[i].getName())
+            else:
+                axs[i].set_visible(False)
 
     if filename is None:
         fig.show()

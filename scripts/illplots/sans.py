@@ -46,5 +46,21 @@ def plotIQ(wsNames, filename=None):
         fig.savefig(fullPath)
 
 
-def plotIQxQy(wsName, filename=None):
-    pass
+def plotIQxQy(wsNames, filename=None):
+    try:
+        wss = _getWorkspaces(wsNames)
+    except Exception as ex:
+        logger.error("Unable to plot I(Qx, Qy), check your input : " + str(ex))
+        return
+
+    fig, ax = plt.subplots(subplot_kw={'projection':'mantid'})
+    ax.set_title("I (Qx, Qy)")
+    for ws in wss:
+        ax.pcolormesh(ws)
+
+    if filename is None:
+        fig.show()
+    else:
+        exportPath = config.getString("defaultsave.directory")
+        fullPath = os.path.join(exportPath, filename)
+        fig.savefig(fullPath)

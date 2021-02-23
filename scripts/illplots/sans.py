@@ -11,6 +11,7 @@ from mantid import plots
 import matplotlib.pyplot as plt
 
 import os
+import math
 
 
 def _getWorkspaces(names):
@@ -53,10 +54,21 @@ def plotIQxQy(wsNames, filename=None):
         logger.error("Unable to plot I(Qx, Qy), check your input : " + str(ex))
         return
 
-    fig, ax = plt.subplots(subplot_kw={'projection':'mantid'})
-    ax.set_title("I (Qx, Qy)")
-    for ws in wss:
-        ax.pcolormesh(ws)
+    n = len(wss)
+    if n == 1:
+        fig, ax = plt.subplots(subplot_kw={'projection':'mantid'})
+        ax.pcolormesh(wss[0])
+        ax.set_title(wss[0].getName())
+    else:
+        nr = int(math.ceil(math.sqrt(n)))
+        nc = int(n / nr)
+        if n%nr != 0:
+            nc += 1
+        fig, axs = plt.subplots(nr, nc, subplot_kw={'projection':'mantid'})
+        axs = axs.flatten()
+        for i in range(n):
+            axs[i].pcolormesh(wss[i])
+            axs[i].set_title(wss[i].getName())
 
     if filename is None:
         fig.show()

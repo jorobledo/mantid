@@ -5,14 +5,12 @@
 #     & Institut Laue - Langevin
 # SPDX - License - Identifier: GPL - 3.0 +
 
-from ._common import getWorkspaces
+from ._common import getWorkspaces, exportFig
 
-from mantid import config, logger
+from mantid import logger
 from mantid import plots
 
 import matplotlib.pyplot as plt
-
-import os
 
 
 def plotRQ(wsNames, filename=None):
@@ -30,9 +28,4 @@ def plotRQ(wsNames, filename=None):
         plots.axesfunctions.errorbar(ax, ws, specNum=1, label=ws.getName())
     ax.legend()
 
-    if filename is None:
-        fig.show()
-    else:
-        exportPath = config.getString("defaultsave.directory")
-        fullPath = os.path.join(exportPath, filename)
-        fig.savefig(fullPath)
+    exportFig(fig, filename)

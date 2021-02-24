@@ -5,14 +5,13 @@
 #     & Institut Laue - Langevin
 # SPDX - License - Identifier: GPL - 3.0 +
 
-from ._common import getWorkspaces
+from ._common import getWorkspaces, exportFig
 
-from mantid import config, logger
+from mantid import logger
 from mantid import plots
 
 import matplotlib.pyplot as plt
 
-import os
 import math
 
 
@@ -31,12 +30,7 @@ def plotIQ(wsNames, filename=None):
         plots.axesfunctions.errorbar(ax, ws, specNum=1, label=ws.getName())
     ax.legend()
 
-    if filename is None:
-        fig.show()
-    else:
-        exportPath = config.getString("defaultsave.directory")
-        fullPath = os.path.join(exportPath, filename)
-        fig.savefig(fullPath)
+    exportFig(fig, filename)
 
 
 def plotKratky(wsNames, filename=None):
@@ -55,12 +49,7 @@ def plotKratky(wsNames, filename=None):
         y = ws.dataY(0) * ws.dataX(0)**2
         ax.plot(x, y, label=ws.getName())
 
-    if filename is None:
-        fig.show()
-    else:
-        exportPath = config.getString("defaultsave.directory")
-        fullPath = os.path.join(exportPath, filename)
-        fig.savefig(fullPath)
+    exportFig(fig, filename)
 
 
 def plotIQxQy(wsNames, filename=None):
@@ -89,9 +78,4 @@ def plotIQxQy(wsNames, filename=None):
             else:
                 axs[i].set_visible(False)
 
-    if filename is None:
-        fig.show()
-    else:
-        exportPath = config.getString("defaultsave.directory")
-        fullPath = os.path.join(exportPath, filename)
-        fig.savefig(fullPath)
+    exportFig(fig, filename)

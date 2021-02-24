@@ -39,6 +39,30 @@ def plotIQ(wsNames, filename=None):
         fig.savefig(fullPath)
 
 
+def plotKratky(wsNames, filename=None):
+    try:
+        wss = getWorkspaces(wsNames)
+    except Exception as ex:
+        logger.error("Unable to plot IQ**2(Q), check your input : " + str(ex))
+        return
+
+    fig, ax = plt.subplots()
+    ax.set_title("Kratky plot")
+    ax.set_xscale("linear")
+    ax.set_yscale("linear")
+    for ws in wss:
+        x = ws.dataX(0)
+        y = ws.dataY(0) * ws.dataX(0)**2
+        ax.plot(x, y, label=ws.getName())
+
+    if filename is None:
+        fig.show()
+    else:
+        exportPath = config.getString("defaultsave.directory")
+        fullPath = os.path.join(exportPath, filename)
+        fig.savefig(fullPath)
+
+
 def plotIQxQy(wsNames, filename=None):
     try:
         wss = getWorkspaces(wsNames)

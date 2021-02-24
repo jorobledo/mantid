@@ -76,6 +76,7 @@ def plotIQxQy(wsNames, filename=None):
         for i in range(len(axs)):
             if i < n:
                 axs[i].pcolormesh(wss[i])
+                axs[i].set_aspect(1)
                 axs[i].set_title(wss[i].getName())
             else:
                 axs[i].set_visible(False)

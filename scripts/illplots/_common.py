@@ -6,6 +6,7 @@
 # SPDX - License - Identifier: GPL - 3.0 +
 
 from mantid import mtd, config
+from mantid.api import WorkspaceGroup
 
 import matplotlib.pyplot as plt
 
@@ -14,7 +15,10 @@ import os
 
 def getWorkspaces(names):
     if isinstance(names, str):
-        return [mtd[names]]
+        ws = mtd[names]
+        if isinstance(ws, WorkspaceGroup):
+            return [e for e in ws]
+        return ws
     if isinstance(names, list):
         return [mtd[name] for name in names]
     else:

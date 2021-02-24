@@ -18,7 +18,7 @@ def plotRQ(wsNames, filename=None):
         wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot R(Q), check your input : " + str(ex))
-        return
+        return None, None
 
     fig, ax = plt.subplots()
     ax.set_title("R(Q)")
@@ -29,3 +29,4 @@ def plotRQ(wsNames, filename=None):
     ax.legend()
 
     exportFig(fig, filename)
+    return fig, ax

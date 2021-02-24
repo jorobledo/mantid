@@ -20,7 +20,7 @@ def plotIQ(wsNames, filename=None):
         wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot I(Q), check your input : " + str(ex))
-        return
+        return None, None
 
     fig, ax = plt.subplots()
     ax.set_title("I (Q)")
@@ -31,6 +31,7 @@ def plotIQ(wsNames, filename=None):
     ax.legend()
 
     exportFig(fig, filename)
+    return fig, ax
 
 
 def plotKratky(wsNames, filename=None):
@@ -38,7 +39,7 @@ def plotKratky(wsNames, filename=None):
         wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot IQ**2(Q), check your input : " + str(ex))
-        return
+        return None, None
 
     fig, ax = plt.subplots()
     ax.set_title("Kratky plot")
@@ -50,6 +51,7 @@ def plotKratky(wsNames, filename=None):
         ax.plot(x, y, label=ws.getName())
 
     exportFig(fig, filename)
+    return fig, ax
 
 
 def plotIQxQy(wsNames, filename=None):
@@ -57,7 +59,7 @@ def plotIQxQy(wsNames, filename=None):
         wss = getWorkspaces(wsNames)
     except Exception as ex:
         logger.error("Unable to plot I(Qx, Qy), check your input : " + str(ex))
-        return
+        return None, None
 
     n = len(wss)
     if n == 1:
@@ -79,3 +81,4 @@ def plotIQxQy(wsNames, filename=None):
                 axs[i].set_visible(False)
 
     exportFig(fig, filename)
+    return fig, axs.reshape(nr, nc)

@@ -7,6 +7,8 @@
 
 from mantid import mtd, config
 
+import matplotlib.pyplot as plt
+
 import os
 
 
@@ -21,6 +23,7 @@ def getWorkspaces(names):
 
 
 def exportFig(fig, filename):
+    plt.tight_layout(0)
     if filename is None:
         fig.show()
     else:

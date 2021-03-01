@@ -29,6 +29,7 @@
 		  experiment_title,start_time,end_time,numor_list,
 		  processedAs,wavelength,sample_transmission,
                   collimation.actual_position,L2"/>
+      </parameter>
       <!-- These parameters are used to define headers and entries for GenerateLogbook algorithm -->
       <parameter name="logbook_default_parameters" type="string">
 	<value val="SampleDescription:/entry0/sample_description,

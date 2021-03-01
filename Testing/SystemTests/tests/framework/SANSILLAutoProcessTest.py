@@ -248,7 +248,7 @@ class D11_AutoProcess_Multiple_Transmissions_Test(systemtesting.MantidSystemTest
             OutputWorkspace='iq_mult_wavelengths',
             BeamRadius='0.05',
             TransmissionBeamRadius=0.05,
-            StitchReferenceIndex = 0
+            StitchReferenceIndex=0
         )
 
 
@@ -260,21 +260,6 @@ class D11_AutoProcess_CustomStitching_Test(systemtesting.MantidSystemTest):
     def __init__(self):
         super(D11_AutoProcess_CustomStitching_Test, self).__init__()
         self.setUp()
-        # prepare mask for instrument edges first:
-        MaskBTP(Instrument='D11', Tube='0-6,250-256')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_vertical')
-        MaskBTP(Instrument='D11', Pixel='0-6,250-256')
-        Plus(LHSWorkspace='mask_vertical', RHSWorkspace='D11MaskBTP', OutputWorkspace='edge_masks')
-        # the edges mask can be used as a default mask for all distances and wavelengths
-
-        MaskBTP(Instrument='D11', Tube='114-142,', Pixel='114-142')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_8m_4_6A_center')
-        MaskBTP(Instrument='D11', Tube='3-14', Pixel='240-256')
-        Plus(LHSWorkspace='D11MaskBTP', RHSWorkspace='mask_8m_4_6A_center', OutputWorkspace='mask_8m_4_6A')
-        MaskBTP(Instrument='D11', Tube='103-147', Pixel='103-147')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_1m_4_6A_center')
-        MaskBTP(Instrument='D11', Tube='3-14', Pixel='240-256')
-        Plus(LHSWorkspace='D11MaskBTP', RHSWorkspace='mask_1m_4_6A_center', OutputWorkspace='mask_1m_4_6A')
 
     def cleanup(self):
         mtd.clear()
@@ -289,6 +274,7 @@ class D11_AutoProcess_CustomStitching_Test(systemtesting.MantidSystemTest):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
         self.disableChecking.append('Instrument')
+        self.disableChecking.append('Sample')
         return ['out', 'D11_AutoProcess_CustomStitch_Reference.nxs']
 
     def runTest(self):
@@ -335,17 +321,20 @@ class D11_AutoProcess_Solvent_Test(systemtesting.MantidSystemTest):
         super(D11_AutoProcess_Solvent_Test, self).__init__()
         self.setUp()
         # prepare mask for instrument edges first:
-        MaskBTP(Instrument='D11', Tube='1-3,253-256')
+        MaskBTP(Instrument='D11', Tube='0-6,250-256')
         RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_vertical')
-        MaskBTP(Instrument='D11', Pixel='1-3,253-256')
+        MaskBTP(Instrument='D11', Pixel='0-6,250-256')
         Plus(LHSWorkspace='mask_vertical', RHSWorkspace='D11MaskBTP', OutputWorkspace='edge_masks')
         # the edges mask can be used as a default mask for all distances and wavelengths
-        MaskBTP(Instrument='D11', Tube='116-139', Pixel='90-116')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_39m_10A')
-        MaskBTP(Instrument='D11', Tube='115-140', Pixel='115-140')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_8m_4_6A')
-        MaskBTP(Instrument='D11', Tube='105-145', Pixel='105-145')
-        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_1m_4_6A')
+        MaskBTP(Instrument='D11', Tube='114-142', Pixel='114-142')
+        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_8m_4_6A_center')
+        MaskBTP(Instrument='D11', Tube='3-14', Pixel='240-256')
+        Plus(LHSWorkspace='D11MaskBTP', RHSWorkspace='mask_8m_4_6A_center', OutputWorkspace='mask_8m_4_6A')
+        MaskBTP(Instrument='D11', Tube='103-147', Pixel='103-147')
+        RenameWorkspace(InputWorkspace='D11MaskBTP', OutputWorkspace='mask_1m_4_6A_center')
+        MaskBTP(Instrument='D11', Tube='3-14', Pixel='240-256')
+        Plus(LHSWorkspace='D11MaskBTP', RHSWorkspace='mask_1m_4_6A_center', OutputWorkspace='mask_1m_4_6A')
+
 
     def setUp(self):
         config['default.facility'] = 'ILL'
@@ -362,6 +351,7 @@ class D11_AutoProcess_Solvent_Test(systemtesting.MantidSystemTest):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
         self.disableChecking.append('Instrument')
+        self.disableChecking.append('Sample')
         return ['iq_mult_solvent', 'D11_AutoProcess_Solvent_Reference.nxs']
 
     def runTest(self):
@@ -392,7 +382,8 @@ class D11_AutoProcess_Solvent_Test(systemtesting.MantidSystemTest):
             OutputWorkspace='solvents',
             BeamRadius='0.05',
             TransmissionBeamRadius=0.05,
-            ClearCorrected2DWorkspace=False
+            ClearCorrected2DWorkspace=False,
+            StitchReferenceIndex=0
         )
 
         tmp_dir = gettempdir()
@@ -416,7 +407,8 @@ class D11_AutoProcess_Solvent_Test(systemtesting.MantidSystemTest):
             CalculateResolution='MildnerCarpenter',
             OutputWorkspace='iq_mult_solvent',
             BeamRadius='0.05',
-            TransmissionBeamRadius=0.05
+            TransmissionBeamRadius=0.05,
+            StitchReferenceIndex=0
         )
 
 
@@ -637,6 +629,7 @@ class D22_AutoProcess_Single_Sensitivity(systemtesting.MantidSystemTest):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
         self.disableChecking.append('Instrument')
+        self.disableChecking.append('Sample')
         return ['d22_single_sens', 'D22_AutoProcess_Single_Sens_Reference.nxs']
 
     def runTest(self):
@@ -689,6 +682,7 @@ class D22_AutoProcess_Multi_Sensitivity(systemtesting.MantidSystemTest):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
         self.disableChecking.append('Instrument')
+        self.disableChecking.append('Sample')
         return ['sens', 'D22_AutoProcess_Multi_Sens_Reference.nxs']
 
     def runTest(self):
@@ -704,5 +698,6 @@ class D22_AutoProcess_Multi_Sensitivity(systemtesting.MantidSystemTest):
             SensitivityOutputWorkspace='sens',
             SampleThickness=thick,
             OutputWorkspace='ref',
-            SensitivityWithOffsets=True
+            SensitivityWithOffsets=True,
+            StitchReferenceIndex=0
         )

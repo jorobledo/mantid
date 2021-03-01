@@ -12,6 +12,12 @@ SANS Changes
 Algorithms and instruments
 --------------------------
 
+New
+###
+
+- Sectors drawn in the instrument viewer can now be used to define wedges in :ref:`Q1DWeighted <algm-Q1DWeighted>`
+
+
 Improvements
 ############
 
@@ -32,3 +38,8 @@ Bugfixes
 
 
 :ref:`Release 6.1.0 <v6.1.0>`
+=======
+
+
+:ref:`Release 6.1.0 <v6.1.0>`
+>>>>>>> origin/26906_transmit_shapes_to_integration

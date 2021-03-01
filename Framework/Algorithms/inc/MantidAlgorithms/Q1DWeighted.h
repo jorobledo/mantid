@@ -77,6 +77,14 @@ private:
   void calculate(const API::MatrixWorkspace_const_sptr &);
   void finalize(const API::MatrixWorkspace_const_sptr &);
 
+  void getTableShapes();
+  void getViewportParams(std::string &,
+                         std::map<std::string, std::vector<double>> &);
+  void getSectorParams(std::vector<std::string> &,
+                       std::map<std::string, std::vector<double>> &);
+  bool checkIfSymetricalWedge(double innerRadius, double outerRadius,
+                              double centerX, double centerY,
+                              double centerAngle, double angleRange);
   std::vector<std::vector<std::vector<double>>> m_intensities;
   std::vector<std::vector<std::vector<double>>> m_errors;
   std::vector<std::vector<std::vector<double>>> m_normalisation;
@@ -84,11 +92,20 @@ private:
   size_t m_nQ;
   size_t m_nLambda;
   size_t m_nWedges;
+
+  std::vector<double> m_wedgesInnerRadius;
+  std::vector<double> m_wedgesOuterRadius;
+  std::vector<double> m_wedgesCenterX;
+  std::vector<double> m_wedgesCenterY;
+  std::vector<double> m_wedgesCenterAngle;
+  std::vector<double> m_wedgesAngleRange;
+
+  // for each wedge, false if the integration should also take its symmetric
+  // into account
+  std::vector<bool> m_wedgesIsAsymmetric;
+
   size_t m_nSpec;
   int m_nSubPixels;
-  double m_wedgeFullAngle;
-  double m_wedgeOffset;
-  double m_wedgeAngle;
   double m_pixelSizeY;
   double m_pixelSizeX;
   bool m_asymmWedges;

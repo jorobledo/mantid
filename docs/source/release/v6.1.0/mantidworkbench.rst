@@ -20,4 +20,10 @@ Bugfixes
 - Fixed a bug which occurred when switching to a log scale in sliceviewer with negative data.
 - Fixed a bug that use wrong help links in certain interfaces
 
+Interfaces
+----------
+
+- Automatic data export in DrILL now creates a header for ASCII files, through the new property in :ref:`SaveAscii <algm-SaveAscii>`.
+  See the :ref:`SaveAscii <algm-SaveAscii>` for more information.
+
 :ref:`Release 6.1.0 <v6.1.0>`

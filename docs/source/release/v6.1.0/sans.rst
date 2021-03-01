@@ -25,5 +25,8 @@ Improvements
 
 Bugfixes
 ########
+=======
+- :ref:`SANSILLReduction <algm-SANSILLReduction>` adds sample log information to reduced data about facility,
+  sample transmission numor, and all SampleRuns numors, with relevant algebra.
 
 :ref:`Release 6.1.0 <v6.1.0>`

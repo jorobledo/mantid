@@ -22,11 +22,13 @@ Improvements
 - :ref:`SANSILLAutoProcess <algm-SANSILLAutoProcess>` has new property:
   `StitchReferenceIndex` to denote the index of ws that should be a reference
   for scaling during stitching
-
-Bugfixes
-########
-=======
+- With SANSILLAutoProcess, the detector distance, the collimation position and the wavelength are appended
+  to the names of the output workspaces (values are taken from the sample logs).
 - :ref:`SANSILLReduction <algm-SANSILLReduction>` adds sample log information to reduced data about facility,
   sample transmission numor, and all SampleRuns numors, with relevant algebra.
+  
+Bugfixes
+########
+
 
 :ref:`Release 6.1.0 <v6.1.0>`

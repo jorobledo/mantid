@@ -282,6 +282,7 @@ class D11_AutoProcess_CustomStitching_Test(systemtesting.MantidSystemTest):
     def validate(self):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
+        self.disableChecking.append('Instrument')
         return ['out', 'D11_AutoProcess_CustomStitch_Reference.nxs']
 
     def runTest(self):
@@ -354,6 +355,7 @@ class D11_AutoProcess_Solvent_Test(systemtesting.MantidSystemTest):
     def validate(self):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
+        self.disableChecking.append('Instrument')
         return ['iq_mult_solvent', 'D11_AutoProcess_Solvent_Reference.nxs']
 
     def runTest(self):
@@ -544,7 +546,6 @@ class D16_AutoProcess_Test(systemtesting.MantidSystemTest):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
         self.disableChecking.append("Instrument")
-
         return ['iq', 'ILL_D16_Gamma_scan.nxs']
 
     def runTest(self):
@@ -629,6 +630,7 @@ class D22_AutoProcess_Single_Sensitivity(systemtesting.MantidSystemTest):
     def validate(self):
         self.tolerance = 1e-3
         self.tolerance_is_rel_err = True
+        self.disableChecking.append('Instrument')
         return ['d22_single_sens', 'D22_AutoProcess_Single_Sens_Reference.nxs']
 
     def runTest(self):

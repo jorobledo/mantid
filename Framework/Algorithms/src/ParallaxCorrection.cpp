@@ -71,15 +71,16 @@ const std::string ParallaxCorrection::summary() const {
 
 /// Validate inputs @see Algorithm::validateInputs
 std::map<std::string, std::string> ParallaxCorrection::validateInputs() {
-    std::map<std::string, std::string> results;
-    const std::vector<double> angleOffsets = getProperty("AngleOffsets");
-    const std::vector<std::string> componentNames = getProperty("ComponentNames");
-    if (angleOffsets.size() != componentNames.size() && angleOffsets.size() != 1) {
-        results["AngleOffsets"] = "Angle offsets should have one value or as many as there are components";
-    }
-    return results;
+  std::map<std::string, std::string> results;
+  const std::vector<double> angleOffsets = getProperty("AngleOffsets");
+  const std::vector<std::string> componentNames = getProperty("ComponentNames");
+  if (angleOffsets.size() != componentNames.size() &&
+      angleOffsets.size() != 1) {
+    results["AngleOffsets"] = "Angle offsets should have one value or as many "
+                              "as there are components";
+  }
+  return results;
 }
-
 
 //----------------------------------------------------------------------------------------------
 /** Initialize the algorithm's properties.
@@ -99,8 +100,10 @@ void ParallaxCorrection::init() {
       std::make_unique<API::WorkspaceProperty<API::MatrixWorkspace>>("OutputWorkspace", "", Kernel::Direction::Output),
       "An output workspace.");
 
-  declareProperty(std::make_unique<Kernel::ArrayProperty<double>>("AngleOffsets", std::vector<double>{0.0}),
-                  "The values of offset angles [degrees] to be subtracted from the scattering angle (per component).");
+  declareProperty(std::make_unique<Kernel::ArrayProperty<double>>(
+                      "AngleOffsets", std::vector<double>{0.0}),
+                  "The values of offset angles [degrees] to be subtracted from "
+                  "the scattering angle (per component).");
 }
 
 //----------------------------------------------------------------------------------------------
@@ -113,7 +116,8 @@ void ParallaxCorrection::init() {
  */
 void ParallaxCorrection::performCorrection(
     const API::MatrixWorkspace_sptr &outWS, const std::vector<size_t> &indices,
-    const std::string &parallax, const std::string &direction, const double angleOffset) {
+    const std::string &parallax, const std::string &direction,
+    const double angleOffset) {
   double t;
   mu::Parser muParser;
   muParser.DefineVar("t", &t);
@@ -157,9 +161,10 @@ void ParallaxCorrection::exec() {
   const auto &componentInfo = outputWorkspace->componentInfo();
   auto progress =
       std::make_unique<API::Progress>(this, 0., 1., componentNames.size());
-  int componentIndex = 0;
+  size_t componentIndex = 0;
   for (const auto &componentName : componentNames) {
-    const double angleOffset = angleOffsets[(angleOffsets.size() == 1) ? 0 : componentIndex];
+    const double angleOffset =
+        angleOffsets[(angleOffsets.size() == 1) ? 0 : componentIndex];
     ++componentIndex;
     progress->report("Performing parallax correction for component " +
                      componentName);
@@ -192,7 +197,8 @@ void ParallaxCorrection::exec() {
     std::transform(detectorIndices.cbegin(), detectorIndices.cend(), std::back_inserter(detIDs),
                    [&allDetIDs](size_t i) { return allDetIDs[i]; });
     const auto indices = outputWorkspace->getIndicesFromDetectorIDs(detIDs);
-    performCorrection(outputWorkspace, indices, parallax, direction, angleOffset);
+    performCorrection(outputWorkspace, indices, parallax, direction,
+                      angleOffset);
   }
   setProperty("OutputWorkspace", outputWorkspace);
 }

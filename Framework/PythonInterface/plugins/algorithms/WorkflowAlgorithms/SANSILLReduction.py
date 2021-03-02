@@ -627,7 +627,10 @@ class SANSILLReduction(PythonAlgorithm):
             components = mtd[ws].getInstrument().getStringParameter('detector_panels')[0].split(',')
         else:
             components = ['detector']
-        ParallaxCorrection(InputWorkspace=ws, OutputWorkspace=ws, ComponentNames=components)
+        offsets = [0.]
+        if self._instrument == 'D22B':
+            offsets.append(mtd[ws].getRun().getLogData('Detector 1.dan1_actual').value)
+        ParallaxCorrection(InputWorkspace=ws, OutputWorkspace=ws, ComponentNames=components, AngleOffsets=offsets)
 
     def _apply_dead_time(self, ws):
         """
@@ -799,7 +802,7 @@ class SANSILLReduction(PythonAlgorithm):
                         else:
                             input_solid = ws
                         SolidAngle(InputWorkspace=input_solid, OutputWorkspace=solid_angle,
-                                   Method="Rectangle")
+                                   Method="GenericShape")
                     Divide(LHSWorkspace=ws, RHSWorkspace=solid_angle, OutputWorkspace=ws, WarnOnZeroDivide=False)
                     if not cache:
                         DeleteWorkspace(solid_angle)

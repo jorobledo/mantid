@@ -110,8 +110,9 @@
         </parameter>
     </component-link>
     <component-link name="detector_front">
-        <parameter name="parallax" type="string" visible="false">
-            <value val="1+0.14*exp(-4*ln(2.)*((t-0.588)/0.414)^2)"/>
+        <parameter name="parallax" type="string">
+            <!--value val="1+0.14*exp(-4*ln(2.)*((t-0.588)/0.414)^2)"-->
+            <value val="(t * 180 / 3.14 &lt; 26) ? 1./cos(t) : 1.113+0.007726 * t * 180 / 3.14"/>
         </parameter>
         <parameter name="direction" type="string" visible="false">
             <value val="y"/>

@@ -25,9 +25,10 @@ public:
 private:
   void init() override;
   void exec() override;
-  void performCorrection(const API::MatrixWorkspace_sptr &, const std::vector<size_t> &, const std::string &,
-                         const std::string &);
-};
+  std::map<std::string, std::string> validateInputs() override;
+  void performCorrection(const API::MatrixWorkspace_sptr &,
+                         const std::vector<size_t> &, const std::string &,
+                         const std::string &, const double);
 
 } // namespace Algorithms
 } // namespace Mantid

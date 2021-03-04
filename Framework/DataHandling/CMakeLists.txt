@@ -63,6 +63,7 @@ set(SRC_FILES
     src/LoadHelper.cpp
     src/LoadIDFFromNexus.cpp
     src/LoadILLDiffraction.cpp
+    src/LoadILLEvent.cpp
     src/LoadILLIndirect2.cpp
     src/LoadILLPolarizationFactors.cpp
     src/LoadILLPolarizedDiffraction.cpp
@@ -276,6 +277,7 @@ set(INC_FILES
     inc/MantidDataHandling/LoadHelper.h
     inc/MantidDataHandling/LoadIDFFromNexus.h
     inc/MantidDataHandling/LoadILLDiffraction.h
+    inc/MantidDataHandling/LoadILLEvent.h
     inc/MantidDataHandling/LoadILLIndirect2.h
     inc/MantidDataHandling/LoadILLPolarizationFactors.h
     inc/MantidDataHandling/LoadILLPolarizedDiffraction.h
@@ -671,6 +673,8 @@ set_property(TARGET DataHandling PROPERTY FOLDER "MantidFramework")
 target_include_directories(DataHandling PUBLIC inc ../Nexus/inc)
 target_include_directories(DataHandling SYSTEM PRIVATE ${HDF5_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
+find_library(LST_READER_LIBRARY lstdpp128)
+message(${LST_READER_LIBRARY})
 target_link_libraries(DataHandling
                       LINK_PRIVATE
                       ${MANTIDLIBS}
@@ -681,7 +685,8 @@ target_link_libraries(DataHandling
                       ${HDF5_LIBRARIES}
                       ${HDF5_HL_LIBRARIES}
                       ${JSONCPP_LIBRARIES}
-                      Catalog)
+                      Catalog
+                      ${LST_READER_LIBRARY})
 
 if(ENABLE_LIB3MF)
   target_link_libraries(DataHandling LINK_PRIVATE 

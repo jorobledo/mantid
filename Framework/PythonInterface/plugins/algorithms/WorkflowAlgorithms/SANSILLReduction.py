@@ -386,8 +386,7 @@ class SANSILLReduction(PythonAlgorithm):
             Scale(InputWorkspace=ws, Factor=self.getProperty('WaterCrossSection').value, OutputWorkspace=ws)
             self._mask(ws, reference_ws)
             self._rescale_flux(ws, reference_ws)
-        ReplaceSpecialValues(InputWorkspace=ws, OutputWorkspace=ws,
-                             NaNValue=0., NaNError=0., InfinityValue=0., InfinityError=0.)
+        MaskDetectorsIf(InputWorkspace=ws, OutputWorkspace=ws, Operator='NotFinite')
 
     def _rescale_flux(self, ws, ref_ws):
         """

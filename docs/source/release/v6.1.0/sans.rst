@@ -36,10 +36,7 @@ Improvements
 Bugfixes
 ########
 
+- Fix a bug that made it impossible to process flux in SANSILLAutoprocess.
 
 :ref:`Release 6.1.0 <v6.1.0>`
-=======
-
-
-:ref:`Release 6.1.0 <v6.1.0>`
->>>>>>> origin/26906_transmit_shapes_to_integration
+>>>>>>> master

@@ -24,11 +24,12 @@ Algorithms
 - :ref:`Stitch1DMany <algm-Stitch1DMany>` has additional property `IndexOfReference` to allow user to decide which
   of the provided ws should give reference for scaling
 - :ref:`SaveAscii <algm-SaveAscii>` can now create a header for the output file containing sample logs specified through the new property `LogList`.
-
+- Added the ability to specify the spectrum number in :ref:`FindPeaksAutomatic <algm-FindPeaksAutomatic>`.
 
 Data Objects
 ------------
 
+- exposed ``geographicalAngles`` method on :py:obj:`mantid.api.SpectrumInfo`
 - :ref:`Run <mantid.api.Run>` has been modified to allow multiple goniometers to be stored.
 - :ref:`FileFinder <mantid.api.FileFinderImpl>` has been modified to improve search times when loading multiple runs on the same instrument.
 

@@ -141,22 +141,22 @@ class FittingDataModel(object):
                run.getProtonCharge(), ws.getTitle()]
         self.write_table_row(ADS.retrieve("run_info"), row, irow)
         # add log data - loop over existing log workspaces not logs in settings as these might have changed
-        for log in self._log_names:
-            if log in self._log_values[ws_name]:
-                avg, stdev = self._log_values[ws_name][log]
-            else:
-                avg, stdev = full(2, nan)  # default unless value can be calculated
-                if log in [l.name for l in run.getLogData()]:
-                    try:
-                        avg, stdev = AverageLogData(ws_name, LogName=log, FixZero=False)
-                    except RuntimeError:
-                        # sometimes happens in old data if proton_charge log called something different
-                        logger.warning(
-                            f"Average value of log {log} could not be calculated for file {ws.name()}")
+        run_logs = [log.name for log in run.getLogData()]
+        if 'proton_charge' in run_logs:
+            for log in self._log_names:
+                if log in self._log_values[ws_name]:
+                    avg, stdev = self._log_values[ws_name][log]
                 else:
-                    logger.warning(f"File {ws.name()} does not contain log {log}")
-                self._log_values[ws_name][log] = [avg, stdev]
-            self.write_table_row(ADS.retrieve(log), [avg, stdev], irow)
+                    avg, stdev = full(2, nan)  # default unless value can be calculated
+                    if log in run_logs:
+                        avg, stdev = AverageLogData(ws_name, LogName=log, FixZero=False)
+                    else:
+                        logger.warning(f"File {ws.name()} does not contain log {log}")
+                    self._log_values[ws_name][log] = [avg, stdev]
+                self.write_table_row(ADS.retrieve(log), [avg, stdev], irow)
+        else:
+            logger.warning(f"Average value of logs could not be calculated for file {ws.name()} due to outdated "
+                           f"proton_charge log name")
         self.update_log_group_name()
 
     def remove_log_rows(self, row_numbers):

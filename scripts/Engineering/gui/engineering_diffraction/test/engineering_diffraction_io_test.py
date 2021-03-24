@@ -30,10 +30,11 @@ from Engineering.gui.engineering_diffraction.settings.settings_view import Setti
 from Engineering.gui.engineering_diffraction.settings.settings_presenter import SettingsPresenter
 
 IO_VERSION = 1
-TEST_FILE = "ENGINX_277208_focused_bank_2.nxs"
-TEST_WS = 'ENGINX_277208_focused_bank_2_TOF'
+TEST_FILE = "ENGINX_327652_bank_1.nxs"
+TEST_WS = "ENGINX_327652_bank_1_TOF"
 FIT_WS = TEST_WS + '_Workspace'
-FIT_DICT = {'properties': {'InputWorkspace': TEST_WS, 'Output': TEST_WS, 'StartX':
+BGSUB_WS = TEST_WS + '_bgsub'
+FIT_DICT = {'properties': {'InputWorkspace': BGSUB_WS, 'Output': BGSUB_WS, 'StartX':
             5731.386819290339, 'EndX': 52554.79335660165, 'Function': 'name=Gaussian,Height=0.0365604,PeakCentre=37490.'
                                                                       '4,Sigma=1284.55;name=Gaussian,Height=0.0190721,P'
                                                                       'eakCentre=21506.1,Sigma=1945.78',
@@ -50,7 +51,7 @@ SETTINGS_DICT = {
 }
 
 ENCODED_DICT = {'encoder_version': IO_VERSION, 'current_tab': 2, 'data_loaded_workspaces':
-                [TEST_WS], 'plotted_workspaces': [FIT_WS], 'fit_properties': FIT_DICT, 'plot_diff': 'True',
+                [TEST_WS], 'plotted_workspaces': [BGSUB_WS, FIT_WS], 'fit_properties': FIT_DICT, 'plot_diff': 'True',
                 'settings_dict': SETTINGS_DICT, 'background_params': {TEST_WS: [True, 70, 4000, True]}}
 
 
@@ -123,7 +124,7 @@ class EngineeringDiffractionEncoderTest(unittest.TestCase):
         test_dic = self.encoder.encode(self.mock_view)
         self.assertEqual({'encoder_version': self.io_version, 'current_tab': 0, 'data_loaded_workspaces':
                          [TEST_WS], 'plotted_workspaces': [], 'fit_properties': None, 'settings_dict':
-                         SETTINGS_DICT, 'background_params': {'ENGINX_277208_focused_bank_2_TOF': []}}, test_dic)
+                         SETTINGS_DICT, 'background_params': {TEST_WS: []}}, test_dic)
 
     def test_background_params_encode(self):
         self.presenter.fitting_presenter.data_widget.presenter.model.load_files(TEST_FILE, 'TOF')
@@ -143,7 +144,7 @@ class EngineeringDiffractionEncoderTest(unittest.TestCase):
         self.assertEqual({'encoder_version': self.io_version, 'current_tab': 0, 'data_loaded_workspaces':
                           [TEST_WS], 'plotted_workspaces': [FIT_WS], 'fit_properties': FIT_DICT, 'plot_diff':
                           'True', 'settings_dict': SETTINGS_DICT, 'background_params': {
-                                'ENGINX_277208_focused_bank_2_TOF': []}}, test_dic)
+                                TEST_WS: []}}, test_dic)
 
 
 @start_qapplication

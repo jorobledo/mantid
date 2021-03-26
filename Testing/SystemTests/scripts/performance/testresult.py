@@ -28,7 +28,7 @@ def linux_distro_description():
     try:
         lsb_descr = subprocess.check_output('lsb_release --description', shell=True,
                                             stderr=subprocess.STDOUT).decode('utf-8')
-        return lsb_descr.strip()[len('Description:')+1:].strip()
+        return lsb_descr.strip()[len('Description:') + 1:].strip()
     except subprocess.CalledProcessError as exc:
         return f'Unknown distribution: lsb_release -d failed {exc}'
 
@@ -45,18 +45,17 @@ def envAsString():
         # assume linux
         env = linux_distro_description()
     return env
-    
-    
+
+
 #########################################################################
-# A class to store the results of a test 
+# A class to store the results of a test
 #########################################################################
 class TestResult(object):
     '''
     Stores the results of each test so that they can be reported later.
     '''
-    
-    def __init__(self, 
-                 date = datetime.datetime.now(),
+    def __init__(self,
+                 date=datetime.datetime.now(),
                  name="",
                  type="system",
                  host=platform.uname()[1],
@@ -67,7 +66,7 @@ class TestResult(object):
                  runtime=0.0,
                  speed_up=0.0,
                  cpu_fraction=0.0,
-                 memory_change=0, 
+                 memory_change=0,
                  iterations=1,
                  success=False,
                  status="",
@@ -90,27 +89,23 @@ class TestResult(object):
         self.data["status"] = status
         self.data["log_contents"] = log_contents
         self.data["variables"] = variables
-        
-    
+
     def get_logarchive_filename(self):
         "Return a bare filename that will hold the archived log contents"
         s = str(self.data["date"])
         s = s.replace(" ", "_")
         s = s.replace(":", "-")
         return "%s.%s.log" % (s, self.data["name"])
-        
+
     def __getitem__(self, key):
         return self.data[key]
-    
+
     def __setitem__(self, key, value):
         self.data.__setitem__(key, value)
-            
+
     def getData(self):
         ''' Get the map storing the results   '''
         return self.data
-    
+
     def __str__(self):
         return str(self.data)
-
-
-    

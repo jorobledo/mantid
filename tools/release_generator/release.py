@@ -9,7 +9,7 @@ import os
 import sys
 
 DOCS = {
-    'index.rst':'''.. _v{version}:
+    'index.rst': '''.. _v{version}:
 
 ===========================
 Mantid {version} Release Notes
@@ -95,7 +95,7 @@ For a full list of all issues addressed during this release please see the `GitH
 
 .. _GitHub release page: https://github.com/mantidproject/mantid/releases/tag/v{version}
 ''',
-    'framework.rst':'''=================
+    'framework.rst': '''=================
 Framework Changes
 =================
 
@@ -144,7 +144,7 @@ Improvements
 Bugfixes
 ########
 ''',
-    'mantidworkbench.rst':'''========================
+    'mantidworkbench.rst': '''========================
 Mantid Workbench Changes
 ========================
 
@@ -157,12 +157,12 @@ New and Improved
 Bugfixes
 --------
 '''
-    }
+}
 
 ################################################################################
 
 TECH_DOCS = {
-    'diffraction.rst':('Diffraction Changes', '''
+    'diffraction.rst': ('Diffraction Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
@@ -176,32 +176,32 @@ Engineering Diffraction
 Single Crystal Diffraction
 --------------------------
 '''),
-    'direct_geometry.rst':('Direct Geometry Changes', '''
+    'direct_geometry.rst': ('Direct Geometry Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
 '''),
-    'indirect_geometry.rst':('Indirect Geometry Changes', '''
+    'indirect_geometry.rst': ('Indirect Geometry Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
 '''),
-    'muon.rst':('MuSR Changes', '''
+    'muon.rst': ('MuSR Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
 '''),
-    'sans.rst':('SANS Changes', '''
+    'sans.rst': ('SANS Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
 '''),
-    'reflectometry.rst':('Reflectometry Changes', '''
+    'reflectometry.rst': ('Reflectometry Changes', '''
 .. warning:: **Developers:** Sort changes under appropriate heading
     putting new features at the top of the section, followed by
     improvements, followed by bug fixes.
 ''')
-    }
+}
 
 TECH_HEAD = '''{divider}
 {technique}
@@ -243,7 +243,7 @@ def fixReleaseName(name):
     except ValueError as e:
         raise RuntimeError('expected version number form: major.minor.patch', e)
     if len(version) == 3:
-        pass # perfect
+        pass  # perfect
     elif len(version) == 2:
         name += '.0'
     elif len(version) == 1:
@@ -283,9 +283,8 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
     parser = ArgumentParser(description="Generate generic release pages")
     parser.add_argument('--release', required=True)
-    parser.add_argument('--milestone', required=False, default=None,
-                        help="Formatted with html escapes already")
-    args=parser.parse_args()
+    parser.add_argument('--milestone', required=False, default=None, help="Formatted with html escapes already")
+    args = parser.parse_args()
 
     # parse, repair, and create missing arguments
     args.release = fixReleaseName(args.release)
@@ -308,8 +307,10 @@ if __name__ == '__main__':
     release_link = '\n:ref:`Release {0} <{1}>`'.format(args.release[1:], args.release)
 
     for filename in DOCS.keys():
-        version_maj_min=args.release[1:-2]
-        contents = DOCS[filename].format(milestone=args.milestone, version=args.release[1:], version_maj_min=version_maj_min ,
+        version_maj_min = args.release[1:-2]
+        contents = DOCS[filename].format(milestone=args.milestone,
+                                         version=args.release[1:],
+                                         version_maj_min=version_maj_min,
                                          mantid_doi=MANTID_DOI.format(version_maj_min=version_maj_min))
         filename = os.path.join(release_root, filename)
         print('making', filename)
@@ -324,5 +325,5 @@ if __name__ == '__main__':
         filename = os.path.join(release_root, filename)
         print('making', filename)
         with open(filename, 'w') as handle:
-            handle.write(createTechniquePage(name, contents, [1,2,3]))
+            handle.write(createTechniquePage(name, contents, [1, 2, 3]))
             handle.write(release_link)

@@ -143,7 +143,7 @@ def cluster_qs(qs, k=None, threshold=1.5):
         if len(set(clusters)) != k:
             raise ValueError("Could not group the satellite reflections "
                              "into {} clusters. Please check that you have "
-                             "at least {} satellites.".format(k,k))
+                             "at least {} satellites.".format(k, k))
     else:
         clusters = hcluster.fclusterdata(qs, threshold, criterion="distance")
     return clusters, len(set(clusters))
@@ -209,8 +209,7 @@ def get_hkls(peaks_workspace):
     :param peaks_workspace: the peaks workspace to extract HKL values from
     :return: 2D numpy array of HKL values.
     """
-    return np.array([np.array([peak.getH(), peak.getK(), peak.getL()])
-                     for peak in peaks_workspace])
+    return np.array([np.array([peak.getH(), peak.getK(), peak.getL()]) for peak in peaks_workspace])
 
 
 def remove_noninteger(matrix):
@@ -231,7 +230,7 @@ def trunc_decimals(vec, n_decimals=2):
     :return: the vector with truncated elements
     """
     decade = 10**n_decimals
-    return np.trunc(vec*decade)/decade
+    return np.trunc(vec * decade) / decade
 
 
 def sort_vectors_by_norm(vecs):
@@ -251,7 +250,7 @@ def norm_along_axis(vecs, axis=-1):
     :param axis: the axis to compute the norm along
     :return: a ndarray with the norms along the chosen axis
     """
-    return np.sum(vecs**2, axis=axis)**(1./2)
+    return np.sum(vecs**2, axis=axis)**(1. / 2)
 
 
 def kmeans_plus_plus(points, k):
@@ -285,7 +284,7 @@ def kmeans_plus_plus(points, k):
     centroid_indices.append(centroid_index)
     centroids.append(centroid)
 
-    for i in range(k-1):
+    for i in range(k - 1):
         # choose all points that are not already centroids
         mask = np.array([x for x in indices if x not in centroid_indices])
         pts = points[mask]

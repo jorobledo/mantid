@@ -28,10 +28,10 @@ class AtomsData(collections.abc.Sequence):
         all_labels = list(atoms_data.keys())
         # Collect integer keys with corresponding string 'labels'
         # i.e. {0: 'atom_0', 1: 'atom_1', ...}
-        atom_labels_by_index = {index: label
-                                for index, label in zip(map(_get_index_if_atom, all_labels),
-                                                        all_labels)
-                                if index is not None}
+        atom_labels_by_index = {
+            index: label
+            for index, label in zip(map(_get_index_if_atom, all_labels), all_labels) if index is not None
+        }
 
         sorted_atom_keys = [atom_labels_by_index[index] for index in sorted(atom_labels_by_index)]
         n_atoms = len(sorted_atom_keys)

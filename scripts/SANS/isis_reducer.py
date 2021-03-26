@@ -321,11 +321,9 @@ class ISISReducer(Reducer):
         # so currently do not understand why it is in isis_reduction_steps
         # Also the main purpose of this class is to use it as an input argument
         # to ConvertToQ below
-        self.prep_normalize = isis_reduction_steps.CalculateNormISIS(
-            [self.norm_mon, self.transmission_calculator])
+        self.prep_normalize = isis_reduction_steps.CalculateNormISIS([self.norm_mon, self.transmission_calculator])
 
-        self.to_Q = isis_reduction_steps.ConvertToQISIS(
-            self.prep_normalize)
+        self.to_Q = isis_reduction_steps.ConvertToQISIS(self.prep_normalize)
         self._background_subtracter = isis_reduction_steps.CanSubtraction()
         self.geometry_correcter = isis_reduction_steps.SampleGeomCor()
         #        self._zero_error_flags=isis_reduction_steps.ReplaceErrors()
@@ -612,11 +610,13 @@ class ISISReducer(Reducer):
         if self.__transmission_sample:
             unfitted_transmission_workspace_name = su.get_unfitted_transmission_workspace_name(
                 self.__transmission_sample)
-            AddSampleLog(Workspace=self.output_wksp, LogName="Transmission",
+            AddSampleLog(Workspace=self.output_wksp,
+                         LogName="Transmission",
                          LogText=unfitted_transmission_workspace_name)
         if self.__transmission_can:
             unfitted_transmission_workspace_name = su.get_unfitted_transmission_workspace_name(self.__transmission_can)
-            AddSampleLog(Workspace=self.output_wksp, LogName="TransmissionCan",
+            AddSampleLog(Workspace=self.output_wksp,
+                         LogName="TransmissionCan",
                          LogText=unfitted_transmission_workspace_name)
 
         # clean these values for subsequent executions
@@ -886,8 +886,8 @@ class ISISReducer(Reducer):
         if su.are_two_files_identical(idf_path_workspace, idf_path_reducer):
             return
         else:
-            logger.notice("Updating the IDF of the Reducer. Switching from "
-                          + str(idf_path_reducer) + " to " + str(idf_path_workspace))
+            logger.notice("Updating the IDF of the Reducer. Switching from " + str(idf_path_reducer) + " to " +
+                          str(idf_path_workspace))
             idf_path = os.path.basename(idf_path_workspace)
             instrument = self._get_correct_instrument(instrument_name, idf_path)
 

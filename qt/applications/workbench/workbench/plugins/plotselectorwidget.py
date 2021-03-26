@@ -21,7 +21,6 @@ from workbench.widgets.plotselector.presenter import PlotSelectorPresenter
 
 class PlotSelector(PluginWidget):
     """Provides an algorithm selector widget for selecting algorithms to run"""
-
     def __init__(self, parent):
         super(PlotSelector, self).__init__(parent)
 
@@ -32,6 +31,7 @@ class PlotSelector(PluginWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.plot_selector_widget)
         self.setLayout(layout)
+
 
 # ----------------- Plugin API --------------------
 

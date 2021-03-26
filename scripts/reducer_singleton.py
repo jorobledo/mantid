@@ -18,7 +18,6 @@ class ReductionStep(object):
     """
         Base class for reduction steps
     """
-
     @classmethod
     def delete_workspaces(cls, workspace):
         """
@@ -81,8 +80,8 @@ class Reducer(object):
         if issubclass(configuration.__class__, BaseInstrument):
             self.instrument = configuration
         else:
-            raise RuntimeError(
-                "Reducer.set_instrument expects an %s object, found %s" % (BaseInstrument, configuration.__class__))
+            raise RuntimeError("Reducer.set_instrument expects an %s object, found %s" %
+                               (BaseInstrument, configuration.__class__))
 
     def set_data_path(self, path):
         """

@@ -45,7 +45,8 @@ class Squares(PythonAlgorithm):
         # Create standard 2D matrix-like workspace
         wspace = WorkspaceFactory.create("Workspace2D", NVectors=1, XLength=endrange, YLength=endrange)
 
-        # Setup progress reporting. start/end=fractions of whole progress to report over (nreports does not have to be exact)
+        # Setup progress reporting. start/end=fractions of whole progress to report over (nreports does not have to be
+        # exact)
         prog_reporter = Progress(self, start=0.0, end=1.0, nreports=endrange + 1)  # extra call below when summing
 
         for i in range(1, endrange + 1):

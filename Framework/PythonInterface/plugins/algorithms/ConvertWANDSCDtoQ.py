@@ -6,7 +6,8 @@
 # SPDX - License - Identifier: GPL - 3.0 +
 from mantid.api import (PythonAlgorithm, AlgorithmFactory, PropertyMode, WorkspaceProperty, Progress,
                         IMDHistoWorkspaceProperty, mtd)
-from mantid.kernel import Direction, FloatArrayProperty, FloatArrayLengthValidator, StringListValidator, FloatBoundedValidator
+from mantid.kernel import Direction, FloatArrayProperty, FloatArrayLengthValidator, StringListValidator,\
+    FloatBoundedValidator
 from mantid import logger
 import numpy as np
 
@@ -141,7 +142,8 @@ class ConvertWANDSCDtoQ(PythonAlgorithm):
             if (nd0.name != d0.name or nd0.getNBins() != d0.getNBins() or nd1.name != d1.name
                     or nd1.getNBins() != d1.getNBins() or nd2.name != d2.name):
                 issues[
-                    "NormalisationWorkspace"] = "NormalisationWorkspace dimensions are not compatible with InputWorkspace"
+                    "NormalisationWorkspace"] = "NormalisationWorkspace dimensions are not compatible with " \
+                                                "InputWorkspace"
 
         ubWS = self.getProperty("UBWorkspace").value
         if ubWS:

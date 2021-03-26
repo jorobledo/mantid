@@ -396,8 +396,9 @@ class ReflectometryILLAutoProcess(DataProcessorAlgorithm):
             for property_name in PropertyNames.PROPETIES_TO_SIZE_MATCH:
                 value = self.getProperty(property_name).value
                 if len(value) != dimensionality and len(value) != 1:
-                    issues[property_name] = 'Parameter size mismatch: must have a single value or as many as there are reflected beams:' \
-                                            ' given {0}, but there are {1} reflected beam runs'.format(len(value), dimensionality)
+                    issues[property_name] = 'Parameter size mismatch: must have a single value or as many as there ' \
+                                            'are reflected beams: given {0}, but there are {1} reflected beam runs'\
+                                            .format(len(value), dimensionality)
         if self.getProperty(PropertyNames.USE_MANUAL_SCALE_FACTORS).value:
             manual_scale_factors = self.getProperty(PropertyNames.MANUAL_SCALE_FACTORS).value
             if len(manual_scale_factors) != dimensionality - 1:

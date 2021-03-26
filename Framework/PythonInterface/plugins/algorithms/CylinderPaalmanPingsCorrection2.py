@@ -470,7 +470,8 @@ class CylinderPaalmanPingsCorrection(PythonAlgorithm):
         @param attenuation_x_section:: the absorption cross section
         @param density_type         :: 'Mass Density' or 'Number Density'
         @param density              :: Density of sample
-        @param number_density_unit  :: the unit to use ('Atoms' or 'Formula Units') if the density type is Number density
+        @param number_density_unit  :: the unit to use ('Atoms' or 'Formula Units') if the density type is Number
+        density
         @return pointer to the workspace with sample material set
                 AND
                 number density of the sample material

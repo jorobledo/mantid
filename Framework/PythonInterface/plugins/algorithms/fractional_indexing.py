@@ -125,7 +125,8 @@ def index_q_vectors(qs, tolerance=.03):
 def cluster_qs(qs, k=None, threshold=1.5):
     """Cluster q vectors into discrete groups.
 
-    Classifies each of the q vectors into a number of clusters. The number of clusters used is decided by the parameters passed:
+    Classifies each of the q vectors into a number of clusters. The number of clusters used is decided by the parameters
+     passed:
         * If the k parameter is supplied then the q vectors are grouped into k clusters using kmeans.
         * If the threshold parameter is supplied then the q vectors a split into groups based on cophenetic distance.
 

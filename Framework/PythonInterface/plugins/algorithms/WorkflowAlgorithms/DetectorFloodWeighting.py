@@ -83,10 +83,12 @@ class DetectorFloodWeighting(DataProcessorAlgorithm):
         if trans_ws:
             if not trans_ws.getNumberHistograms() == input_ws.getNumberHistograms():
                 issues[
-                    'TransmissionWorkspace'] = 'Transmission should have same number of histograms as flood input workspace'
+                    'TransmissionWorkspace'] = 'Transmission should have same number of histograms as flood input ' \
+                                               'workspace'
             if not trans_ws.blocksize() == input_ws.blocksize():
                 issues[
-                    'TransmissionWorkspace'] = 'Transmission workspace should be rebinned the same as the flood input workspace'
+                    'TransmissionWorkspace'] = 'Transmission workspace should be rebinned the same as the flood input' \
+                                               ' workspace'
 
         return issues
 

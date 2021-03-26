@@ -39,7 +39,8 @@ def diagnose(white_int, **kwargs):
           instrument_name - The name of the instrument (required for hard_masking)
           start_index    - The index to start the diag
           end_index    - The index to finish the diag
-          background_int - A workspace, run number or filepath of a sample run that has been integrated over the background region.
+          background_int - A workspace, run number or filepath of a sample run that has been integrated over the
+                          background region.
                           If a run/file is given it simply loaded and integrated across the whole range
           sample_counts - A workspace containing the total integrated counts from a sample run
           second_white - If provided an additional set of tests is performed on this.

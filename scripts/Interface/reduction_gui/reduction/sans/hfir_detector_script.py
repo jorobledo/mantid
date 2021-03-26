@@ -74,10 +74,11 @@ class Detector(BaseScriptElement):
             if len(str(self.sensitivity_dark).strip()) > 0:
                 script += "SensitivityCorrection(\"%s\", min_sensitivity=%g, "\
                           "max_sensitivity=%g, dark_current=\"%s\", use_sample_dc=%s)\n" % \
-                    (self.sensitivity_data, self.min_sensitivity, self.max_sensitivity, self.sensitivity_dark, self.use_sample_dark)
+                    (self.sensitivity_data, self.min_sensitivity, self.max_sensitivity, self.sensitivity_dark,
+                     self.use_sample_dark)
             else:
-                script += "SensitivityCorrection(\"%s\", min_sensitivity=%g, max_sensitivity=%g, use_sample_dc=%s)\n" % \
-                    (self.sensitivity_data, self.min_sensitivity, self.max_sensitivity, self.use_sample_dark)
+                script += "SensitivityCorrection(\"%s\", min_sensitivity=%g, max_sensitivity=%g, use_sample_dc=%s)\n"\
+                          % (self.sensitivity_data, self.min_sensitivity, self.max_sensitivity, self.use_sample_dark)
 
             # Beam center
             if not self.use_sample_beam_center:

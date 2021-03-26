@@ -80,7 +80,8 @@ class GroupingTabModel(object):
 
     @property
     def group_and_pair_names(self):
-        return self._groups_and_pairs.group_names + self._groups_and_pairs.pair_names + self._groups_and_pairs.diff_names
+        return self._groups_and_pairs.group_names + self._groups_and_pairs.pair_names + \
+               self._groups_and_pairs.diff_names
 
     @property
     def selected_groups(self):

@@ -15,13 +15,13 @@ from Muon.GUI.Common.test_helpers.context_setup import setup_context
 from Muon.GUI.Common.ADSHandler.muon_workspace_wrapper import MuonWorkspaceWrapper
 
 EXAMPLE_TF_ASYMMETRY_FUNCTION = '(composite=ProductFunction,NumDeriv=false;name=FlatBackground,A0=1.02709;' \
-                                '(name=FlatBackground,A0=1,ties=(A0=1);name=ExpDecayOsc,A=0.2,Lambda=0.2,Frequency=0.1,Phi=0))' \
-                                ';name=ExpDecayMuon,A=0,Lambda=-2.19698,ties=(A=0,Lambda=-2.19698)'
+                                '(name=FlatBackground,A0=1,ties=(A0=1);name=ExpDecayOsc,A=0.2,Lambda=0.2,' \
+                                'Frequency=0.1,Phi=0));name=ExpDecayMuon,A=0,Lambda=-2.19698,ties=(A=0,Lambda=-2.19698)'
 
 EXAMPLE_SINGLE_DOMAIN_FUNCTION = 'name=GausOsc,A=0.2,Sigma=0.2,Frequency=0.1,Phi=0'
 
-EXAMPLE_MULTI_DOMAIN_FUNCTION = 'composite=MultiDomainFunction,NumDeriv=true;name=GausOsc,A=0.2,Sigma=0.2,Frequency=0.1,' \
-                                'Phi=0,$domains=i;name=GausOsc,A=0.2,Sigma=0.2,' \
+EXAMPLE_MULTI_DOMAIN_FUNCTION = 'composite=MultiDomainFunction,NumDeriv=true;name=GausOsc,A=0.2,Sigma=0.2,' \
+                                'Frequency=0.1,Phi=0,$domains=i;name=GausOsc,A=0.2,Sigma=0.2,' \
                                 'Frequency=0.1,Phi=0,$domains=i;name=GausOsc,A=0.2,' \
                                 'Sigma=0.2,Frequency=0.1,Phi=0,$domains=i'
 
@@ -770,7 +770,7 @@ class FittingTabPresenterTest(unittest.TestCase):
 
         self.presenter.handle_display_workspace_changed.assert_called_once_with()
 
-    def test_that_calling_handle_function_structure_changed_with_no_fit_function_and_no_data_sets_stores_fit_function_list_correctly(
+    def test_that_calling_handle_function_structure_changed_with_no_fit_and_no_data_sets_stores_fit_list_correctly(
             self):
         self.presenter.handle_function_structure_changed()
 

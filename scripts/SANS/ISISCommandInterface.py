@@ -199,7 +199,8 @@ def SetMonitorSpectrum(specNum, interp=False):
         Specifies the spectrum number of the spectrum that will be used to
         for monitor normalisation
         @param specNum: a spectrum number (1 or greater)
-        @param interp: when rebinning the wavelength bins to match the main workspace, if use interpolation default no interpolation
+        @param interp: when rebinning the wavelength bins to match the main workspace, if use interpolation default no
+        interpolation
     """
     ReductionSingleton().set_monitor_spectrum(specNum, interp)
 
@@ -226,8 +227,10 @@ def SetFrontDetRescaleShift(scale=1.0, shift=0.0, fitScale=False, fitShift=False
         @param shift: Default to 0.0. Value to add to data
         @param fitScale: Default is False. Whether or not to try and fit this param
         @param fitShift: Default is False. Whether or not to try and fit this param
-        @param qMin: When set to None (default) then for fitting use the overlapping q region of front and rear detectors
-        @param qMax: When set to None (default) then for fitting use the overlapping q region of front and rear detectors
+        @param qMin: When set to None (default) then for fitting use the overlapping q region of front and rear
+        detectors
+        @param qMax: When set to None (default) then for fitting use the overlapping q region of front and rear
+        detectors
     """
     ReductionSingleton().instrument.getDetector('FRONT').rescaleAndShift = ReductionSingleton().instrument. \
         getDetector('FRONT')._RescaleAndShift(scale, shift, fitScale, fitShift, qMin, qMax)
@@ -267,7 +270,8 @@ def TransFit(mode, lambdamin=None, lambdamax=None, selector='BOTH'):
         over which to do the fit. These arguments are passed to the algorithm
         CalculateTransmission. If mode is set to 'Off' then the unfitted workspace is
         used and lambdamin and max have no effect
-        @param mode: can be 'Logarithmic' ('YLOG', 'LOG') 'OFF' ('CLEAR') or 'LINEAR' (STRAIGHT', LIN'), 'POLYNOMIAL2', 'POLYNOMIAL3', ...
+        @param mode: can be 'Logarithmic' ('YLOG', 'LOG') 'OFF' ('CLEAR') or 'LINEAR' (STRAIGHT', LIN'), 'POLYNOMIAL2',
+        'POLYNOMIAL3', ...
         @param lambdamin: the lowest wavelength to use in any fit
         @param lambdamax: the end of the fit range
         @param selector: define for which transmission this fit specification is valid (BOTH, SAMPLE, CAN)
@@ -432,14 +436,17 @@ def WavRangeReduction(
         @param name_suffix: append the created output workspace with this
         @param combineDet: combineDet can be one of the following:
                            'rear'                (run one reduction for the 'rear' detector data)
-                           'front'               (run one reduction for the 'front' detector data, and rescale+shift 'front' data)
+                           'front'               (run one reduction for the 'front' detector data, and rescale+shift
+                                                 'front' data)
                            'both'                (run both the above two reductions)
-                           'merged'              (run the same reductions as 'both' and additionally create a merged data workspace)
-                            None                 (run one reduction for whatever detector has been set as the current detector
+                           'merged'              (run the same reductions as 'both' and additionally create a merged
+                                                 data workspace)
+                            None                 (run one reduction for whatever detector has been set as the current
+                                                  detector
                                                   before running this method. If front apply rescale+shift)
         @param resetSetup: if true reset setup at the end
-        @param out_fit_settings: An output parameter. It is used, specially when resetSetup is True, in order to remember the
-                                 'scale and fit' of the fitting algorithm.
+        @param out_fit_settings: An output parameter. It is used, specially when resetSetup is True, in order to
+                                 remember the 'scale and fit' of the fitting algorithm.
         @return Name of one of the workspaces created
     """
     _printMessage('WavRangeReduction(' + str(wav_start) + ', ' + str(wav_end) + ', ' + str(full_trans_wav) + ')')
@@ -1066,7 +1073,8 @@ def DisplayMask(mask_worksp=None):
         it in instrument view. If no workspace is passed a copy of the
         sample workspace is used, unless no sample was loaded and then
         an empty instrument will be shown
-        @param mask_worksp: optional this named workspace will be modified and should be from the currently selected instrument
+        @param mask_worksp: optional this named workspace will be modified and should be from the currently selected
+        instrument
         @return the name of the workspace that was displayed
     """
     if not mask_worksp:
@@ -1536,9 +1544,9 @@ def AddRuns(runs,
                     string list with the same format that is used for the Rebin algorithm. This property is ignored
                     when saving as event data.
     @param isOverlay: sets if the the overlay mechanism should be used when the saveAsEvent flag is set
-    @param time_shifts: provides additional time shifts if the isOverlay flag is specified. The time shifts are specified
-                        in a string list. Either time_shifts is not used or a list with times in secomds. Note that there
-                        has to be one entry fewer than the number of workspaces to add.
+    @param time_shifts: provides additional time shifts if the isOverlay flag is specified. The time shifts are
+                        specified in a string list. Either time_shifts is not used or a list with times in seconds.
+                        Note that there has to be one entry fewer than the number of workspaces to add.
     @param defType: the file type
     @param rawTypes: the raw types
     @param lowMem: if the lowMem option should be used

@@ -22,9 +22,9 @@ class AngularAutoCorrelationsTwoAxes(PythonAlgorithm):
     def summary(self):
         return (
             "Calculates the angular auto-correlations of molecules in a simulation along two user-defined axes. "
-            "The first axis is defined by the vector connecting the average position of species two and the average position "
-            "of species one (user input). The second axis is perpendicular to axis 1 and is constructed by considering one "
-            "arbitrary atom of species 3 (user input). Timestep must be specified in femtoseconds.")
+            "The first axis is defined by the vector connecting the average position of species two and the average "
+            "position of species one (user input). The second axis is perpendicular to axis 1 and is constructed by "
+            "considering one arbitrary atom of species 3 (user input). Timestep must be specified in femtoseconds.")
 
     def PyInit(self):
         self.declareProperty(FileProperty('InputFile', '', action=FileAction.Load),
@@ -88,7 +88,8 @@ class AngularAutoCorrelationsTwoAxes(PythonAlgorithm):
         del molecules[0]
 
         # Many-to-one structures. Identify the set of atomic species present (list structure 'elements')
-        # in the simulation and repackage particles into a dictionary 'particles_to_species' with structure id number -> species
+        # in the simulation and repackage particles into a dictionary 'particles_to_species' with structure
+        # id number -> species
         atoms_to_species = {}
         species_to_atoms = {}
         elements = []

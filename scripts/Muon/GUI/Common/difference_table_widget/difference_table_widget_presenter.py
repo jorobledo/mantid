@@ -100,9 +100,11 @@ class DifferenceTablePresenter(object):
                 negative_periods = self._model._context.group_pair_context[diff.negative].periods
                 forward_period_warning = self._model.validate_periods_list(positive_periods)
                 backward_period_warning = self._model.validate_periods_list(negative_periods)
-                if forward_period_warning == RowValid.invalid_for_all_runs or backward_period_warning == RowValid.invalid_for_all_runs:
+                if forward_period_warning == RowValid.invalid_for_all_runs or\
+                        backward_period_warning == RowValid.invalid_for_all_runs:
                     display_period_warning = RowValid.invalid_for_all_runs
-                elif forward_period_warning == RowValid.valid_for_some_runs or backward_period_warning == RowValid.valid_for_some_runs:
+                elif forward_period_warning == RowValid.valid_for_some_runs or\
+                        backward_period_warning == RowValid.valid_for_some_runs:
                     display_period_warning = RowValid.valid_for_some_runs
                 else:
                     display_period_warning = RowValid.valid_for_all_runs

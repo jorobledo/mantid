@@ -575,23 +575,27 @@ def doBVGFit(box,
              sigP0Params=[0.1460775, 1.85816592, 0.26850086, -0.00725352],
              fitPenalty=None):
     """
-    doBVGFit takes a binned MDbox and returns the fit of the peak shape along the non-TOF direction.  This is done in one of two ways:
+    doBVGFit takes a binned MDbox and returns the fit of the peak shape along the non-TOF direction.  This is done in
+    one of two ways:
         1) Standard least squares fit of the 2D histogram.
-        2) Forcing a set of parameters.  Under this, parameters are tightly constrained.  The peak center may move by (dth, dph) from
-        predicted position (in units of histogram pixels) and sigma parameters can change by a factor of forceTolerance.
+        2) Forcing a set of parameters.  Under this, parameters are tightly constrained.  The peak center may move by
+        (dth, dph) from predicted position (in units of histogram pixels) and sigma parameters can change by a factor
+        of forceTolerance.
     Input:
         box: a binned 'MDbox'.
         nTheta, nPhi: integer, number of bins to use when creating 2D BVG histogram
-        zBG: Z score at which we consider events to be above BG #TODO: I think this can be removed since we pass in goodIDX?
+        zBG: Z score at which we consider events to be above BG
+        #TODO: I think this can be removed since we pass in goodIDX?
         fracBoxToHistrogram: Leave at 1.0 to histogram whole box.  Any values lower will remove the edges of box before
                 histogramming.
-        goodIDX: a numpy array of shape box.getNumEventsArray().shape.  True for voxels we will histogram (i.e. False if the
-                events in this voxel are background.)
+        goodIDX: a numpy array of shape box.getNumEventsArray().shape.  True for voxels we will histogram (i.e. False if
+                 the events in this voxel are background.)
         forceParams: set of parameters to force.  These are the same format as a row in strongPeaksParams
-        forceTolerance: the factor we allow sigX, sigY, sigP to change when forcing peaks.  Not used if forceParams is None.
-        dth, dph: The peak center may move by (dth, dph) from predicted position (in units of histogram pixels).
-        doPeakConvolution: boolean stating whether we should fit a convolved (smoothed) peak.  This is useful for filling in
-                gaps for 3He detector tube packs.
+        forceTolerance: the factor we allow sigX, sigY, sigP to change when forcing peaks.  Not used if forceParams is
+                        None. dth, dph: The peak center may move by (dth, dph) from predicted position (in units of
+                        histogram pixels).
+        doPeakConvolution: boolean stating whether we should fit a convolved (smoothed) peak.  This is useful for
+                           filling in gaps for 3He detector tube packs.
         sigX0Params: a 4 element array with input arguments for coshPeakWidthModel [A,x0,b,BG].  Will ultimately be the
                 initial guess at sigma along the scattering direction.
         sigY0: initial guess for sigma in the azimuthal direction.  Units: rad

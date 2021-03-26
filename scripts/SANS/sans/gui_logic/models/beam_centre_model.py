@@ -53,7 +53,8 @@ class BeamCentreModel(object):
 
     def find_beam_centre(self, state: AllStates):
         """
-        This is called from the GUI and runs the find beam centre algorithm given a state model and a beam_centre_model object.
+        This is called from the GUI and runs the find beam centre algorithm given a state model and a beam_centre_model
+        object.
 
         :param state: A SANS state object
         :param beam_centre_model: An instance of the BeamCentreModel class.

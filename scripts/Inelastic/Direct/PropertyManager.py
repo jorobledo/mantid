@@ -37,8 +37,8 @@ class PropertyManager(NonIDF_Properties):
         1) Properties are initiated from Instrument_Properties.xml file as defaults.
         2) Attempt to access property, not present in this file throws.
         3) Attempt to create property not present in this file throws.
-        4) A standard behavior is defined for the most of the properties (get/set appropriate value) when there is number of
-           overloaded properties, which support more complex behavior using specially written Descriptors
+        4) A standard behavior is defined for the most of the properties (get/set appropriate value) when there is
+         number of overloaded properties, which support more complex behavior using specially written Descriptors
         5) Changes to the properties are recorded and the list of changed properties is available on request
 
         ########
@@ -47,15 +47,14 @@ class PropertyManager(NonIDF_Properties):
         1) Simple properties from IDF are stored in class dictionary in the form __dict__[property name]=property value
 
         2) Complex properties from IDF are generated as instances of ReductionHelpers.ComplexProperty class and stored
-          in class dictionary in the form __dict__[_property_name] = ReductionHelpers.ComplexProperty([dependent properties list])
-          (note underscore in front of property name)
-          __getattr__ and __setattr__ are overloaded to understand such calls. The property_name itself is naturally not placed into
-          system dictionary.
+          in class dictionary in the form __dict__[_property_name] = ReductionHelpers.ComplexProperty([dependent
+           properties list]) (note underscore in front of property name) __getattr__ and __setattr__ are overloaded to
+            understand such calls. The property_name itself is naturally not placed into system dictionary.
 
         3) Descriptors with the name present in IDF do not store their values and names in __dict__
           (the name is removed during IDF parsing) but keep their information in the descriptor.
-          This is not considered a problem as only one instance of property manager is expected. If this need to be changed,
-          adding property values to the __dict__ as values of _property_name keys should be safe.
+          This is not considered a problem as only one instance of property manager is expected. If this need to be
+           changed, adding property values to the __dict__ as values of _property_name keys should be safe.
 
         4) __getattr__ (and __setattr__ ) method are overloaded to provide call to a descriptor
            before the search in the system dictionary.
@@ -221,8 +220,8 @@ class PropertyManager(NonIDF_Properties):
     #
     map_file = MapMaskFile(
         'map_file', '.map', """Mapping file for the sample run.\n
-                                   The file used to group various spectra together to obtain appropriate instrument configuration
-                                   and improve statistics.""")
+                                   The file used to group various spectra together to obtain appropriate instrument
+                                    configuration and improve statistics.""")
     #
     monovan_mapfile = MapMaskFile(
         'monovan_map_file', '.map', """Mapping file for the monovanadium integrals calculation.\n
@@ -231,7 +230,8 @@ class PropertyManager(NonIDF_Properties):
     #
     hard_mask_file = MapMaskFile(
         'hard_mask_file', '.msk', """Hard mask file.\n
-                                   The file containing list of spectra to be excluded from analysis (spectra with failing detectors)."""
+                                   The file containing list of spectra to be excluded from analysis (spectra with 
+                                   failing detectors)."""
     )
     #
     monovan_integr_range = MonovanIntegrationRange()
@@ -779,7 +779,8 @@ class PropertyManager(NonIDF_Properties):
     #
 
     def _check_monovan_par_changed(self):
-        """ method verifies, if properties necessary for monovanadium reduction have indeed been changed  from defaults """
+        """ method verifies, if properties necessary for monovanadium reduction have indeed been changed  from
+        defaults """
 
         # list of the parameters which should usually be changed by user and if not, user should be warn about it.
         momovan_properties = ['sample_mass', 'sample_rmm']
@@ -800,7 +801,8 @@ class PropertyManager(NonIDF_Properties):
         list of changed properties displayed.
       """
         if display_header:
-            # we may want to run absolute units normalization and this function has been called with monovan run or helper procedure
+            # we may want to run absolute units normalization and this function has been called with monovan run or
+            # helper procedure
             if self.monovan_run is not None:
                 # check if mono-vanadium is provided as multiple files list or just put in brackets occasionally
                 self.log("****************************************************************", 'notice')
@@ -842,7 +844,8 @@ class PropertyManager(NonIDF_Properties):
 
         save_dir = config.getString('defaultsave.directory')
         self.log("****************************************************************", log_level)
-        if self.monovan_run is not None and 'van_mass' not in changed_Keys:  # This output is Adroja request from may 2014
+        if self.monovan_run is not None and 'van_mass' not in changed_Keys:  # This output is Adroja request
+                                                                                # from may 2014
             self.log("*** Monochromatic vanadium mass used : {0} ".format(self.van_mass), log_level)
     #
         self.log("*** By default results are saved into: {0}".format(save_dir), log_level)
@@ -851,13 +854,6 @@ class PropertyManager(NonIDF_Properties):
             self.log('*** one2one map selected', log_level)
         self.log("****************************************************************", log_level)
 
-    #def help(self,keyword=None) :
-    #    """function returns help on reduction parameters.
-
-    #       if provided without arguments it returns the list of the parameters available
-    #    """
-    #    raise KeyError(' Help for this class is not yet implemented: see {0}_Parameter.xml
-    # in the file for the parameters description'.format())
 
 if __name__ == "__main__":
     pass

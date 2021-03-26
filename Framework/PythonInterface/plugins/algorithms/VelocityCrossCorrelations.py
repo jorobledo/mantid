@@ -160,7 +160,8 @@ class VelocityCrossCorrelations(PythonAlgorithm):
                 # determine the relevant position in the 'correlations' matrices
                 k = elements.index(atoms_to_species[i])
                 l = elements.index(atoms_to_species[j])
-                # Check for the order of elements (ensures upper triangular matrix form & consistent order of operations)
+                # Check for the order of elements (ensures upper triangular matrix form & consistent order of
+                # operations)
                 if k <= l:
                     correlation_temp = self.cross_correlation(velocities[i], velocities[j])
                     correlations[k, l] += correlation_temp

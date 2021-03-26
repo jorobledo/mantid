@@ -738,55 +738,6 @@ class MainWindow(QMainWindow):
 
         self._addUBPeaksDialog.show()
 
-    # def do_add_ub_peak(self):
-    #     """ Add current to ub peaks
-    #     :return:
-    #     """
-    #     # TODO//ISSUE/Future - Find out whether this method is still needed
-    #     # Add peak
-    #     status, int_list = gutil.parse_integers_editors([self.ui.lineEdit_exp,
-    #                                                      self.ui.lineEdit_scanNumber])
-    #     if status is False:
-    #         self.pop_one_button_dialog(int_list)
-    #         return
-    #     exp_no, scan_no = int_list
-    #
-    #     # Get HKL from GUI
-    #     status, float_list = gutil.parse_float_editors([self.ui.lineEdit_H,
-    #                                                     self.ui.lineEdit_K,
-    #                                                     self.ui.lineEdit_L])
-    #     if status is False:
-    #         err_msg = float_list
-    #         self.pop_one_button_dialog(err_msg)
-    #         return
-    #     h, k, l = float_list
-    #
-    #     try:
-    #         peak_info_obj = self._myControl.get_peak_info(exp_no, scan_no)
-    #     except AssertionError as ass_err:
-    #         self.pop_one_button_dialog(str(ass_err))
-    #         return
-    #
-    #     assert isinstance(peak_info_obj, r4c.PeakProcessRecord)
-    #     peak_info_obj.set_hkl(h, k, l)
-    #     self.set_ub_peak_table(peak_info_obj)
-    #
-    #     # Clear
-    #     self.ui.lineEdit_scanNumber.setText('')
-    #
-    #     self.ui.lineEdit_sampleQx.setText('')
-    #     self.ui.lineEdit_sampleQy.setText('')
-    #     self.ui.lineEdit_sampleQz.setText('')
-    #
-    #     self.ui.lineEdit_H.setText('')
-    #     self.ui.lineEdit_K.setText('')
-    #     self.ui.lineEdit_L.setText('')
-    #
-    #     # set the flag/notification where the indexing (HKL) from
-    #     self.ui.lineEdit_peaksIndexedBy.setText(IndexFromSpice)
-    #
-    #     return
-
     def do_add_k_shift_vector(self):
         """ Add a k-shift vector
         :return:
@@ -1543,12 +1494,6 @@ class MainWindow(QMainWindow):
             norm_type = 'monitor'
         else:
             norm_type = ''
-
-        # background Pt.
-        # status, num_bg_pt = gutil.parse_integers_editors(self.ui.lineEdit_numPt4Background, allow_blank=False)
-        # if not status or num_bg_pt == 0:
-        #     self.pop_one_button_dialog('Number of Pt number for background must be larger than 0: %s!' % str(num_bg_pt))
-        #     return
 
         # get the merging information: each item should be a tuple as (scan number, pt number list, merged)
         scan_number_list = list()

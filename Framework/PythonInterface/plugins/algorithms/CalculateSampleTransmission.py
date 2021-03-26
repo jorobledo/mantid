@@ -28,7 +28,8 @@ class CalculateSampleTransmission(PythonAlgorithm):
         return ["SetSampleMaterial"]
 
     def summary(self):
-        return 'Calculates the scattering & transmission for a given sample material and size over a given wavelength range.'
+        return 'Calculates the scattering & transmission for a given sample material and size over a given wavelength' \
+               ' range.'
 
     def PyInit(self):
         self.declareProperty(name='WavelengthRange',

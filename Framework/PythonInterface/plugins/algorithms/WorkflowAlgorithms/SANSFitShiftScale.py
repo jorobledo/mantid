@@ -34,7 +34,8 @@ class SANSFitShiftScale(ParallelDataProcessorAlgorithm):
         return 'SANS'
 
     def summary(self):
-        return 'Fits the high angle workspace and to the low angle bank workspace and provides the required shift and scale'
+        return 'Fits the high angle workspace and to the low angle bank workspace and provides the required shift and' \
+               ' scale'
 
     def PyInit(self):
         self.declareProperty(MatrixWorkspaceProperty('HABWorkspace',
@@ -172,8 +173,8 @@ class SANSFitShiftScale(ParallelDataProcessorAlgorithm):
                                                           fit_min=fit_min,
                                                           fit_max=fit_max)
 
-        # We need to transfer the errors from the front data to the rear data, as we are using the the front data as a model, but
-        # we want to take into account the errors of both workspaces.
+        # We need to transfer the errors from the front data to the rear data, as we are using the the front data as a
+        # model, but we want to take into account the errors of both workspaces.
         error_correction = ErrorTransferFromModelToData()
         front_data_corrected, rear_data_corrected = error_correction.get_error_corrected(rear_data=q_low_angle,
                                                                                          front_data=q_high_angle,

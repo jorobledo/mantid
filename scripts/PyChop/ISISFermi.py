@@ -416,7 +416,8 @@ class ISISFermi:
         van = getResolution(etrans, ei, omega)
 
         Inputs:
-            etrans - list of numpy array of energy transfers to calculate for (meV) [default: linspace(0.05Ei, 0.95Ei, 19)]
+            etrans - list of numpy array of energy transfers to calculate for (meV) [default: linspace(0.05Ei, 0.95Ei,
+                    19)]
             ei - incident energy in meV [default: preset energy]
             omega - chopper frequency in Hz  [default: preset frequency]
 

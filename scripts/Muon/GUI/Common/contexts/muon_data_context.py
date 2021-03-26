@@ -129,8 +129,8 @@ class MuonDataContext(object):
     def update_current_data(self):
         # Update the current data; resetting the groups and pairs to their default values
 
-        if self.current_data['MainFieldDirection'] and self.current_data['MainFieldDirection'] != self._main_field_direction\
-                and self._main_field_direction:
+        if self.current_data['MainFieldDirection'] and self.current_data['MainFieldDirection'] \
+                != self._main_field_direction and self._main_field_direction:
             self.message_notifier.notify_subscribers('MainFieldDirection has changed between'
                                                      ' data sets, click default to reset grouping if required')
         self._main_field_direction = self.current_data['MainFieldDirection']

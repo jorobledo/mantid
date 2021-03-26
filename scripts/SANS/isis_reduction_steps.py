@@ -394,7 +394,8 @@ class LoadRun(object):
     def _extract_run_details(self, run_string):
         """
             Takes a run number and file type and generates the filename, workspace name and log name
-            @param run_string: either the name of a run file or a run number followed by a dot and then the file type, i.e. file extension
+            @param run_string: either the name of a run file or a run number followed by a dot and then the file type,
+             i.e. file extension
         """
         listOfFiles = FileFinder.findRuns(run_string)
         firstFile = listOfFiles[0]
@@ -466,7 +467,8 @@ class LoadTransmissions(object):
             can and if the workspaces should be reloaded if they already
             exist
             @param is_can: if this is to correct the can (default false i.e. it's for the sample)
-            @param reload: setting this to false will mean the workspaces aren't reloaded if they already exist (default True i.e. reload)
+            @param reload: setting this to false will mean the workspaces aren't reloaded if they already exist
+            (default True i.e. reload)
         """
         self.trans = None
         self.direct = None
@@ -840,9 +842,11 @@ class Mask_ISIS(ReductionStep):
     def _ConvertToSpecList(self, maskstring, detector):
         '''
             Convert a mask string to a spectra list
-            6/8/9 RKH attempt to add a box mask e.g.  h12+v34 (= one pixel at intersection), h10>h12+v101>v123 (=block 3 wide, 23 tall)
+            6/8/9 RKH attempt to add a box mask e.g.  h12+v34 (= one pixel at intersection), h10>h12+v101>v123 (=block
+            3 wide, 23 tall)
 
-            @param maskstring Is a comma separated list of mask commands for masking spectra using the e.g. the h, s and v commands
+            @param maskstring Is a comma separated list of mask commands for masking spectra using the e.g. the h, s
+            and v commands
         '''
         # Compile spectra ID list
         if maskstring == '':
@@ -944,16 +948,20 @@ class Mask_ISIS(ReductionStep):
             self._lim_phi_xml += self._infinite_plane(id + '_plane3', centre,
                                                       [math.cos(-phimax + math.pi / 2.0),
                                                        math.sin(-phimax + math.pi / 2.0), 0]) \
-                                 + self._infinite_plane(id + '_plane4', centre, [-math.cos(-phimin + math.pi / 2.0),
-                                                                                 -math.sin(-phimin + math.pi / 2.0), 0]) \
-                                 + '<algebra val="#((' + id + '_plane1 ' + id + '_plane2):(' + id + '_plane3 ' + id + '_plane4))" />'
+                                 + self._infinite_plane(id + '_plane4', centre,
+                                                        [-math.cos(-phimin + math.pi / 2.0),
+                                                        -math.sin(-phimin + math.pi / 2.0), 0]) \
+                                 + '<algebra val="#((' + id + '_plane1 ' + id + '_plane2):(' + id + '_plane3 ' + id +\
+                                 '_plane4))" />'
         else:
             # the formula is different for acute verses obtuse angles
             if phimax - phimin > math.pi:
-                # to get an obtruse angle, a wedge that's more than half the area, we need to add the semi-inifinite volumes
+                # to get an obtruse angle, a wedge that's more than half the area, we need to add the semi-inifinite
+                # volumes
                 self._lim_phi_xml += '<algebra val="#(' + id + '_plane1:' + id + '_plane2)" />'
             else:
-                # an acute angle, wedge is more less half the area, we need to use the intesection of those semi-inifinite volumes
+                # an acute angle, wedge is more less half the area, we need to use the intesection of those
+                # semi-inifinite volumes
                 self._lim_phi_xml += '<algebra val="#(' + id + '_plane1 ' + id + '_plane2)" />'
 
     def _mask_line(self, startPoint, length, width, angle):
@@ -1858,7 +1866,8 @@ class CropDetBank(ReductionStep):
         # Get the detector bank that is to be used in this analysis leave the complete workspace
         reducer.instrument.cur_detector().crop_to_detector(in_wksp, workspace)
 
-        # If the workspace requires dark run subtraction for the detectors and monitors, then this will be performed here.
+        # If the workspace requires dark run subtraction for the detectors and monitors, then this will be performed
+        # here.
         if reducer.dark_run_subtraction.has_dark_runs():
             # Get the spectrum index range for spectra which are part of the current detector
             start_spec_num = reducer.instrument.cur_detector().get_first_spec_num()
@@ -1942,7 +1951,8 @@ class NormalizeToMonitor(ReductionStep):
                                     EndX=TOF_end,
                                     Mode='Mean')
 
-        # perform the same conversion on the monitor spectrum as was applied to the workspace but with a possibly different rebin
+        # perform the same conversion on the monitor spectrum as was applied to the workspace but with a possibly
+        # different rebin
         if reducer.instrument.is_interpolating_norm():
             r_alg = 'InterpolatingRebin'
         else:
@@ -2633,7 +2643,8 @@ class ConvertToQISIS(ReductionStep):
         self._use_gravity = self._DEFAULT_GRAV
         # used to implement a default setting for gravity that can be over written but doesn't over write
         self._grav_set = False
-        # can be used to add an additional length to the neutron path during the correction for gravity in the Q calcuation
+        # can be used to add an additional length to the neutron path during the correction for gravity in the Q
+        # calcuation
         self._grav_extra_length = self._DEFAULT_EXTRA_LENGTH
         # used to implement a default setting for extra length for gravity; seee _grav_set
         self._grav_extra_length_set = False
@@ -2736,8 +2747,9 @@ class ConvertToQISIS(ReductionStep):
 
         # Create the QResolution workspace, but only if it A) is requested by the user and does not exist
         #                                                  B) is requested by the user, exists, but does not
-        #                                                     have the correct binning --> This is currently not implemented,
-        #                                                     but should be addressed in an optimization step
+        #                                                     have the correct binning --> This is currently not
+        #                                                     implemented, but should be addressed in an optimization
+        #                                                     step
         qResolution = self._get_q_resolution_workspace(det_bank_workspace=workspace)
 
         # Debug output
@@ -2984,7 +2996,8 @@ class ConvertToQISIS(ReductionStep):
             _dummy_file_path, _dummy_suggested_name = getFileAndName(self._q_resolution_moderator_file_name)
         except:
             raise RuntimeError(
-                "The specified moderator file is not valid. Please make sure that that it exists in your search directory."
+                "The specified moderator file is not valid. Please make sure that that it exists in your search "
+                "directory."
             )
 
         # If A1 is set, then A2 should be set and vice versa
@@ -3611,7 +3624,8 @@ class UserFile(ReductionStep):
                                 = filepath
                         except AttributeError:
                             raise AttributeError(
-                                'Detector HAB does not exist for the current instrument, set the instrument to LOQ first'
+                                'Detector HAB does not exist for the current instrument, set the instrument to LOQ '
+                                'first'
                             )
                     elif parts[0].upper() == 'FLAT':
                         reducer.prep_normalize.setPixelCorrFile(filepath, 'REAR')
@@ -3815,7 +3829,8 @@ class UserFile(ReductionStep):
             reducer.inst.set_TOFs(int(times[0]), int(times[1]))
         else:
             reducer.inst.set_TOFs(None, None)
-            return 'Only monitor specific backgrounds will be applied, no default is set due to incorrectly formatted background line:'
+            return 'Only monitor specific backgrounds will be applied, no default is set due to incorrectly' \
+                   ' formatted background line:'
 
     def _read_back_trans_roi(self, arguments, reducer):
         """
@@ -3929,7 +3944,8 @@ class UserFile(ReductionStep):
                 reducer.to_Q.set_q_resolution_moderator(file_name=arguments[1])
             except:
                 sanslog.error(
-                    "The specified moderator file could not be found. Please specify a file which exists in the search directories."
+                    "The specified moderator file could not be found. Please specify a file which exists in the search"
+                    " directories."
                 )
             return
 

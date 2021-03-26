@@ -46,7 +46,8 @@ class PolDiffILLReduction(PythonAlgorithm):
 
         if process == 'Quartz' and self.getProperty('TransmissionInputWorkspace').isDefault:
             issues[
-                'TransmissionInputWorkspace'] = 'Quartz transmission is mandatory for polarisation correction calculation.'
+                'TransmissionInputWorkspace'] = 'Quartz transmission is mandatory for polarisation correction ' \
+                                                'calculation.'
 
         if process == 'Sample' or process == 'Vanadium':
             if len(self.getProperty('SampleAndEnvironmentProperties').value) == 0:

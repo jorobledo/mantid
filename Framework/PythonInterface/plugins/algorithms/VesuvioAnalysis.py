@@ -101,7 +101,8 @@ class VesuvioAnalysis(PythonAlgorithm):
             "TransmissionGuess",
             0.9174,
             doc="A number from 0 to 1 to represent the experimental transmission value of the sample for epithermal"
-            " neutrons. This value is used for the multiple scattering corrections. If 1, the multiple scattering correction is not run.",
+            " neutrons. This value is used for the multiple scattering corrections. If 1, the multiple scattering "
+            "correction is not run.",
             validator=FloatBoundedValidator(0, 1))
         self.declareProperty("MultipleScatteringOrder",
                              2,
@@ -209,7 +210,8 @@ class VesuvioAnalysis(PythonAlgorithm):
         if not resonance_function:
             subtract_resonances = False
 
-        fit_hydrogen_in_Y_space = True  # If True, corrected time-of-flight spectra containing H only are transformed to Y-space and fitted.
+        fit_hydrogen_in_Y_space = True  # If True, corrected time-of-flight spectra containing H only are transformed
+        # to Y-space and fitted.
 
         y_fit_ties = self.getProperty("YSpaceFitFunctionTies").value
         if not y_fit_ties:

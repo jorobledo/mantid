@@ -131,14 +131,15 @@ def output_header(external_mode, used_wl_range, ws_sample, sample_thickness, sam
     header.append(wl_row)
 
     if (external_mode):
-        choppers = 'Double choppers pair: ' + str(int(ws_sample.run().getProperty("master1_chopper_id").value)) + ' and ' \
-                                            + str(int(ws_sample.run().getProperty("master2_chopper_id").value))
+        choppers = 'Double choppers pair: ' + str(int(ws_sample.run().getProperty("master1_chopper_id").value)) + \
+                   ' and '  + str(int(ws_sample.run().getProperty("master2_chopper_id").value))
         header.append(choppers)
         frequency = 'Data defining pulse frequency (equal or slower than the Double pair frequency): ' \
                     + str(format(1e6/float(ws_sample.run().getProperty("period").value), '.2f')) + ' Hz'
         header.append(frequency)
-        wavelength_range = 'Wavelength range used for the data reduction: ' + str(format(float(used_wl_range[0]), '.2f')) + ' to ' \
-                                                                            + str(format(float(used_wl_range[2]), '.2f')) + ' Angstrom'
+        wavelength_range = 'Wavelength range used for the data reduction: '\
+                           + str(format(float(used_wl_range[0]), '.2f')) + ' to ' \
+                           + str(format(float(used_wl_range[2]), '.2f')) + ' Angstrom'
         header.append(wavelength_range)
         resolution_value = float(used_wl_range[1])
         if resolution_value < 0:
@@ -247,7 +248,8 @@ def attenuation_correction(att_pos, data_before_May_2016):
         print("You stated data have been collected before May, 2016, i.e. using old attenuators. Please double check.")
         if (att_pos == 2.0 or att_pos == 4.0):
             print(
-                "Wrong attenuators value; Either data have been collected after May, 2016, or something is wrong with hdf file"
+                "Wrong attenuators value; Either data have been collected after May, 2016, or something is wrong with"
+                " hdf file"
             )
             sys.exit()
         scale = attenuation_correction_pre_2016[att_pos]
@@ -303,9 +305,9 @@ def wavelengh_slices(wavelength_intervals, binning_wavelength_ini, wav_delta):
 
 
 def correction_tubes_shift(ws_to_correct, path_to_shifts_file):
-    """ This function moves each tube and then rear panels as a whole as per numbers recorded in the path_to_shifts_file csv file.
-          The values in the file are obtained from fitting of a few data sets collected using different masks.
-          It is a very good idea do not change the file. """
+    """ This function moves each tube and then rear panels as a whole as per numbers recorded in the path_to_shifts_file
+     csv file. The values in the file are obtained from fitting of a few data sets collected using different masks.
+     It is a very good idea do not change the file. """
 
     shifts = []
     shifts = read_csv(path_to_shifts_file)

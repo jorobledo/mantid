@@ -161,8 +161,7 @@ class FittingTabModel(object):
         return function_object, output_status, output_chi_squared
 
     def do_single_fit(self, parameter_dict):
-        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = \
-            self.do_single_fit_and_return_workspace_parameters_and_fit_function(parameter_dict)
+        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = self.do_single_fit_and_return_workspace_parameters_and_fit_function(parameter_dict)
 
         self._handle_single_fit_results(parameter_dict['InputWorkspace'], function_object, fitting_parameters_table,
                                         output_workspace, covariance_matrix)
@@ -171,8 +170,7 @@ class FittingTabModel(object):
 
     def do_single_tf_fit(self, parameter_dict):
         alg = mantid.AlgorithmManager.create("CalculateMuonAsymmetry")
-        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = \
-            run_CalculateMuonAsymmetry(parameter_dict, alg)
+        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = run_CalculateMuonAsymmetry(parameter_dict, alg)
         CopyLogs(InputWorkspace=parameter_dict['ReNormalizedWorkspaceList'],
                  OutputWorkspace=output_workspace,
                  StoreInADS=False)
@@ -216,8 +214,7 @@ class FittingTabModel(object):
         self.add_fit_to_context(wrapped_parameter_workspace, fit_function, input_workspace, [workspace_name])
 
     def do_simultaneous_fit(self, parameter_dict, global_parameters):
-        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = \
-            self.do_simultaneous_fit_and_return_workspace_parameters_and_fit_function(parameter_dict)
+        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = self.do_simultaneous_fit_and_return_workspace_parameters_and_fit_function(parameter_dict)
         self._handle_simultaneous_fit_results(parameter_dict['InputWorkspace'], function_object,
                                               fitting_parameters_table, output_workspace, global_parameters,
                                               covariance_matrix)
@@ -244,8 +241,7 @@ class FittingTabModel(object):
 
     def do_simultaneous_tf_fit(self, parameter_dict, global_parameters):
         alg = mantid.AlgorithmManager.create("CalculateMuonAsymmetry")
-        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = \
-            run_CalculateMuonAsymmetry(parameter_dict, alg)
+        output_workspace, fitting_parameters_table, function_object, output_status, output_chi_squared, covariance_matrix = run_CalculateMuonAsymmetry(parameter_dict, alg)
         if len(parameter_dict['ReNormalizedWorkspaceList']) > 1:
             for input_workspace, output in zip(parameter_dict['ReNormalizedWorkspaceList'],
                                                mantid.api.AnalysisDataService.retrieve(output_workspace).getNames()):

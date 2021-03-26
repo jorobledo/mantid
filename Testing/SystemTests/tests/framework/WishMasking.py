@@ -6,7 +6,8 @@
 # SPDX - License - Identifier: GPL - 3.0 +
 #pylint: disable=no-init,invalid-name
 """
-Tests masking functionality specific to WISH. Working masking behaviour is critical in general, but is heavily used on WISH.
+Tests masking functionality specific to WISH. Working masking behaviour is critical in general, but is heavily used on
+ WISH.
 - Email Pascal Manuel @ ISIS if things break here and let him know how his scripts may need to be modified.
 """
 
@@ -36,7 +37,8 @@ class WishMasking(systemtesting.MantidSystemTest):
     # Tests that the cal file is being created in the expected way.
     # 1) Uses the masks to create a cal file
     # 2) Read the cal file
-    # 3) Use the known masking boundaries to determine whether the cal file has been created propertly according to the function inputs.
+    # 3) Use the known masking boundaries to determine whether the cal file has been created propertly according to the
+    # function inputs.
     #pylint: disable=too-many-arguments
     def do_test_cal_file(self, masked_workspace, should_invert, expected_masking_identifier,
                          expected_not_masking_identifier, masking_edge):
@@ -76,10 +78,12 @@ class WishMasking(systemtesting.MantidSystemTest):
         ExtractMask(InputWorkspace=ws, OutputWorkspace='masking_wish_workspace')
         mask_ws = mtd['masking_wish_workspace']
 
-        ## COMPLETE TESTS: These following are the tests that should pass when everything works. See below for reasons why.
+        ## COMPLETE TESTS: These following are the tests that should pass when everything works. See below for reasons
+        # why.
 
         # Test the 'isMasked' property on the detectors of the masked workspace
-        # The following tests have been added even though they are broken because extracted workspaces currently do not preserve the
+        # The following tests have been added even though they are broken because extracted workspaces currently do not
+        # preserve the
         # Masking flags (buty they SHOULD!). Hopefully the broken functionality will be fixed and I can enable them.
         #self.assertTrue( mask_ws.spectrumInfo().isMasked(masking_edge) )
         #self.assertTrue( not mask_ws.spectrumInfo().isMasked(masking_edge + 1) )

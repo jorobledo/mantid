@@ -149,7 +149,8 @@ class ReflectometryILLSumForeground(DataProcessorAlgorithm):
             if directWS.getNumberHistograms() != 1:
                 issues[
                     Prop.
-                    DIRECT_FOREGROUND_WS] = 'The workspace should have only a single histogram. Was foreground summation forgotten?'
+                    DIRECT_FOREGROUND_WS] = 'The workspace should have only a single histogram. Was foreground ' \
+                                            'summation forgotten?'
             if self.getProperty(Prop.DIRECT_WS).isDefault:
                 issues[Prop.DIRECT_WS] = 'The direct beam workspace is needed for processing the reflected workspace.'
         wRange = self.getProperty(Prop.WAVELENGTH_RANGE).value
@@ -293,14 +294,14 @@ class ReflectometryILLSumForeground(DataProcessorAlgorithm):
         """
         This needs to be called after having summed the foreground but before transfering to momentum transfer.
         This needs to be called in both coherent and incoherent cases, regardless the angle calibration option.
-        The reason for this is that up to this point is the fractional workspace index that correponds to the calibrated 2theta.
-        However the momentum transfer calculation, which normally comes after summing the foreground,
+        The reason for this is that up to this point is the fractional workspace index that correponds to the calibrated
+        2theta. However the momentum transfer calculation, which normally comes after summing the foreground,
         takes the 2theta from the spectrumInfo of the summed foreground workspace.
         Hence this code below translated the detector by the difference of the
         fractional and integer foreground centre along the detector plane.
         It also applies local rotation so that the detector continues to face the sample.
-        Note that this translation has nothing to do with the difference of foreground centres in direct and reflected beams,
-        which is handled already in pre-process algorithm.
+        Note that this translation has nothing to do with the difference of foreground centres in direct and reflected
+        beams, which is handled already in pre-process algorithm.
         Here it's only about the difference of the fractional and integer foreground centre of the reflected beam
         with already calibrated angle no matter the option.
         Note also, that this could probably be avoided, if the loader placed

@@ -1250,8 +1250,10 @@ class SaveFormat(PropDescriptor):
         return self._save_format
 
     def __set__(self, instance, value):
-        """ user can clear save formats by setting save_format=None or save_format = [] or save_format=''
-            if empty string or empty list is provided as part of the list, all save_format-s set up earlier are cleared"""
+        """
+         user can clear save formats by setting save_format=None or save_format = [] or save_format=''
+         if empty string or empty list is provided as part of the list, all save_format-s set up earlier are cleared
+        """
 
         # clear format by using None
         if value is None:

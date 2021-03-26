@@ -11,13 +11,15 @@
 # M. Gigg - Based on Steve King's example
 
 #
-# For batch-reduction of LOQ or SANS2D runs in Mantid using a SINGLE set of instrument parameters (Q, wavelength, radius, etc)
+# For batch-reduction of LOQ or SANS2D runs in Mantid using a SINGLE set of instrument parameters (Q, wavelength,
+# radius, etc)
 #
 # Reads multi-line input from file of the form:
 # sample_sans   54431   sample_trans    54435   direct_beam 54433   can_sans    54432   can_trans  --> continued below
 # 54434   direct_beam 54433   background_sans     background_trans        direct_beam     output_as   script54435.txt
 #
-# Assumes the following have already been set by either the SANS GUI or directly from python using the AssignSample, LimitsR etc commands
+# Assumes the following have already been set by either the SANS GUI or directly from python using the AssignSample,
+# LimitsR etc commands
 # instrument
 # data directory
 # data format
@@ -185,8 +187,10 @@ def BatchReduce(
     """
         @param filename: the CSV file with the list of runs to analyse
         @param format: type of file to load, nxs for Nexus, etc.
-        @param plotresults: if true and this function is run from Mantidplot a graph will be created for the results of each reduction
-        @param saveAlgs: this named algorithm will be passed the name of the results workspace and filename (default = 'SaveRKH').
+        @param plotresults: if true and this function is run from Mantidplot a graph will be created for the results of
+         each reduction
+        @param saveAlgs: this named algorithm will be passed the name of the results workspace and filename
+        (default = 'SaveRKH').
             Pass a tuple of strings to save to multiple file formats
         @param verbose: set to true to write more information to the log (default=False)
         @param centreit: do centre finding (default=False)
@@ -291,11 +295,13 @@ def BatchReduce(
             reduced = WavRangeReduction(combineDet=combineDet, out_fit_settings=scale_shift)
 
         except SkipEntry as reason:
-            #this means that a load step failed, the warning and the fact that the results aren't there is enough for the user
+            #this means that a load step failed, the warning and the fact that the results aren't there is enough for
+            # the user
             issueWarning(str(reason) + ', skipping entry')
             continue
         except SkipReduction as reason:
-            #this means that a load step failed, the warning and the fact that the results aren't there is enough for the user
+            #this means that a load step failed, the warning and the fact that the results aren't there is enough for
+            # the user
             issueWarning(str(reason) + ', skipping reduction')
             continue
         except ValueError as reason:
@@ -370,7 +376,8 @@ def BatchReduce(
 
             for algor in list(saveAlgs.keys()):
                 for workspace_name in save_names:
-                    #add the file extension, important when saving different types of file so they don't over-write each other
+                    #add the file extension, important when saving different types of file so they don't over-write
+                    # each other
                     ext = saveAlgs[algor]
                     if not ext.startswith('.'):
                         ext = '.' + ext

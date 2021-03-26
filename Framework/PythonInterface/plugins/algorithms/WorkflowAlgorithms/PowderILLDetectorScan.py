@@ -6,7 +6,8 @@
 # SPDX - License - Identifier: GPL - 3.0 +
 from mantid.kernel import CompositeValidator, Direction, FloatArrayLengthValidator, FloatArrayOrderedPairsValidator, \
     FloatArrayProperty, StringListValidator, IntBoundedValidator
-from mantid.api import DataProcessorAlgorithm, MultipleFileProperty, Progress, WorkspaceGroupProperty, FileProperty, FileAction
+from mantid.api import DataProcessorAlgorithm, MultipleFileProperty, Progress, WorkspaceGroupProperty, FileProperty, \
+    FileAction
 from mantid.simpleapi import *
 
 

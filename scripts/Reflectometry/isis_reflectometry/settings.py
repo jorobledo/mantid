@@ -37,7 +37,8 @@ class Settings(object):
         if extension.lower().strip() != ".xml":
             raise ValueError("Wrong file extension. *.xml expected not %s." % extension)
         if not os.path.isfile(filename):
-            ''' Deliberately swallow and re-throw at this point. Consise reinterpreted error, will be much nicer for client code.'''
+            ''' Deliberately swallow and re-throw at this point. Consise reinterpreted error, will be much nicer for
+             client code.'''
             raise MissingSettings("Settings file %s does not exist so no manual settings will be applied." % filename)
 
     def __extract_to_dictionary(self, doc):

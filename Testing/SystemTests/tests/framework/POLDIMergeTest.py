@@ -58,7 +58,8 @@ class POLDIMergeTest(systemtesting.MantidSystemTest):
 
     def analyseResults(self, outputWorkspaceName):
         for i in range(mtd[outputWorkspaceName + '_reference'].getNumberHistograms()):
-            # reference spectrum is still in the "original order", so for one of the workspaces, the index has to be reversed.
+            # reference spectrum is still in the "original order", so for one of the workspaces, the index has to be
+            # reversed.
             self.assertTrue(
                 np.array_equal(mtd[outputWorkspaceName].dataY(i),
                                mtd[outputWorkspaceName + '_reference'].dataY(399 - i)))

@@ -11,7 +11,8 @@ from mantid.simpleapi import (LoadIsawUB, MaskDetectors, ConvertUnits, CropWorks
                               CreateSingleValuedWorkspace, LoadNexus, MultiplyMD, LoadIsawDetCal, LoadMask,
                               CopyInstrumentParameters, ApplyCalibration, CopySample, RecalculateTrajectoriesExtents,
                               CropWorkspaceForMDNorm)
-from mantid.kernel import VisibleWhenProperty, PropertyCriterion, FloatArrayLengthValidator, FloatArrayProperty, Direction, Property
+from mantid.kernel import VisibleWhenProperty, PropertyCriterion, FloatArrayLengthValidator, FloatArrayProperty, \
+    Direction, Property
 from mantid import logger
 import numpy as np
 

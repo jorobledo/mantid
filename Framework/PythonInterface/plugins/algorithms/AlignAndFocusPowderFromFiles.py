@@ -8,8 +8,8 @@ from mantid.api import mtd, AlgorithmFactory, DistributedDataProcessorAlgorithm,
     MatrixWorkspaceProperty, MultipleFileProperty, PropertyMode
 from mantid.kernel import Direction, PropertyManagerDataService
 from mantid.simpleapi import AlignAndFocusPowder, CompressEvents, ConvertDiffCal, ConvertUnits, CopyLogs, \
-    CopySample, CreateCacheFilename, DeleteWorkspace, DetermineChunking, Divide, EditInstrumentGeometry, FilterBadPulses, \
-    LoadDiffCal, Load, LoadIDFFromNexus, LoadNexusProcessed, PDDetermineCharacterizations, Plus, \
+    CopySample, CreateCacheFilename, DeleteWorkspace, DetermineChunking, Divide, EditInstrumentGeometry, \
+    FilterBadPulses, LoadDiffCal, Load, LoadIDFFromNexus, LoadNexusProcessed, PDDetermineCharacterizations, Plus, \
     RebinToWorkspace, RemoveLogs, RenameWorkspace, SaveNexusProcessed
 import os
 import numpy as np
@@ -370,7 +370,8 @@ class AlignAndFocusPowderFromFiles(DistributedDataProcessorAlgorithm):
                 self.__loaderName = loader.getPropertyValue('LoaderName')
             # only LoadEventNexus can turn off loading logs, but FilterBadPulses
             # requires them to be loaded from the file
-            canSkipLoadingLogs = self.__loaderName == 'LoadEventNexus' and self.filterBadPulses <= 0. and haveAccumulationForFile
+            canSkipLoadingLogs = self.__loaderName == 'LoadEventNexus' and self.filterBadPulses <= 0. and \
+                                 haveAccumulationForFile
 
             if determineCharacterizations and j == 0:
                 self.__determineCharacterizations(filename, chunkname)  # updates instance variable

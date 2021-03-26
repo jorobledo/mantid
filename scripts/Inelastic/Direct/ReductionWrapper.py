@@ -424,7 +424,8 @@ class ReductionWrapper(object):
 
     @abstractmethod
     def def_advanced_properties(self):
-        """ Define properties which considered to be advanced but still changeable by instrument scientist or advanced user
+        """ Define properties which considered to be advanced but still changeable by instrument scientist or advanced
+            user
 
             Should be overwritten by special reduction and decorated with  @AdvancedProperties decorator.
 
@@ -509,7 +510,8 @@ class ReductionWrapper(object):
             # all our working systems. Inform user about the problem
             self.reducer.prop_man.log \
                 (
-                    '*** Can not verify if file is accessible. Install h5py to be able to check file access in waiting mode',
+                    '*** Can not verify if file is accessible. Install h5py to be able to check file access in waiting '
+                    'mode',
                     'notice')
             return
         ic = 0

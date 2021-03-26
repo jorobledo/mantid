@@ -30,7 +30,8 @@ class TubeCalibFitParams(object):
         :param peaks: expected positions of the peaks in pixels
         :param height: expect height of peaks
         :param width: expected width (sigma for Gaussian fitting) of peaks
-        :param threePointMethod: True if three point method is used (first and last peaks are the extreme ends of very wide peaks).
+        :param threePointMethod: True if three point method is used (first and last peaks are the extreme ends of very
+        wide peaks).
         :param margin: defines the region around the peak that will be considered for fitting
 
         This class has also an attribute, called automatic, accessed through

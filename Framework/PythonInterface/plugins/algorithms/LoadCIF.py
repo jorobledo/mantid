@@ -177,7 +177,8 @@ class AtomListBuilder(object):
         try:
             return cifData['_atom_site_label']
         except KeyError:
-            # If there are no atomic coordinates specified, there is really no point in continuing with replacement labels.
+            # If there are no atomic coordinates specified, there is really no point in continuing with replacement
+            # labels.
             if '_atom_site_fract_x' not in cifData.keys():
                 raise RuntimeError(
                     'Too much information missing from CIF-file. Does it contain a loop_ that defines atoms?')
@@ -214,7 +215,8 @@ class AtomListBuilder(object):
             raise RuntimeError('Cannot determine atom types, both _atom_site_type_symbol and _atom_site_label are '
                                'missing.')
 
-        # Return a dict like { 'label1': 'Element1', ... } extracted from either _atom_site_type_symbol or _atom_site_label
+        # Return a dict like { 'label1': 'Element1', ... } extracted from either _atom_site_type_symbol or
+        # _atom_site_label
         return dict([(label, self._getCleanAtomSymbol(x)) for label, x in zip(labels, rawAtomSymbols[0])])
 
     def _getCleanAtomSymbol(self, atomSymbol):
@@ -359,7 +361,8 @@ class LoadCIF(PythonAlgorithm):
         return "LoadCIF"
 
     def summary(self):
-        return "This algorithm loads a CIF file using the PyCifRW package and assigns a CrystalStructure to the sample of the workspace."
+        return "This algorithm loads a CIF file using the PyCifRW package and assigns a CrystalStructure to the" \
+               "sample of the workspace."
 
     def PyInit(self):
         self.declareProperty(WorkspaceProperty(name='Workspace', defaultValue='', direction=Direction.InOut),

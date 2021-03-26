@@ -74,7 +74,8 @@ def CalibrateWish(RunNumber, PanelNumber):
     # == Save workspace ==
     # uncomment these lines to save the workspace
     # nexusName = "TubeCalibDemoWish" + PanelNumber + "Result.nxs"
-    # mantid.SaveNexusProcessed(CalibInstWS, 'TubeCalibDemoWishResult.nxs', "Result of Running TubeCalibWishMerlin_Simple.py")
+    # mantid.SaveNexusProcessed(CalibInstWS, 'TubeCalibDemoWishResult.nxs', "Result of Running
+    # TubeCalibWishMerlin_Simple.py")
     # print("saved calibrated workspace (CalibInstWS) into Nexus file", nexusName)
 
     # == Reset default instrument ==

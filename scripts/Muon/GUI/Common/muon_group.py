@@ -145,8 +145,8 @@ class MuonGroup(object):
 
         for run in runs:
             run_object = MuonRun(run)
-            if run_object in self._asymmetry_estimate_rebin and self._asymmetry_estimate_rebin[run_object].workspace_name \
-                    and not self._asymmetry_estimate_rebin[run_object].is_hidden:
+            if run_object in self._asymmetry_estimate_rebin and self._asymmetry_estimate_rebin[run_object]\
+                    .workspace_name and not self._asymmetry_estimate_rebin[run_object].is_hidden:
 
                 workspace_list.append(self._asymmetry_estimate_rebin[run_object].workspace_name)
 

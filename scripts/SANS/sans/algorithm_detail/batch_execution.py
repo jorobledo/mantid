@@ -618,8 +618,8 @@ def reduction_packages_require_splitting_for_wavelength_range(reduction_packages
     """
         Creates reduction packages from a list of reduction packages by splitting up wavelength ranges.
 
-        The SANSSingleReduction algorithm can handle only a single wavelength range. For each wavelength range, we require an individual
-        reduction. Hence we split the states up at this point.
+        The SANSSingleReduction algorithm can handle only a single wavelength range. For each wavelength range, we
+        require an individual reduction. Hence we split the states up at this point.
         :param reduction_packages: a list of reduction packages.
         :return: a list of reduction packages which has at least the same length as the input
         """
@@ -1057,8 +1057,8 @@ def group_workspaces_if_required(reduction_package, output_mode, save_can, event
     :param reduction_package: a list of reduction packages
     :param output_mode: one of OutputMode. SaveToFile, PublishToADS, Both.
     :param save_can: a bool. If true save out can and sample workspaces.
-    :param event_slice_optimisation: an optional bool. If true group_workspaces is being called on event sliced data, so the
-                        reduction_package contains grouped workspaces.
+    :param event_slice_optimisation: an optional bool. If true group_workspaces is being called on event sliced data, so
+                        the reduction_package contains grouped workspaces.
     """
     is_part_of_multi_period_reduction = reduction_package.is_part_of_multi_period_reduction
     is_part_of_event_slice_reduction = reduction_package.is_part_of_event_slice_reduction or event_slice_optimisation

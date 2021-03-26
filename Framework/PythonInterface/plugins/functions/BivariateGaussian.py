@@ -29,7 +29,8 @@ def bivariate_normal(X, Y, sigmax=1.0, sigmay=1.0, mux=0.0, muy=0.0, sigmaxy=0.0
 
 class BivariateGaussian(IFunction1D):
     """
-    BivariateGaussian implements a bivariate gaussian (BivariateGaussian) in Mantid (M) as a 1D function.  This is done so that it can be
+    BivariateGaussian implements a bivariate gaussian (BivariateGaussian) in Mantid (M) as a 1D function.  This is done
+     so that it can be
     fit in a straightforward fashion using Mantid's Fit() function.  To achieve this, we use the flattened
     version of the 2D profile and fit it as a 1D function.  It is built on matplotlib.mlab.bivariate_normal, which
     is available on SNS analysis machines.

@@ -28,7 +28,8 @@ def CalibrateWish(run_per_panel_list):
     '''
     :param run_per_panel_list: is a list of tuples with the run number and the associated panel
 
-    run_per_panel_list =  [ (17706, 'panel01'), (17705, 'panel02'),  (17701, 'panel03'), (17702, 'panel04'), (17695, 'panel05')]
+    run_per_panel_list =  [ (17706, 'panel01'), (17705, 'panel02'),  (17701, 'panel03'), (17702, 'panel04'), (17695,
+    'panel05')]
     '''
     # == Set parameters for calibration ==
     previousDefaultInstrument = mantid.config['default.instrument']

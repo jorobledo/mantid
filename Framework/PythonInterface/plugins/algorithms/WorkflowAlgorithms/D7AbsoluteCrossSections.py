@@ -41,8 +41,8 @@ class D7AbsoluteCrossSections(PythonAlgorithm):
         return 'ILL\\Diffraction'
 
     def summary(self):
-        return 'Separates magnetic, nuclear coherent, and incoherent components for diffraction and spectroscopy data,' \
-               'and corrects the sample data for detector efficiency and normalises it to the chosen standard.'
+        return 'Separates magnetic, nuclear coherent, and incoherent components for diffraction and spectroscopy' \
+               ' data, and corrects the sample data for detector efficiency and normalises it to the chosen standard.'
 
     def seeAlso(self):
         return ['D7YIGPositionCalibration', 'PolDiffILLReduction']
@@ -56,22 +56,25 @@ class D7AbsoluteCrossSections(PythonAlgorithm):
         normalisation_method = self.getPropertyValue('NormalisationMethod')
 
         if normalisation_method == 'Vanadium' and self.getProperty('VanadiumInputWorkspace').isDefault:
-            issues['VanadiumInputWorkspace'] = 'Vanadium input workspace is mandatory for when detector efficiency calibration' \
-                                                    ' is "Vanadium".'
+            issues['VanadiumInputWorkspace'] = 'Vanadium input workspace is mandatory for when detector efficiency' \
+                                               ' calibration is "Vanadium".'
 
         if normalisation_method in ['Incoherent', 'Paramagnetic']:
             if self.getProperty('CrossSectionSeparationMethod').isDefault:
                 issues[
-                    'NormalisationMethod'] = 'Chosen sample normalisation requires input from the cross-section separation.'
+                    'NormalisationMethod'] = 'Chosen sample normalisation requires input from the cross-section ' \
+                                             'separation.'
                 issues[
-                    'CrossSectionSeparationMethod'] = 'Chosen sample normalisation requires input from the cross-section separation.'
+                    'CrossSectionSeparationMethod'] = 'Chosen sample normalisation requires input from the ' \
+                                                      'cross-section separation.'
 
             if normalisation_method == 'Paramagnetic' and self.getPropertyValue(
                     'CrossSectionSeparationMethod') == 'Uniaxial':
                 issues[
                     'NormalisationMethod'] = 'Paramagnetic normalisation is not compatible with uniaxial measurement.'
                 issues[
-                    'CrossSectionSeparationMethod'] = 'Paramagnetic normalisation is not compatible with uniaxial measurement.'
+                    'CrossSectionSeparationMethod'] = 'Paramagnetic normalisation is not compatible with uniaxial' \
+                                                      ' measurement.'
 
         if normalisation_method != 'None' or self.getPropertyValue('CrossSectionSeparationMethod') == '10p':
             sampleAndEnvironmentProperties = self.getProperty('SampleAndEnvironmentProperties').value
@@ -190,8 +193,8 @@ class D7AbsoluteCrossSections(PythonAlgorithm):
         return nMeasurements, nComponents
 
     def _read_experiment_properties(self, ws):
-        """Reads the user-provided dictionary that contains sample geometry (type, dimensions) and experimental conditions,
-         such as the beam size and calculates derived parameters."""
+        """Reads the user-provided dictionary that contains sample geometry (type, dimensions) and experimental
+        conditions, such as the beam size and calculates derived parameters."""
         self._sampleAndEnvironmentProperties = self.getProperty('SampleAndEnvironmentProperties').value
         if 'InitialEnergy' not in self._sampleAndEnvironmentProperties:
             h = physical_constants['Planck constant'][0]  # in m^2 kg^2 / s^2
@@ -209,8 +212,8 @@ class D7AbsoluteCrossSections(PythonAlgorithm):
             self._sampleAndEnvironmentProperties['NMoles'] = (sample_mass / formula_unit_mass) * formula_units
 
     def _cross_section_separation(self, ws, nMeasurements, nComponents):
-        """Separates coherent, incoherent, and magnetic components based on spin-flip and non-spin-flip intensities of the
-        current sample. The method used is based on either the user's choice or the provided data structure."""
+        """Separates coherent, incoherent, and magnetic components based on spin-flip and non-spin-flip intensities of
+        the current sample. The method used is based on either the user's choice or the provided data structure."""
         DEG_2_RAD = np.pi / 180.0
         user_method = self.getPropertyValue('CrossSectionSeparationMethod')
         n_detectors = mtd[ws][0].getNumberHistograms()
@@ -338,7 +341,8 @@ class D7AbsoluteCrossSections(PythonAlgorithm):
                     magnetic_nsf_cos2alpha = c0_t2_m4 * sigma_x_nsf + c0_t2_p2 * sigma_y_nsf + mc0_t4_p2 * sigma_z_nsf
                     magnetic_sf_cos2alpha = (
                         -1) * c0_t2_m4 * sigma_x_sf - c0_t2_p2 * sigma_y_sf - mc0_t4_p2 * sigma_z_sf
-                    magnetic_nsf_sin2alpha = c4_t2_m4 * sigma_xpy_nsf + c4_t2_p2 * sigma_xmy_nsf + mc4_t4_p2 * sigma_z_nsf
+                    magnetic_nsf_sin2alpha = c4_t2_m4 * sigma_xpy_nsf + c4_t2_p2 * sigma_xmy_nsf + mc4_t4_p2 *\
+                                             sigma_z_nsf
                     magnetic_sf_sin2alpha = (
                         -1) * c4_t2_m4 * sigma_xpy_sf - c4_t2_p2 * sigma_xmy_sf - mc4_t4_p2 * sigma_z_sf
                     tmp_names.add('magnetic_nsf_cos2alpha')

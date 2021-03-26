@@ -117,7 +117,8 @@ class ReflectometryILLConvertToQ(DataProcessorAlgorithm):
         if directWS.getNumberHistograms() != 1:
             issues[
                 Prop.
-                DIRECT_FOREGROUND_WS] = 'The workspace should have only a single histogram. Was foreground summation forgotten?'
+                DIRECT_FOREGROUND_WS] = 'The workspace should have only a single histogram. Was foreground summation' \
+                                        ' forgotten?'
         run = inputWS.run()
         if not run.hasProperty(common.SampleLogs.SUM_TYPE):
             issues[Prop.INPUT_WS] = "'" + common.SampleLogs.SUM_TYPE + "' entry missing in sample logs"
@@ -126,7 +127,8 @@ class ReflectometryILLConvertToQ(DataProcessorAlgorithm):
             if sumType not in ['SumInLambda', 'SumInQ']:
                 issues[
                     Prop.
-                    INPUT_WS] = "Unknown sum type in sample logs: '" + sumType + "'. Allowed values: 'SumInLambda' or 'SumInQ'."
+                    INPUT_WS] = "Unknown sum type in sample logs: '" + sumType + "'. Allowed values: 'SumInLambda' or" \
+                                                                                 " 'SumInQ'."
             else:
                 if sumType == 'SumInLambda':
                     if directWS.blocksize() != inputWS.blocksize():

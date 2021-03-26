@@ -35,7 +35,8 @@ class D7YIGPositionCalibration(PythonAlgorithm):
         return 'ILL\\Diffraction'
 
     def summary(self):
-        return 'Performs D7 position calibration using YIG scan and returns D7 IPF readable by LoadILLPolarizedDiffraction.'
+        return 'Performs D7 position calibration using YIG scan and returns D7 IPF readable by ' \
+               'LoadILLPolarizedDiffraction.'
 
     def seeAlso(self):
         return ['LoadILLPolarizedDiffraction', 'PolDiffILLReduction', 'D7AbsoluteCrossSections']
@@ -46,8 +47,9 @@ class D7YIGPositionCalibration(PythonAlgorithm):
     def validateInputs(self):
         issues = dict()
         if self.getProperty('Filenames').isDefault and self.getProperty('InputWorkspace').isDefault:
-            issues['Filenames'] = 'Either a list of file names containing YIG scan or the workspace with the loaded scan ' \
-                                  'is required for calibration. If both are provided, the InputWorkspace takes precedence.'
+            issues['Filenames'] = 'Either a list of file names containing YIG scan or the workspace with the loaded ' \
+                                  'scan is required for calibration. If both are provided, the InputWorkspace takes ' \
+                                  'precedence.'
             issues['InputWorkspace'] = issues['Filenames']
 
         if self.getPropertyValue('FittingMethod') != 'None' and self.getProperty('CalibrationOutputFile').isDefault:
@@ -580,7 +582,8 @@ class D7YIGPositionCalibration(PythonAlgorithm):
             if '.offset' in row_data['Name']:
                 pixel_offset = self._RAD_2_DEG * row_data['Value'] \
                              + (0.5*self._D7NumberPixelsBank) \
-                             - bank_slopes[math.floor(pixel_no / self._D7NumberPixelsBank)] * (pixel_no % self._D7NumberPixelsBank)
+                             - bank_slopes[math.floor(pixel_no / self._D7NumberPixelsBank)] \
+                             * (pixel_no % self._D7NumberPixelsBank)
                 if pixel_no % 2 == 0:
                     pixel_offset -= self._RAD_2_DEG * 0.011 / (2.0 * (1.5177 - 0.01252)
                                                                )  # repeats calculation from the D7 IDF

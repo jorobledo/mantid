@@ -53,8 +53,8 @@ class FindSatellitePeaks(DataProcessorAlgorithm):
             1.5,
             direction=Direction.Input,
             doc=
-            "Threshold for automaticallty deciding on the number of modulation (q) vectors to use. If NumOfQs found is set then this \
-                             is property is ignored.")
+            "Threshold for automaticallty deciding on the number of modulation (q) vectors to use. If NumOfQs found is "
+            "set then this is property is ignored.")
         self.declareProperty(
             'PeakRadius',
             0.1,
@@ -66,15 +66,15 @@ class FindSatellitePeaks(DataProcessorAlgorithm):
             0.1,
             direction=Direction.Input,
             doc=
-            "The inner background radius used to integrate the satellite peaks. This is Euclidean distance in HKL space. This is passed directly to \
-                             IntegratePeaksMD")
+            "The inner background radius used to integrate the satellite peaks. This is Euclidean distance in HKL "
+            "space. This is passed directly to IntegratePeaksMD")
         self.declareProperty(
             'BackgroundOuterRadius',
             0.2,
             direction=Direction.Input,
             doc=
-            "The outer background radius used to integrate satellite peaks. TThis is Euclidean distance in HKL space. his is passed directly to \
-                             IntegratePeaksMD")
+            "The outer background radius used to integrate satellite peaks. TThis is Euclidean distance in HKL space. "
+            "his is passed directly to IntegratePeaksMD")
         self.declareProperty(
             'IOverSigma',
             2,

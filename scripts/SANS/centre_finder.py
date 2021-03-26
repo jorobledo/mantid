@@ -506,7 +506,8 @@ class PositionProviderFactory(object):
             # The angle increment is currently not specified in the instrument parameters file,
             # hence we set a value here. This is also true for the tolerance
             #increment_coord1_angle = self.get_increment_coord1_angle(reducer, self.tolerance)
-            #tolerance_angle = self.get_tolerance_for_angle(self.tolerance, self.increment_coord1, increment_coord1_angle)
+            #tolerance_angle = self.get_tolerance_for_angle(self.tolerance, self.increment_coord1,
+            #increment_coord1_angle)
             increment_coord1_angle = self.increment_coord1 / 1000.  # The tolerance needs to be specified in angles
             tolerance_angle = self.tolerance
 

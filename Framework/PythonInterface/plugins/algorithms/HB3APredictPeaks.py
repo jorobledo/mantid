@@ -21,7 +21,8 @@ class HB3APredictPeaks(PythonAlgorithm):
         return "HB3APredictPeaks"
 
     def summary(self):
-        return 'Given a MD workspace in Q-space, and an optional workspace for UB, predict the peaks covering for that data'
+        return 'Given a MD workspace in Q-space, and an optional workspace for UB, predict the peaks covering for that' \
+               ' data'
 
     def PyInit(self):
         self.declareProperty(IMDWorkspaceProperty("InputWorkspace",

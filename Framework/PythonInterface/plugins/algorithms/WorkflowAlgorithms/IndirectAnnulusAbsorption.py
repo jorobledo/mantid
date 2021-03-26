@@ -7,7 +7,8 @@
 # pylint: disable=no-init, too-many-instance-attributes
 
 from mantid.simpleapi import *
-from mantid.api import DataProcessorAlgorithm, AlgorithmFactory, MatrixWorkspaceProperty, PropertyMode, Progress, WorkspaceGroupProperty
+from mantid.api import DataProcessorAlgorithm, AlgorithmFactory, MatrixWorkspaceProperty, PropertyMode, Progress, \
+                       WorkspaceGroupProperty
 from mantid.kernel import (StringMandatoryValidator, Direction, logger, IntBoundedValidator, FloatBoundedValidator,
                            StringListValidator, MaterialBuilder)
 

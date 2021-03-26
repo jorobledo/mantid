@@ -829,9 +829,10 @@ def BatchReduce(
     """
         @param filename: the CSV file with the list of runs to analyse
         @param format: type of file to load, nxs for Nexus, etc.
-        @param plotresults: if true and this function is run from Mantidplot a graph will be created for the results of each reduction
-        @param saveAlgs: this named algorithm will be passed the name of the results workspace and filename (default = 'SaveRKH').
-            Pass a tuple of strings to save to multiple file formats
+        @param plotresults: if true and this function is run from Mantidplot a graph will be created for the results of
+        each reduction
+        @param saveAlgs: this named algorithm will be passed the name of the results workspace and filename
+        (default = 'SaveRKH'). Pass a tuple of strings to save to multiple file formats
         @param verbose: set to true to write more information to the log (default=False)
         @param centreit: do centre finding (default=False)
         @param reducer: if to use the command line (default) or GUI reducer object
@@ -1066,8 +1067,8 @@ def FindBeamCentre(rlow,
     if not xstart:
         xstart = state.move.detectors['LAB'].sample_centre_pos1
     elif config['default.instrument'] == 'LARMOR':
-        # This is to maintain compatibility with how this function worked in the old Interface so that legacy scripts still
-        # function
+        # This is to maintain compatibility with how this function worked in the old Interface so that legacy scripts
+        # still function
         xstart = xstart * 1000
     if not ystart:
         ystart = state.move.detectors['LAB'].sample_centre_pos2
@@ -1133,9 +1134,9 @@ def AddRuns(runs,
                     string list with the same format that is used for the Rebin algorithm. This property is ignored
                     when saving as event data.
     @param isOverlay: sets if the the overlay mechanism should be used when the saveAsEvent flag is set
-    @param time_shifts: provides additional time shifts if the isOverlay flag is specified. The time shifts are specified
-                        in a string list. Either time_shifts is not used or a list with times in secomds. Note that there
-                        has to be one entry fewer than the number of workspaces to add.
+    @param time_shifts: provides additional time shifts if the isOverlay flag is specified. The time shifts are
+                        specified in a string list. Either time_shifts is not used or a list with times in secomds. Note
+                        that there has to be one entry fewer than the number of workspaces to add.
     @param defType: the file type
     @param rawTypes: the raw types
     @param lowMem: if the lowMem option should be used

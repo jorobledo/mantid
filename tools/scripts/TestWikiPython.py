@@ -86,7 +86,8 @@ def findCodeSections(mediawikiText, pageName):
 
     wikiTestPattern = re.compile(
         r'''(<!--\s*skip\s*-->)?\s*                             # optional skip section (group 1)
-            (<!--\s*testsetup\s*(.*?)\s*-->)?\s*                    # optional setup section (group 2), just setup code (group 3)
+            (<!--\s*testsetup\s*(.*?)\s*-->)?\s*                    # optional setup section (group 2), just setup code 
+            (group 3)
             <source.*?lang="python".*?>\s*(.*?)\s*<\/source>\s* # mandatory source section, code (group 4)
             (<!--\s*testcleanup\s*(.*?)\s*-->)?\s*                 # optional teardown section (group 5), code (group 6)
             (<!--\s+testoutput\s*(.*?)\s*-->)?                      # optional result section (group 7), text group (8)

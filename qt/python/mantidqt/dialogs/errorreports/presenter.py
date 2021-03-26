@@ -12,7 +12,8 @@ from mantid.kernel import ConfigService, ErrorReporter, Logger, UsageService
 
 
 class ErrorReporterPresenter(object):
-    SENDING_ERROR_MESSAGE = 'There was an error when sending the report.\nPlease contact mantid-help@mantidproject.org directly'
+    SENDING_ERROR_MESSAGE = 'There was an error when sending the report.\nPlease contact ' \
+                            'mantid-help@mantidproject.org directly'
 
     def __init__(self, view, exit_code: str, application: str, traceback: Optional[str] = None):
         """

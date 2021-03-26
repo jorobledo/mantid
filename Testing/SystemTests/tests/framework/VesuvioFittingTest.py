@@ -78,8 +78,8 @@ def _do_fit(function_str, k_is_free):
 
 
 def tolerance():
-    # Not too happy about this but the gsl seems to behave slightly differently on Windows/Mac but the reference result is from Linux
-    # The results however are still acceptable
+    # Not too happy about this but the gsl seems to behave slightly differently on Windows/Mac but the reference result
+    # is from Linux The results however are still acceptable
     system = platform.system()
     if system == "Windows" or system == "Darwin":
         return 1.0e-2

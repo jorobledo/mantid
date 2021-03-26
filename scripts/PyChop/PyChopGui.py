@@ -693,11 +693,16 @@ class PyChopGui(QMainWindow):
             import mantidqt
             mantidqt.interfacemanager.InterfaceManager().showCustomInterfaceHelp("PyChop", 'direct')
         except ImportError:
-            helpTxt = "PyChop is a tool to allow direct inelastic neutron\nscattering users to estimate the inelastic resolution\n"
-            helpTxt += "and incident flux for a given spectrometer setting.\n\nFirst select the instrument, chopper settings and\n"
-            helpTxt += "Ei, and then click 'Calculate and Plot'. Data for all\nthe graphs will be generated (may take 1-2s) and\n"
-            helpTxt += "all graphs will be updated. If the 'Hold current plot'\ncheck box is ticked, additional settings will be\n"
-            helpTxt += "overplotted on the existing graphs if they are\ndifferent from previous settings.\n\nMore in-depth help "
+            helpTxt = "PyChop is a tool to allow direct inelastic neutron\nscattering users to estimate the " \
+                      "inelastic resolution\n"
+            helpTxt += "and incident flux for a given spectrometer setting.\n\nFirst select the instrument, chopper " \
+                       "settings and\n"
+            helpTxt += "Ei, and then click 'Calculate and Plot'. Data for all\nthe graphs will be generated (may" \
+                       " take 1-2s) and\n"
+            helpTxt += "all graphs will be updated. If the 'Hold current plot'\ncheck box is ticked, additional " \
+                       "settings will be\n"
+            helpTxt += "overplotted on the existing graphs if they are\ndifferent from previous settings.\n\nMore" \
+                       " in-depth help "
             helpTxt += "can be obtained from the\nMantid help pages."
             self.hlpwin = QDialog()
             self.hlpedt = QLabel(helpTxt)

@@ -321,11 +321,13 @@ class MuonMaxent(PythonAlgorithm):
         # note on lengths of transforms, etc:
         # input data has CHANNELS_itotal data points with time spacing RUNDATA_res
         # Frequency spectrum has MAXPAGE_n data points with frequency spacing fperchan
-        # maximum frequency fperchan*MAXPAGE_n should be greater than anything expected in the data (or resolved due to pulse width, etc)
-        # Frequency spectrum is zero padded to POINTS_npts points and another POINTS_npts negative frequency components added,
-        # all of those are zeros
+        # maximum frequency fperchan*MAXPAGE_n should be greater than anything expected in the data (or resolved due to
+        # pulse width, etc)
+        # Frequency spectrum is zero padded to POINTS_npts points and another POINTS_npts negative frequency components
+        # added, all of those are zeros
         # Fourier transform performed on POINTS_npts*2 points (signed frequency axis)
-        # after transform, only the first CHANNELS_itotal values are compared to the raw data, the others can take any value.
+        # after transform, only the first CHANNELS_itotal values are compared to the raw data, the others can take any
+        # value.
         #  (Data set actually padded to POINTS_npts with errors set to 1.E15 beyond good range)
         # length constraints:
         # POINTS_npts >=CHANNELS_itotal and POINTS_npts >= MAXPAGE_n

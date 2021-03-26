@@ -45,7 +45,8 @@ class CleanFileCache(PythonAlgorithm):
 
         self.declareProperty(
             "CacheDir", "",
-            "the directory in which the cache file will be created. If nothing is given, default location for cache files will be used",
+            "the directory in which the cache file will be created. If nothing is given, default location for cache "
+            "files will be used",
             Direction.Input)
 
         self.declareProperty(

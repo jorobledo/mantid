@@ -141,7 +141,8 @@ class IntegratePeaksProfileFitting(PythonAlgorithm):
 
             CreateWorkspace(DataX=theta, DataY=sigma_theta, OutputWorkspace='__ws_bvg0_scat')
             Fit(Function=
-                'name=UserFunction,Formula=A/2.0*(exp(((x-x0)/b))+exp( -((x-x0)/b)))+BG,A=0.0025,x0=1.54,b=1,BG=-1.26408e-15',
+                'name=UserFunction,Formula=A/2.0*(exp(((x-x0)/b))+exp( -((x-x0)/b)))+BG,A=0.0025,x0=1.54,b=1,'
+                'BG=-1.26408e-15',
                 InputWorkspace='__ws_bvg0_scat',
                 Output='__fitSigX0',
                 StartX=np.min(theta),
@@ -225,8 +226,8 @@ class IntegratePeaksProfileFitting(PythonAlgorithm):
 
         generateStrongPeakParams, strongPeakParams, strongPeakParams_ws, needsForcedProfile, \
             needsForcedProfileIDX, canFitProfileIDX, numPeaksCanFit, peaksToFit = \
-            self.initializeStrongPeakSettings(strongPeaksParamsFile, peaks_ws, sampleRun, forceCutoff, edgeCutoff, numDetRows,
-                                              numDetCols)
+            self.initializeStrongPeakSettings(strongPeaksParamsFile, peaks_ws, sampleRun, forceCutoff, edgeCutoff,
+                                              numDetRows, numDetCols)
 
         if peakNumberToFit > -1:
             peaksToFit = [peakNumberToFit]
@@ -309,9 +310,9 @@ class IntegratePeaksProfileFitting(PythonAlgorithm):
                 bgIDX = np.logical_and.reduce(np.array([~goodIDX, qMask, conv_n_events > 0]))
                 bgEvents = np.mean(n_events[bgIDX]) * np.sum(peakIDX)
 
-                # Now we consider the variation of the fit.  These are done as three independent fits.  So we need to consider
-                # the variance within our fit sig^2 = sum(N*(yFit-yData)) / sum(N) and scale by the number of parameters that go into
-                # the fit.  In total: 10 (removing scale variables)
+                # Now we consider the variation of the fit.  These are done as three independent fits.  So we need to
+                # consider the variance within our fit sig^2 = sum(N*(yFit-yData)) / sum(N) and scale by the number of
+                # parameters that go into the fit.  In total: 10 (removing scale variables)
                 w_events = n_events.copy()
                 w_events[w_events == 0] = 1
                 varFit = np.average((n_events[peakIDX] - Y3D[peakIDX]) * (n_events[peakIDX] - Y3D[peakIDX]),

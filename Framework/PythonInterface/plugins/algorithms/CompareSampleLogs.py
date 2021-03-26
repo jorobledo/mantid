@@ -151,8 +151,8 @@ class CompareSampleLogs(PythonAlgorithm):
                         properties.append(curprop.value)
 
                     else:
-                        message = "Comparison of " + str(curprop.type) + " properties is not yet supported. Property " +\
-                            prop + " in the workspace " + wsname
+                        message = "Comparison of " + str(curprop.type) + " properties is not yet supported. Property " \
+                                  + prop + " in the workspace " + wsname
                         self.log().warning(message)
 
             # sometimes numbers are presented as strings

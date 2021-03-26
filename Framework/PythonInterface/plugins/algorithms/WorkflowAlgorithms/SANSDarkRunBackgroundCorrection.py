@@ -59,7 +59,8 @@ class SANSDarkRunBackgroundCorrection(PythonAlgorithm):
 
         dark_run_normalized = None
         # Apply normalization. Uniform means here that the time over which the data was measured is uniform, there are
-        # no particular spikes to be expected. In the non-uniform case we assume that it matters, when the data was taken
+        # no particular spikes to be expected. In the non-uniform case we assume that it matters, when the data was
+        # taken
         if do_uniform:
             dark_run_normalized = self._prepare_uniform_correction(workspace=workspace,
                                                                    dark_run=dark_run,

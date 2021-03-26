@@ -23,7 +23,8 @@ def combineDataMulti(wksp_list,
                      keep=0,
                      scale_right=True):
     """
-    Function stitches multiple workspaces together. Workspaces should have an X-axis in mod Q, and the Spectrum axis as I/I0
+    Function stitches multiple workspaces together. Workspaces should have an X-axis in mod Q, and the Spectrum axis as
+    I/I0
 
     wksp_list: A list of workspaces to stitch together
     ouput_wksp: output workspace name

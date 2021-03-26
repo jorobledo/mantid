@@ -1003,7 +1003,8 @@ def doICCFit(tofWS,
         (y - np.polyval(bgx0, x))[nPts // 3:2 * nPts // 3]) / np.max(fICC.function1D(x)[nPts // 3:2 * nPts // 3])
     x0[4] = x0[4] * scaleFactor
     fICC.setParameter(4, x0[4])
-    #fICC.setPenalizedConstraints(A0=[0.01, 1.0], B0=[0.005, 1.5], R0=[0.01, 1.0], T00=[0,1.0e10], KConv0=[10,500],penalty=1.0e20)
+    #fICC.setPenalizedConstraints(A0=[0.01, 1.0], B0=[0.005, 1.5], R0=[0.01, 1.0], T00=[0,1.0e10], KConv0=[10,500],
+    # penalty=1.0e20)
     if constraintScheme == 1:
         # Set these bounds as defaults - they can be changed for each instrument
         # They can be changed by setting parameters in the INSTRUMENT_Parameters.xml file.
@@ -1074,7 +1075,8 @@ def integrateSample(run,
                     iccFitDict=None,
                     fitPenalty=None):
     """
-    integrateSample contains the loop that integrates over all of the peaks in a run and saves the results.  Importantly, it also handles
+    integrateSample contains the loop that integrates over all of the peaks in a run and saves the results. Importantly,
+     it also handles
     errors (mostly by passing and recording special values for failed fits.)
     Input:
         run - int; the run number to process
@@ -1112,10 +1114,10 @@ def integrateSample(run,
     Returns:
         peaks_ws - the peaks_ws with updated I, sig(I)
         paramList - a list of fit parameters for each peak.  Parameters are in the order:
-            [peakNumber, energy (eV), sum(fitIntensities), 0.0, redChiSq, alpha, beta, R, T0, amplitude/scale, hat_width,
-            k_conv, Ai (the background coefficients, A0 and A1 for linear), reducedChiSquared, pp_lambda]
-        fitDict - if keepFitDict is False, an empty dictionary.  If keepFitDict is true, a dictionary (integer peak number as key)
-            containing the x, yData, yFit for each peak.
+            [peakNumber, energy (eV), sum(fitIntensities), 0.0, redChiSq, alpha, beta, R, T0, amplitude/scale,
+             hat_width, k_conv, Ai (the background coefficients, A0 and A1 for linear), reducedChiSquared, pp_lambda]
+        fitDict - if keepFitDict is False, an empty dictionary.  If keepFitDict is true, a dictionary (integer peak
+            number as key) containing the x, yData, yFit for each peak.
     """
     if p is None:
         p = range(peaks_ws.getNumberPeaks())
@@ -1237,7 +1239,8 @@ def integrateSample(run,
                 peak.setSigmaIntensity(1)
                 logger.warning('Error with peak ' + str(i))
                 paramList.append([i, energy, 0.0, 1.0e10, 1.0e10] + [0 for i in range(10)] + [0])
-                #paramList.append([i, energy, 0.0, 1.0e10,1.0e10] + [0 for i in range(mtd['fit_parameters'].rowCount())]+[0])
+                #paramList.append([i, energy, 0.0, 1.0e10,1.0e10] + [0 for i in range(mtd['fit_parameters'].rowCount())]
+                # +[0])
                 continue
         mtd.remove('MDbox_' + str(run) + '_' + str(i))
     return peaks_ws, paramList, fitDict

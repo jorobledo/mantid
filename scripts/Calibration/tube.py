@@ -20,7 +20,8 @@ from tube_calib import getCalibration, getCalibratedPixelPositions, getPoints
 
 # Need to avoid flake8 warning but we can't do that with this
 # buried directly in the string
-CALIBRATE_SIGNATURE = "ws, tubeSet, knownPositions, funcForm, [fitPar, margin, rangeList, calibTable, plotTube, excludeShorTubes, overridePeaks, fitPolyn, outputPeak]"  # noqa
+CALIBRATE_SIGNATURE = "ws, tubeSet, knownPositions, funcForm, [fitPar, margin, rangeList, calibTable, plotTube, " \
+                      "excludeShorTubes, overridePeaks, fitPolyn, outputPeak]"  # noqa
 
 __doc__ = _MODULE_DOC = """
 =========================
@@ -50,8 +51,9 @@ Among the examples, inside the :py:mod:`Examples` folder, the user is encouraged
   carry a calibration to the group of tubes.
 * :py:func:`~Examples.TubeCalibDemoMaps_All.completeCalibration` demonstrate how the **rangeList**, **overridePeaks**,
   may be used together to allow the calibration of the whole instrument, despite, its particularities in some cases.
-* :py:func:`~Examples.TubeCalibDemoMaps_All.findThoseTubesThatNeedSpecialCareForCalibration` show an approach to find the
-  tubes that will require special care on calibrating. It will also help to find detectors that are not working well.
+* :py:func:`~Examples.TubeCalibDemoMaps_All.findThoseTubesThatNeedSpecialCareForCalibration` show an approach to find 
+  the tubes that will require special care on calibrating. It will also help to find detectors that are not working 
+  well.
 
 ========
 Examples
@@ -321,8 +323,8 @@ def calibrate(ws, tubeSet, knownPositions, funcForm, **kwargs):
 
     Optionals parameters to tune the calibration:
 
-    :param fitPar: Define the parameters to be used in the fit as a :class:`~tube_calib_fit_params.TubeCalibFitParams`. \
-    If not provided, the dynamic mode is used. See :py:func:`~Examples.TubeCalibDemoMaps_All.provideTheExpectedValue`
+    :param fitPar: Define the parameters to be used in the fit as a :class:`~tube_calib_fit_params.TubeCalibFitParams`.
+     If not provided, the dynamic mode is used. See :py:func:`~Examples.TubeCalibDemoMaps_All.provideTheExpectedValue`
 
     :param margin: value in pixesl that will be used around the peaks/edges to fit them. Default = 15. See the code of \
     :py:mod:`~Examples.TubeCalibDemoMerlin` where **margin** is used to calibrate small tubes.
@@ -721,8 +723,8 @@ class _CalibrationParameterHelper(object):
     def ensure_no_unknown_kwargs(self, kwargs):
         for key in kwargs.keys():
             if key not in self.allowed_kwargs:
-                msg = "Wrong argument: '{0}'! This argument is not defined in the signature of this function. Hint: remember" \
-                      "that arguments are case sensitive".format(key)
+                msg = "Wrong argument: '{0}'! This argument is not defined in the signature of this function. Hint: " \
+                      "remember that arguments are case sensitive".format(key)
                 raise RuntimeError(msg)
 
     @staticmethod

@@ -28,9 +28,10 @@ common regions:
 This example shows:
 
  * How to calibrate regions of the instrument separetelly.
- * How to use **calibTable** parameter to append information in order to create a calibration table for the whole instrument.
- * How to use the **outputPeak** to check how the calibration is working as well as the usage of analisePeakTable method to
-       look into the details of the operation to improve the calibration.
+ * How to use **calibTable** parameter to append information in order to create a calibration table for the whole
+ instrument.
+ * How to use the **outputPeak** to check how the calibration is working as well as the usage of analisePeakTable
+ method to look into the details of the operation to improve the calibration.
  * It deals with defining different known positions for the different tube lengths.
 
 
@@ -148,12 +149,15 @@ def calibrateMerlin(filename):
                                                  margin=30)
     analisePeakTable(peakTable, 'door1to7_peaks')
 
-    # The door 3 is a special case, because it is composed by diffent kind of tubes.
-    # door 3 tubes: 5_8, 5_7, 5_6, 5_5, 5_4, 5_3, 5_2, 5_1, 4_8, 4_7, 4_6, 4_5, 4_4, 4_3, 4_2, 4_1, 3_8, 3_7, 3_6, 3_5, 3_4
+    # The door 3 is a special case, because it is composed by different kind of tubes.
+    # door 3 tubes: 5_8, 5_7, 5_6, 5_5, 5_4, 5_3, 5_2, 5_1, 4_8, 4_7, 4_6, 4_5, 4_4, 4_3, 4_2, 4_1, 3_8, 3_7, 3_6, 3_5,
+    # 3_4
     # obeys the same rules as the doors 7, 6, 5, 4, 2, 1
     # For the tubes 3_3, 3_2, 3_1 -> it is better to skip the central peak
-    # For the tubes 1_x (smaller tube below), it is better to take the final part of known positions: peak4,peak5,edge6,edge7
-    # For the tubes 2_x (smaller tube above, it is better to take the first part of known positions: edge1, edge2, peak1,peak2
+    # For the tubes 1_x (smaller tube below), it is better to take the final part of known positions: peak4,peak5,
+    # edge6,edge7
+    # For the tubes 2_x (smaller tube above, it is better to take the first part of known positions: edge1, edge2,
+    # peak1,peak2
 
     # NOTE: the smaller tubes they have length = 1.22879882813, but 1024 detectors
     # so we have to correct the known positiosn by multiplying by its length and dividing by the longer dimension

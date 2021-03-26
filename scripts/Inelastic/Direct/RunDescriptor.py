@@ -374,7 +374,7 @@ class RunDescriptor(PropDescriptor):
     _logger = None
     _sum_log_name = 'SumRuns'
 
-    #--------------------------------------------------------------------------------------------------------------------
+    #------------------------------------------------------------------------------------------------------------------
 
     def __init__(self, prop_name, DocString=None):
         """ """
@@ -1285,9 +1285,11 @@ class RunDescriptor(PropDescriptor):
     @staticmethod
     def copy_spectrum2monitors(data_ws, mon_ws, spectraID):
         """
-        this routine copies a spectrum form workspace to monitor workspace and rebins it according to monitor workspace binning
+        this routine copies a spectrum form workspace to monitor workspace and rebins it according to monitor workspace
+        binning
 
-        @param data_ws  -- the  event workspace which detector is considered as monitor or Mantid pointer to this workspace
+        @param data_ws  -- the  event workspace which detector is considered as monitor or Mantid pointer to this
+        workspace
         @param mon_ws   -- the  histogram workspace with monitors where one needs to place the detector's spectra
         @param spectraID-- the ID of the spectra to copy.
 
@@ -1546,9 +1548,9 @@ class RunDescriptor(PropDescriptor):
         return ws
 
 
-#-------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------
 #pylint: disable=too-many-public-methods
 
 

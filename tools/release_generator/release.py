@@ -23,7 +23,8 @@ Mantid {version} Release Notes
 .. contents:: Table of Contents
    :local:
 
-.. warning:: This release is still under construction. The changes can be found in the nightly builds on the `download page`_.
+.. warning:: This release is still under construction. The changes can be found in the nightly builds on the 
+`download page`_.
 
 We are proud to announce version {version} of Mantid.
 
@@ -52,9 +53,9 @@ Please cite any usage of Mantid as follows:
 
 - *Mantid {version}: Manipulation and Analysis Toolkit for Instrument Data.; Mantid Project*. {mantid_doi}
 
-- Arnold, O. et al. *Mantid-Data Analysis and Visualization Package for Neutron Scattering and mu-SR Experiments.* Nuclear Instruments
-  and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment 764 (2014): 156-166
-  `doi: 10.1016/j.nima.2014.07.029 <https://doi.org/10.1016/j.nima.2014.07.029>`_
+- Arnold, O. et al. *Mantid-Data Analysis and Visualization Package for Neutron Scattering and mu-SR Experiments.* 
+  Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated
+   Equipment 764 (2014): 156-166 `doi: 10.1016/j.nima.2014.07.029 <https://doi.org/10.1016/j.nima.2014.07.029>`_
   (`download bibtex <https://raw.githubusercontent.com/mantidproject/mantid/master/docs/source/mantid.bib>`_)
 
 
@@ -91,7 +92,8 @@ For a full list of all issues addressed during this release please see the `GitH
 
 .. _forum: https://forum.mantidproject.org
 
-.. _GitHub milestone: https://github.com/mantidproject/mantid/pulls?utf8=%E2%9C%93&q=is%3Apr+milestone%3A"Release {milestone}"+is%3Amerged
+.. _GitHub milestone: https://github.com/mantidproject/mantid/pulls?utf8=%E2%9C%93&q=is%3Apr+milestone%3A"Release 
+    {milestone}"+is%3Amerged
 
 .. _GitHub release page: https://github.com/mantidproject/mantid/releases/tag/v{version}
 ''',
@@ -213,7 +215,8 @@ TECH_CONTENTS = '''
    :local:
 '''
 
-MANTID_DOI = '`doi: 10.5286/SOFTWARE/MANTID{version_maj_min} <https://dx.doi.org/10.5286/SOFTWARE/MANTID{version_maj_min}>`_'
+MANTID_DOI = '`doi: 10.5286/SOFTWARE/MANTID{version_maj_min} <https://dx.doi.org/10.5286/SOFTWARE/MANTID' \
+             '{version_maj_min}>`_'
 
 
 def createTechniquePage(technique, body, components):

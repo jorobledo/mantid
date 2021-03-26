@@ -228,8 +228,8 @@ class ISISReducer(Reducer):
         Inside ISIS there are two detector banks (low-angle and high-angle) and this particularity is responsible for
         requiring a special class to deal with SANS data reduction inside ISIS.
 
-        For example, it requires the knowledge of the beam center inside the low-angle detector and the high-angle detector
-        as well, and this cause to extend the method get_beam_center and set_beam_center to support both.
+        For example, it requires the knowledge of the beam center inside the low-angle detector and the high-angle
+        detector as well, and this cause to extend the method get_beam_center and set_beam_center to support both.
 
         TODO: need documentation for all the data member
         TODO: need to see whether all those data members really belong here

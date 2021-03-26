@@ -136,8 +136,8 @@ class MuonBase(object):
 
     def remove_workspace_by_name(self, workspace_name):
         """
-                Searches through all of the stored workspaces and remmves any which match the name given. This is used to handle
-                workspaces being removed from the ADS.
+                Searches through all of the stored workspaces and remmves any which match the name given. This is used
+                to handle workspaces being removed from the ADS.
                 :param workspace_name:
                 :return:
 

@@ -13,7 +13,8 @@ import re
 
 temp_filename = 'all-commits.stdout'
 regex_git_log_entry = re.compile(
-    r"Author:\s+(.+?)\s+Date:\s+(.+?)\B\s+(\S+).*?((\d+)\sfile.+?)?((\d+)+\sinsertion.+?)?((\d+)+\sdeletion.+?)?(commit\s[0-9a-f]{40}|$)",
+    r"Author:\s+(.+?)\s+Date:\s+(.+?)\B\s+(\S+).*?((\d+)\sfile.+?)?((\d+)+\sinsertion.+?)?((\d+)+\sdeletion.+?)?"
+    r"(commit\s[0-9a-f]{40}|$)",
     re.DOTALL)
 regex_git_log_splitter = re.compile(r"commit\s[0-9a-f]{40}")
 regex_name_email_address = re.compile(r"(.*?)<(\S+)>")

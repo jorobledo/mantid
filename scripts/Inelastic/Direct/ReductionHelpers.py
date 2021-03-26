@@ -213,7 +213,8 @@ def extract_non_system_names(names_list, prefix='_'):
 
 
 def build_subst_dictionary(synonims_list=None):
-    """Function to process "synonims_list" in the instrument parameters string, used to support synonyms in the reduction script
+    """Function to process "synonims_list" in the instrument parameters string, used to support synonyms in the
+       reduction script
 
        it takes string of synonyms in the form key1=subs1=subst2=subts3;key2=subst4 and returns the dictionary
        in the form dict[subs1]=key1 ; dict[subst2] = key1 ... dict[subst4]=key2
@@ -245,8 +246,8 @@ def build_subst_dictionary(synonims_list=None):
         for i in range(1, len(keys)):
             if len(keys[i]) == 0:
                 raise AttributeError(
-                    "The pairs in the synonyms fields have to have form key1=key2=key3 with at least two values present, "
-                    "but the key" + str(i) + " is empty")
+                    "The pairs in the synonyms fields have to have form key1=key2=key3 with at least two values "
+                    "present, but the key" + str(i) + " is empty")
             kkk = keys[i].strip()
             rez[kkk] = keys[0].strip()
 

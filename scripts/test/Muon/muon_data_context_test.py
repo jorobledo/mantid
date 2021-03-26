@@ -57,7 +57,8 @@ class MuonDataContextTest(unittest.TestCase):
         self.context.current_runs = [[19489], [1]]
 
         self.context.message_notifier.notify_subscribers.assert_called_once_with(
-            'MainFieldDirection changes within current run set:\ntransverse field runs 1\nlongitudinal field runs 19489\n'
+            'MainFieldDirection changes within current run set:\ntransverse field runs 1\nlongitudinal field runs '
+            '19489\n'
         )
 
     def test_is_data_loaded_returns_true_if_data_loaded(self):

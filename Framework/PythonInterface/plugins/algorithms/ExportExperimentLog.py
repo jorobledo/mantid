@@ -70,8 +70,8 @@ class ExportExperimentLog(PythonAlgorithm):
             logoperprop, "Operation on each log, including None (as no operation), min, max, average, sum and \"0\". ")
 
         fileformates = ["tab", "comma (csv)"]
-        des = "Output file format.  'tab' format will insert a tab between 2 adjacent values; 'comma' will put a , instead. " + \
-            "With this option, the posfix of the output file is .csv automatically. "
+        des = "Output file format.  'tab' format will insert a tab between 2 adjacent values; 'comma' will put a , " \
+              "instead. With this option, the posfix of the output file is .csv automatically. "
         self.declareProperty("FileFormat", "tab", mantid.kernel.StringListValidator(fileformates), des)
 
         self.declareProperty("OrderByTitle", "",

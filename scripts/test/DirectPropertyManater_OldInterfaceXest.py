@@ -9,10 +9,6 @@ import unittest
 from DirectEnergyConversion import DirectEnergyConversion
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------
 class DirectEnergyConversionTest(unittest.TestCase):
     def __init__(self, methodName):
         self.reducer = None
@@ -323,13 +319,6 @@ class DirectEnergyConversionTest(unittest.TestCase):
         self.assertFalse(tReducer.load_monitors_with_workspace)
         tReducer.load_monitors_with_workspace = 10
         self.assertTrue(tReducer.load_monitors_with_workspace)
-
-    #def test_diag_call(self):
-    #    tReducer = self.reducer
-    #    # should do nothing as already initialized above, but if not will initiate the instrument
-    #    tReducer.initialise("MAP")
-
-    #    tReducet.di
 
 
 if __name__ == "__main__":

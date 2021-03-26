@@ -38,7 +38,8 @@ class RunBilbyReduction:
         if len(index_reduction_settings) > 1:  # must be single choice
             raise ValueError('Please check your choice of reduction settigns; only single value is allowed')
 
-        # ID to evaluate - INPUT, in any combination of 'a-b' or ',c', or empty line; empty line means evaluate all files listed in csv
+        # ID to evaluate - INPUT, in any combination of 'a-b' or ',c', or empty line; empty line means evaluate all
+        # files listed in csv
         self.index_files_to_reduce = self.file_index
 
         red_settings = mantid_api.FileFinder.getFullPath(self.reduction_settings_file)
@@ -184,14 +185,15 @@ class RunBilbyReduction:
         binning_wavelength_ini = BilbyCustomFunctions_Reduction.read_convert_to_float(binning_wavelength_ini_str)
         binning_wavelength_ini_original = binning_wavelength_ini
 
-        # WAVELENGTH RANGE FOR TRANSMISSION: the aim is to fit transmission on the whole range, and take only part for the data reduction
-        # must  be equal or longer than binning_wavelength_ini
+        # WAVELENGTH RANGE FOR TRANSMISSION: the aim is to fit transmission on the whole range, and take only part for
+        # the data reduction must  be equal or longer than binning_wavelength_ini
         binning_wavelength_transmission_str = self.current_reduction_settings[0]["binning_wavelength_transmission"]
         binning_wavelength_transmission = BilbyCustomFunctions_Reduction.read_convert_to_float(
             binning_wavelength_transmission_str)
         binning_wavelength_transmission_original = binning_wavelength_transmission
 
-        # Check of wavelength range: transmission range must be equal or longer than the wavelength binning range for data reduction
+        # Check of wavelength range: transmission range must be equal or longer than the wavelength binning range for
+        # data reduction
         if (binning_wavelength_ini[0] < binning_wavelength_transmission[0]) or (binning_wavelength_ini[2] >
                                                                                 binning_wavelength_transmission[2]):
             raise ValueError("Range for transmission binning shall be equal or wider than the range for the"
@@ -252,7 +254,8 @@ class RunBilbyReduction:
             try:
                 external_mode = (ws_sam.run().getProperty("is_tof").value)
             except:
-                external_mode = True  # This is needed for old files, where the ToF/mono mode value has not been recorded
+                external_mode = True  # This is needed for old files, where the ToF/mono mode value has not been
+                                      # recorded
 
             # Internal frame source has been used during data collection; it is not always NVS only,
             # one can have both, NVS and choppers running for this mode

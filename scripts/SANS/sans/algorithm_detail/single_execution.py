@@ -320,7 +320,8 @@ def run_optimized_for_can(reduction_alg, reduction_setting_bundle, event_slice_o
 
     :param reduction_alg: a handle to the SANSReductionCore algorithm
     :param reduction_setting_bundle: a ReductionSettingBundle tuple.
-    :param event_slice_optimisation: An optional bool. If true then run run_core_event_slice_reduction, else run_core_reduction.
+    :param event_slice_optimisation: An optional bool. If true then run run_core_event_slice_reduction, else
+    run_core_reduction.
     :return: a reduced workspace, a partial output workspace for the counts, a partial workspace for the normalization.
     """
     state = reduction_setting_bundle.state
@@ -366,7 +367,8 @@ def run_optimized_for_can(reduction_alg, reduction_setting_bundle, event_slice_o
                                           or output_transmission_bundle.unfitted_transmission_workspace is None)
     partial_output_require_reload = output_parts and is_invalid_partial_workspaces
 
-    must_reload = output_bundle.output_workspace is None or partial_output_require_reload or is_invalid_transmission_workspaces
+    must_reload = output_bundle.output_workspace is None or partial_output_require_reload or \
+                  is_invalid_transmission_workspaces
     if 'boost.mpi' in sys.modules:
         # In MPI runs the result is only present on rank 0 (result of Q1D2 integration),
         # so the reload flag must be broadcasted from rank 0.

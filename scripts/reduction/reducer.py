@@ -569,7 +569,8 @@ class ReductionStep(object):
             Implemented the reduction step.
             @param reducer: Reducer object for which the step is executed
             @param inputworkspace: Name of the workspace to apply this step to
-            @param outputworkspace: Name of the workspace to have as an output. If this is None it will be set to inputworkspace
+            @param outputworkspace: Name of the workspace to have as an output. If this is None it will be set to
+             inputworkspace
         """
         raise NotImplementedError
 

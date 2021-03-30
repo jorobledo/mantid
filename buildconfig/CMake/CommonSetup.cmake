@@ -422,7 +422,7 @@ if (ENABLE_PRECOMMIT)
     # continue anyway.
     execute_process(COMMAND bash -c "pre-commit install" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE STATUS)
     if (STATUS AND NOT STATUS EQUAL 0)
-      message(FATAL_ERROR "Pre-commit tried to install itself into your repository, but failed to do so. Is it installed on your system?")
+      message(FATAL_ERROR "Pre-commit program not found, see https://developer.mantidproject.org/GettingStarted.html for information on installing it")
     endif()
   endif()
 else()

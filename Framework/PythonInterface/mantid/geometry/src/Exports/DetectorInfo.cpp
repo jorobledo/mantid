@@ -41,6 +41,14 @@ using return_readonly_numpy =
     return_value_policy<Policies::VectorRefToNumpy<Converters::WrapReadOnly>>;
 } // namespace
 
+boost::python::tuple diffractometerConstants(DetectorInfo self,
+                                                           const size_t index) {
+  std::vector<int> emptyWarningVec;
+  auto [difa, difc, tzero] =
+      self.diffractometerConstants(index, emptyWarningVec, emptyWarningVec);
+  return boost::python::make_tuple(difa, difc, tzero);
+}
+
 // Export DetectorInfo
 void export_DetectorInfo() {
 
@@ -121,5 +129,10 @@ void export_DetectorInfo() {
       .def("l1", &DetectorInfo::l1, arg("self"),
            "Returns the l1 scattering distance")
       .def("hasMaskedDetectors", &DetectorInfo::hasMaskedDetectors, arg("self"),
-           "Returns if there are masked detectors");
+           "Returns if there are masked detectors")
+      .def("difcUncalibrated", &DetectorInfo::difcUncalibrated,
+           (arg("self"), arg("index")),
+           "Return the uncalibrated difc diffractometer constant")
+      .def("diffractometerConstants", diffractometerConstants,
+           (arg("self"), arg("index")), "Return the diffractometer constants");
 }

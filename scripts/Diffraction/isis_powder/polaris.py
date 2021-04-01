@@ -5,11 +5,13 @@
 #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
 # SPDX - License - Identifier: GPL - 3.0 +
 import os
+import math
 
 from isis_powder.routines import absorb_corrections, common, instrument_settings
 from isis_powder.abstract_inst import AbstractInst
 from isis_powder.polaris_routines import polaris_advanced_config, polaris_algs, polaris_param_mapping
-from mantid.kernel import logger
+from mantid.kernel import logger, UnitParams, UnitParametersMap, UnitConversion, DeltaEModeType
+import mantid.simpleapi as mantid
 
 
 class Polaris(AbstractInst):
@@ -103,6 +105,62 @@ class Polaris(AbstractInst):
         cropped_ws = common.crop_banks_using_crop_list(bank_list=van_ws_to_crop,
                                                        crop_values_list=self._inst_settings.van_crop_values)
         return cropped_ws
+
+    def apply_calibration_to_focused_data(self, focused_ws):
+        # convert back to TOF based on a DIFC calculated from average L2 and average effective two theta
+        # effective two theta is calculated based on offset for a particular detector
+        # This mirrors the approach used to feeding detector positions into Gudrun using the make_detector_file script
+        spectruminfo = focused_ws.spectrumInfo()
+        l1 = spectruminfo.l1()
+        avg_l2s = []
+        avg_two_thetas = []
+        avg_eff_two_thetas = []
+        new_detids = []
+        for i in range(focused_ws.getNumberHistograms()):
+            avg_l2s.append(spectruminfo.l2(i))
+            avg_two_thetas.append(spectruminfo.twoTheta(i))
+
+            spectrum = focused_ws.getSpectrum(i)
+            detIDs = spectrum.getDetectorIDs()
+            detectorinfo = focused_ws.detectorInfo()
+            effective_twotheta_sum = 0
+            for detID in detIDs:
+                detIndex = detectorinfo.indexOf(detID)
+                difa, difc_calibrated, tzero = detectorinfo.diffractometerConstants(detIndex)
+                if (difa == 0) and (tzero == 0):
+                    difc_uncalibrated = detectorinfo.difcUncalibrated(detIndex)
+                    twoTheta = detectorinfo.twoTheta(detIndex)
+                    arg = math.sin(0.5 * twoTheta) * difc_calibrated / difc_uncalibrated
+                    try:
+                        effective_twotheta = 2 * math.asin(arg)
+                    except:
+                        raise "Can't calculate an effective two theta for detector " + detID
+                    effective_twotheta_sum += effective_twotheta
+                else:
+                    raise AssertionError("Can't generate effective thetas if difa or tzero are non-zero")
+            avg_eff_two_theta = effective_twotheta_sum / detIDs.size()
+            avg_eff_two_thetas.append(avg_eff_two_theta)
+            new_detids.append(100 + i)
+
+        avg_two_thetas_deg = [i * 180.0 / math.pi for i in avg_two_thetas]
+        mantid.EditInstrumentGeometry(Workspace=focused_ws, PrimaryFlightPath=l1, L2=avg_l2s,
+                                      Polar=avg_two_thetas_deg, DetectorIDs=new_detids)
+
+        calibration_ws = mantid.CreateEmptyTableWorkspace()
+        calibration_ws.addColumn("int", "detid")
+        calibration_ws.addColumn("double", "difc")
+        calibration_ws.addColumn("double", "difa")
+        calibration_ws.addColumn("double", "tzero")
+
+        params = UnitParametersMap()
+        emode = DeltaEModeType.Elastic;
+        for detid, two_theta, l2 in zip(new_detids, avg_eff_two_thetas, avg_l2s):
+            params[UnitParams.l2] = l2
+            params[UnitParams.twoTheta] = two_theta
+
+            difc = UnitConversion.run('dSpacing', 'TOF', 1.0, l1, emode, params)
+            calibration_ws.addRow([detid, difc, 0.0, 0.0])
+        mantid.ApplyDiffCal(InstrumentWorkspace=focused_ws, CalibrationWorkspace=calibration_ws)
 
     @staticmethod
     def _generate_input_file_name(run_number, file_ext=""):

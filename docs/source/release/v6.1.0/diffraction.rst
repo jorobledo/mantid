@@ -21,6 +21,7 @@ New features
 - New diagnostic plotting tool `Calibration.tofpd.diagnostics.plot_peakd` which plots the d-spacing relative strain of peak positions.
 - New diagnostic plotting tool `Calibration.tofpd.diagnostics.plot_corr` which plots the Pearson correlation coefficient for time-of-flight and d-spacing for each detector.
 - New diagnostic plotting tool `Calibration.tofpd.diagnostics.plot_peak_info` which plots fitted peak parameters for instrument banks.
+- Modify calibration used to convert focused data from d-spacing to TOF for POLARIS in ISIS Powder Diffraction scripts
 
 Improvements
 ############

@@ -481,45 +481,51 @@ enable_precompiled_headers(inc/MantidKernel/PrecompiledHeader.h SRC_FILES)
 # Add the target for this directory
 add_library(Kernel ${SRC_FILES} ${INC_FILES})
 # Set the name of the generated library
-set_target_properties(Kernel
-                      PROPERTIES OUTPUT_NAME
-                                 MantidKernel
-                                 COMPILE_DEFINITIONS
-                                 "IN_MANTID_KERNEL;PSAPI_VERSION=1")
+set_target_properties(
+  Kernel PROPERTIES OUTPUT_NAME MantidKernel COMPILE_DEFINITIONS
+                                             "IN_MANTID_KERNEL;PSAPI_VERSION=1"
+)
 
-target_include_directories(Kernel SYSTEM
-                           PUBLIC ${Boost_INCLUDE_DIRS} ${POCO_INCLUDE_DIRS}
-                                  ${JSONCPP_INCLUDE_DIR} ${NEXUS_INCLUDE_DIR}
-                           PRIVATE ${GSL_INCLUDE_DIR}
-			   ${OPENSSL_INCLUDE_DIR} ${HDF5_INCLUDE_DIRS})
+target_include_directories(
+  Kernel SYSTEM
+  PUBLIC ${Boost_INCLUDE_DIRS} ${JSONCPP_INCLUDE_DIR} ${NEXUS_INCLUDE_DIR}
+  PRIVATE ${GSL_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR} ${HDF5_INCLUDE_DIRS}
+)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  set_target_properties(Kernel PROPERTIES INSTALL_RPATH "@loader_path/../MacOS;@loader_path/../Frameworks")
+  set_target_properties(
+    Kernel PROPERTIES INSTALL_RPATH
+                      "@loader_path/../MacOS;@loader_path/../Frameworks"
+  )
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-  set_target_properties(Kernel
-                        PROPERTIES INSTALL_RPATH "\$ORIGIN/../${LIB_DIR}")
+  set_target_properties(
+    Kernel PROPERTIES INSTALL_RPATH "\$ORIGIN/../${LIB_DIR}"
+  )
 endif()
 
 # Add to the 'Framework' group in VS
 set_property(TARGET Kernel PROPERTY FOLDER "MantidFramework")
+target_link_libraries(
+  Kernel
+  PUBLIC TBB::tbb
+         TBB::tbbmalloc
+         TBB::tbbmalloc_proxy
+         Poco::Foundation
+         Poco::XML
+         Poco::Util
+         Poco::Net
+         Poco::NetSSL
+)
 
-target_link_libraries(Kernel
-                      PUBLIC
-                      ${NEXUS_LIBRARIES}
-                      Eigen3::Eigen
-                      ${JSONCPP_LIBRARIES}
-                      ${TBB_LIBRARIES}
-                      ${TBB_MALLOC_LIBRARIES}
-                      PRIVATE
-                      ${GSL_LIBRARIES}
-                      ${MANTIDLIBS}
-                      ${NETWORK_LIBRARIES}
-                      span
-                      ${HDF5_LIBRARIES}
-                      )
+target_link_libraries(
+  Kernel
+  PUBLIC ${NEXUS_LIBRARIES} Eigen3::Eigen ${JSONCPP_LIBRARIES}
+  PRIVATE ${GSL_LIBRARIES} ${MANTIDLIBS} ${NETWORK_LIBRARIES} span
+          ${HDF5_LIBRARIES}
+)
 if(WIN32)
-  target_link_libraries(Kernel LINK_PRIVATE Psapi.lib) # For memory usage
-                                                       # queries
+  target_link_libraries(Kernel LINK_PRIVATE Psapi.lib) # For memory
+  # usage queries
 endif()
 
 # Add the unit tests directory

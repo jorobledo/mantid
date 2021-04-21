@@ -75,7 +75,20 @@ add_definitions(-DBOOST_DATE_TIME_POSIX_TIME_STD_CONFIG)
 # Silence issues with deprecated allocator methods in boost regex
 add_definitions(-D_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING)
 
-find_package(Poco 1.4.6 REQUIRED)
+find_package(
+  Poco
+  COMPONENTS Foundation
+             Crypto
+             Data
+             DataSQLite
+             Util
+             Zip
+             Net
+             NetSSL
+             JSON
+             Encodings
+)
+
 add_definitions(-DPOCO_ENABLE_CPP11)
 
 find_package(GSL REQUIRED)
@@ -203,9 +216,9 @@ if(GIT_FOUND)
       set(MtdVersion_WC_LAST_CHANGED_DATETIME "${ISODATE}.${ISOTIME}")
     endif()
 
-    # conda builds want to know about the branch being used
-    # otherwise the variable is "Unknown"
-    if (ENABLE_CONDA)
+    # conda builds want to know about the branch being used otherwise the
+    # variable is "Unknown"
+    if(ENABLE_CONDA)
       execute_process(
         COMMAND ${GIT_EXECUTABLE} name-rev --name-only HEAD
         OUTPUT_VARIABLE MtdVersion_WC_LAST_CHANGED_BRANCHNAME
@@ -229,15 +242,16 @@ if(GIT_FOUND)
     # running to be up-to-date On Windows, we have to copy the file
     if(WIN32)
       execute_process(
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                ${GIT_TOP_LEVEL}/.githooks/commit-msg
-                ${GIT_TOP_LEVEL}/.git/hooks
+        COMMAND
+          ${CMAKE_COMMAND} -E copy_if_different
+          ${GIT_TOP_LEVEL}/.githooks/commit-msg ${GIT_TOP_LEVEL}/.git/hooks
       )
     else()
       execute_process(
-        COMMAND ${CMAKE_COMMAND} -E create_symlink
-                ${GIT_TOP_LEVEL}/.githooks/commit-msg
-                ${GIT_TOP_LEVEL}/.git/hooks/commit-msg
+        COMMAND
+          ${CMAKE_COMMAND} -E create_symlink
+          ${GIT_TOP_LEVEL}/.githooks/commit-msg
+          ${GIT_TOP_LEVEL}/.git/hooks/commit-msg
       )
     endif()
 
@@ -407,35 +421,56 @@ endif()
 # pre-commit hooks being added
 # ##############################################################################
 option(ENABLE_PRECOMMIT "Enable pre-commit framework" ON)
-if (ENABLE_PRECOMMIT)
-  # Windows should use downloaded ThirdParty version of pre-commit.cmd
-  # Everybody else should find one in their PATH
-  find_program(PRE_COMMIT_EXE
-    NAMES
-    pre-commit
-    HINTS
-    ~/.local/bin/
-    "${MSVC_PYTHON_EXECUTABLE_DIR}/Scripts/")
-  if (NOT PRE_COMMIT_EXE)
-    message ( FATAL_ERROR "Failed to find pre-commit see https://developer.mantidproject.org/GettingStarted.html" )
-  endif ()
+if(ENABLE_PRECOMMIT)
+  # Windows should use downloaded ThirdParty version of pre-commit.cmd Everybody
+  # else should find one in their PATH
+  find_program(
+    PRE_COMMIT_EXE
+    NAMES pre-commit
+    HINTS ~/.local/bin/ "${MSVC_PYTHON_EXECUTABLE_DIR}/Scripts/"
+  )
+  if(NOT PRE_COMMIT_EXE)
+    message(
+      FATAL_ERROR
+        "Failed to find pre-commit see https://developer.mantidproject.org/GettingStarted.html"
+    )
+  endif()
 
-  if (MSVC)
-    execute_process(COMMAND "${PRE_COMMIT_EXE}.cmd" install --overwrite WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE PRE_COMMIT_RESULT)
+  if(MSVC)
+    execute_process(
+      COMMAND "${PRE_COMMIT_EXE}.cmd" install --overwrite
+      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+      RESULT_VARIABLE PRE_COMMIT_RESULT
+    )
     if(NOT PRE_COMMIT_RESULT EQUAL "0")
-        message(FATAL_ERROR "Pre-commit install failed with ${PRE_COMMIT_RESULT}")
+      message(FATAL_ERROR "Pre-commit install failed with ${PRE_COMMIT_RESULT}")
     endif()
-    # Create pre-commit script wrapper to use mantid third party python for pre-commit
-    file(RENAME "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit" "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit-script.py")
-    file(WRITE "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit" "#!/usr/bin/env sh\n${MSVC_PYTHON_EXECUTABLE_DIR}/python.exe ${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit-script.py")
-  else()  # linux as osx
-    execute_process(COMMAND bash -c "${PRE_COMMIT_EXE} install" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} RESULT_VARIABLE STATUS)
-    if (STATUS AND NOT STATUS EQUAL 0)
-      message(FATAL_ERROR "Pre-commit tried to install itself into your repository, but failed to do so. Is it installed on your system?")
+    # Create pre-commit script wrapper to use mantid third party python for
+    # pre-commit
+    file(RENAME "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit"
+         "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit-script.py"
+    )
+    file(
+      WRITE "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit"
+      "#!/usr/bin/env sh\n${MSVC_PYTHON_EXECUTABLE_DIR}/python.exe ${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit-script.py"
+    )
+  else() # linux as osx
+    execute_process(
+      COMMAND bash -c "${PRE_COMMIT_EXE} install"
+      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+      RESULT_VARIABLE STATUS
+    )
+    if(STATUS AND NOT STATUS EQUAL 0)
+      message(
+        FATAL_ERROR
+          "Pre-commit tried to install itself into your repository, but failed to do so. Is it installed on your system?"
+      )
     endif()
   endif()
 else()
-  message(AUTHOR_WARNING "Pre-commit not enabled by CMake, please enable manually.")
+  message(
+    AUTHOR_WARNING "Pre-commit not enabled by CMake, please enable manually."
+  )
 endif()
 
 # ##############################################################################

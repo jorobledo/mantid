@@ -95,7 +95,7 @@ if(ENABLE_OPENGL)
   endif()
 endif()
 
-find_package(TBB REQUIRED)
+find_package(TBB CONFIG)
 
 # We probably don't want this to run on every build.
 option(COVERALLS "Generate coveralls data" OFF)

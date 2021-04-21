@@ -129,6 +129,8 @@ class SliceViewerDataView(QWidget):
         self.mpl_toolbar.homeClicked.connect(self.on_home_clicked)
         self.mpl_toolbar.nonOrthogonalClicked.connect(self.on_non_orthogonal_axes_toggle)
         self.mpl_toolbar.zoomPanFinished.connect(self.on_data_limits_changed)
+        self.mpl_toolbar.removeClicked.connect(self.on_peak_removal)
+        self.mpl_toolbar.addClicked.connect(self.on_peak_add)
         self.toolbar_layout.addWidget(self.mpl_toolbar)
 
         # Status bar
@@ -409,6 +411,14 @@ class SliceViewerDataView(QWidget):
         React to when the data limits have changed
         """
         self.presenter.data_limits_changed()
+
+    def on_peak_removal(self, state):
+        """Switch whether removing selected peak"""
+        self.presenter.peak_removal(state)
+
+    def on_peak_add(self, state):
+        """Switch whether adding selected peak"""
+        self.presenter.peak_add(state)
 
     def deactivate_and_disable_tool(self, tool_text):
         """Deactivate a tool as if the control had been pressed and disable the functionality"""

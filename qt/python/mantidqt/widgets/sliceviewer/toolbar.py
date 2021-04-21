@@ -22,7 +22,8 @@ class ToolItemText:
     OVERLAY_PEAKS = 'OverlayPeaks'
     NONORTHOGONAL_AXES = 'NonOrthogonalAxes'
     SAVE = 'Save'
-
+    REMOVE = 'Remove'
+    ADD = 'Add'
 
 class SliceViewerNavigationToolbar(NavigationToolbar2QT):
 
@@ -32,6 +33,8 @@ class SliceViewerNavigationToolbar(NavigationToolbar2QT):
     regionSelectionClicked = Signal(bool)
     nonOrthogonalClicked = Signal(bool)
     peaksOverlayClicked = Signal(bool)
+    removeClicked = Signal(bool)
+    addClicked = Signal(bool)
     zoomPanFinished = Signal()
 
     toolitems = (
@@ -52,7 +55,9 @@ class SliceViewerNavigationToolbar(NavigationToolbar2QT):
         (ToolItemText.NONORTHOGONAL_AXES, 'Toggle nonorthogonal axes on/off', 'mdi.axis',
          'nonOrthogonalClicked', False),
         (None, None, None, None, None),
-        (ToolItemText.SAVE, 'Save the figure', 'mdi.content-save', 'save_figure', None)
+        (ToolItemText.SAVE, 'Save the figure', 'mdi.content-save', 'save_figure', None),
+        (ToolItemText.REMOVE, 'Remove peak from workspace', 'mdi.close', 'removeClicked', False),
+        (ToolItemText.ADD, 'Add peak to workspace', 'mdi.plus', 'addClicked', False)
     )
 
     def _init_toolbar(self):

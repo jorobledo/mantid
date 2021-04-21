@@ -357,6 +357,12 @@ class SliceViewer(ObservingPresenter):
         else:
             self.view.peaks_view.hide()
 
+    def peak_removal(self, workspace_name, peak):
+        return
+
+    def peak_add(self, workspace_name, peak):
+        return
+
     def replace_workspace(self, workspace_name, workspace):
         """
         Called when the SliceViewerADSObserver has detected that a workspace has changed

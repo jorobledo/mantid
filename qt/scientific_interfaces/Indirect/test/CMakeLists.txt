@@ -55,8 +55,8 @@ mtd_add_qt_tests(
     gmock
     ${POCO_LIBRARIES}
     ${Boost_LIBRARIES}
-    PythonInterfaceCore
     ${PYTHON_LIBRARIES}
+    PythonInterfaceCore
   QT5_LINK_LIBS
     Qt5::OpenGL
     Qt5::Concurrent

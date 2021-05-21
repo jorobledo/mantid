@@ -126,7 +126,7 @@ void DownloadInstrument::exec() {
       g_log.notice("A new Facilities.xml file has been downloaded, this will "
                    "take effect next time Mantid is started.");
     } else {
-      g_log.information() << "Downloading \"" << itMap.second << "\" from \"" << itMap.first << "\"\n";
+      g_log.notice() << "Downloading \"" << itMap.second << "\" from \"" << itMap.first << "\"\n";
     }
     doDownloadFile(itMap.first, itMap.second);
   }
@@ -241,9 +241,11 @@ DownloadInstrument::StringToStringMap DownloadInstrument::processRepository() {
     }
   }
 
+  g_log.notice() << "fileMap.size just before removing orphaned files " << fileMap.size() << "\n";
   // remove any .xml files from the local appdata directory that are not present
   // in the remote instrument repo
   removeOrphanedFiles(localPath.toString(), repoFilenames);
+  g_log.notice() << "fileMap.size just  removing orphaned files " << fileMap.size() << "\n";
 
   return fileMap;
 }

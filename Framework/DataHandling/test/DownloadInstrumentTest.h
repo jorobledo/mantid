@@ -42,6 +42,8 @@ private:
 
     std::string outputString;
     if (urlFile.find("api.github.com") != std::string::npos) {
+      g_log.notice() << "On the if conditional branch"
+                     << "\n";
       outputString = "[\n"
                      "  {\n"
                      "    \"name\": \"NewFile.xml\",\n"
@@ -76,13 +78,18 @@ private:
                      "  }\n"
                      "]";
     } else if (urlFile.find("https://www.mantidproject.org/NewFile.xml") != std::string::npos) {
+      g_log.notice() << "On the first else-if conditional branch"
+                     << "\n";
       outputString = "Here is some sample text for NewFile.xml";
     } else if (urlFile.find("https://www.mantidproject.org/UpdatableFile.xml") != std::string::npos) {
+      g_log.notice() << "On the second else-if conditional branch"
+                     << "\n";
       outputString = "Here is some sample text for WISH_Definition.xml";
     }
 
     std::ofstream file;
     file.open(localFilePath.c_str());
+    g_log.notice() << outputString << "\n";
     file << outputString;
     file.close();
 

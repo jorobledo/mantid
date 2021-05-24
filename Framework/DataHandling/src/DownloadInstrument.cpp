@@ -218,6 +218,7 @@ DownloadInstrument::StringToStringMap DownloadInstrument::processRepository() {
   for (auto &serverElement : serverContents) {
     std::string name = serverElement.get("name", "").asString();
     repoFilenames.insert(name);
+    g_log.notice() << "name: " << name << "\n";
     Poco::Path filePath(localPath, name);
     if (filePath.getExtension() != "xml")
       continue;
@@ -231,10 +232,14 @@ DownloadInstrument::StringToStringMap DownloadInstrument::processRepository() {
     // this will also catch when file is only present on github (as local sha
     // will be "")
     if ((sha != installSha) && (sha != localSha)) {
+      g_log.notice() << "On if branch for sha comparison"
+                     << "\n";
       fileMap.emplace(downloadUrl,
                       filePath.toString());                                     // ACTION - DOWNLOAD to localPath
     } else if ((!localSha.empty()) && (sha == installSha) && (sha != localSha)) // matches install, but different local
     {
+      g_log.notice() << "On else-if branch for sha comparison"
+                     << "\n";
       fileMap.emplace(downloadUrl, filePath.toString()); // ACTION - DOWNLOAD to
                                                          // localPath and
                                                          // overwrite
@@ -245,7 +250,7 @@ DownloadInstrument::StringToStringMap DownloadInstrument::processRepository() {
   // remove any .xml files from the local appdata directory that are not present
   // in the remote instrument repo
   removeOrphanedFiles(localPath.toString(), repoFilenames);
-  g_log.notice() << "fileMap.size just  removing orphaned files " << fileMap.size() << "\n";
+  g_log.notice() << "fileMap.size just after removing orphaned files " << fileMap.size() << "\n";
 
   return fileMap;
 }

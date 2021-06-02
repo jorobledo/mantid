@@ -18,4 +18,9 @@ New Features
 
 - Fit functions `ElasticIsoRotDiff` and `InelasticIsoRotDiff` have been made available in the ConvFit tab in the Indirect Data Analysis
 
+Improvements
+############
+
+- Single input has been removed from the Indirect Data Analysis Fit tabs. All data input is now done via the multiple input dialog.
+
 :ref:`Release 6.2.0 <v6.2.0>`

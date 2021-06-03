@@ -414,7 +414,7 @@ if [[ ${DO_UNITTESTS} == true ]]; then
     for (( irun=1; irun <=500; irun++ ))
     do
       echo "run: $irun"
-      run_with_xvfb $CTEST_EXE --no-compress-output -R "DownloadInstrumentTest" -T Test -j${BUILD_THREADS:?} --schedule-random --output-on-failure
+      run_with_xvfb $CTEST_EXE --no-compress-output -R "LoadNexusProcessedTest" -T Test -j${BUILD_THREADS:?} --schedule-random --output-on-failure
       terminate_xvfb_sessions
     done
 fi

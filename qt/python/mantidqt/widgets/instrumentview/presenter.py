@@ -89,7 +89,7 @@ class InstrumentViewPresenter(ObservingPresenter):
 
         if workspace_name == self.ws_name:
             super(InstrumentViewPresenter, self).close(self.ws_name)
-            InstrumentViewManager.remove(self.ws_name)
+            InstrumentViewManager.remove(self.ws_name, self)
 
 
 class InstrumentViewManager:
@@ -101,6 +101,8 @@ class InstrumentViewManager:
     last_view = None
     # a dictionary to trace all the InstrumentView instances launched
     # key is the name of the workspace associated with the InstrumentView widget
+    # value is a list of InstrumentView (several InstrumentView can be opened on
+    # the same workspace
     view_dict = dict()
 
     @staticmethod
@@ -108,7 +110,10 @@ class InstrumentViewManager:
         """Register an InstrumentViewPresenter instance
         """
         InstrumentViewManager.last_view = instrument_view_obj
-        InstrumentViewManager.view_dict[ws_name] = instrument_view_obj
+        if ws_name in InstrumentViewManager.view_dict:
+            InstrumentViewManager.view_dict[ws_name].append(instrument_view_obj)
+        else:
+            InstrumentViewManager.view_dict[ws_name] = [instrument_view_obj]
 
     @staticmethod
     def get_instrument_view(ws_name: str):
@@ -120,14 +125,10 @@ class InstrumentViewManager:
         return InstrumentViewManager.view_dict[ws_name]
 
     @staticmethod
-    def remove(ws_name: str):
+    def remove(ws_name, iv):
         """Remove a registered InstrumentView
         """
-        try:
-            # delete the record
-            del InstrumentViewManager.view_dict[ws_name]
-        except KeyError as ke:
-            # if it does not exist
-            raise RuntimeError(f'workspace {ws_name} does not exist in dictionary. '
-                               f'The available includes {InstrumentViewManager.view_dict.keys()},'
-                               f'FYI: {ke}')
+        if ws_name in InstrumentViewManager.view_dict:
+            InstrumentViewManager.view_dict[ws_name].remove(iv)
+            if not InstrumentViewManager.view_dict[ws_name]:
+                del InstrumentViewManager.view_dict[ws_name]

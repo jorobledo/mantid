@@ -21,7 +21,7 @@ namespace IDA {
 FqFitDataPresenter::FqFitDataPresenter(FqFitModel *model, IIndirectFitDataView *view,
                                        IFQFitObserver *SingleFunctionTemplateBrowser)
     : IndirectFitDataPresenter(model, view, std::make_unique<FqFitDataTablePresenter>(model, view->getDataTable())),
-      m_activeParameterType("Width"), m_dataIndex(TableDatasetIndex{0}), m_fqFitModel(model) {
+      m_activeParameterType("Width"), m_activeWorkspaceIndex(WorkspaceID{0}), m_fqFitModel(model) {
 
   connect(this, SIGNAL(requestedAddWorkspaceDialog()), this, SLOT(updateActiveDataIndex()));
 

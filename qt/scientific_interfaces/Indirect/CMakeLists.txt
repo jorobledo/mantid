@@ -225,7 +225,6 @@ set(
         IndirectDataAnalysisElwinTab.ui
         IndirectDataReduction.ui
         IndirectDiffractionReduction.ui
-        IndirectDockWidgetArea.ui
         IndirectEditResultsDialog.ui
         IndirectFitDataView.ui
         IndirectFitOutputOptions.ui

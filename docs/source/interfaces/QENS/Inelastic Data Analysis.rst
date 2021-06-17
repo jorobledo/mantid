@@ -19,12 +19,13 @@ taken from a bespoke algorithm or auto reduction.
 Four of the available tabs are QENS fitting interfaces and share common features and
 layout. These tabs are documented in :ref:`QENS Fitting <QENS-fitting-ref>`.
 
-The other two tabs in the interface perform transformations on data and are documented in :ref:`Elwin and I(Q,t) <Elwin-iqt-ref>`.
+The other two tabs in the interface perform transformations on data and are documented in
+:ref:`Elwin <Elwin-ref>` and :ref:`I(Q,t) <Iqt-ref>`.
 
 These interfaces do not support GroupWorkspaces as input.
 
-.. interface:: Data Analysis
-  :width: 650
+.. figure::  ../../images/QENS/QENSDataAnalysis.png
+   :height: 1000px
 
 Action Buttons
 ~~~~~~~~~~~~~~

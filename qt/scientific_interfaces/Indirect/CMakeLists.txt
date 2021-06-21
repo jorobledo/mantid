@@ -81,7 +81,6 @@ set(
         IndirectSettingsView.cpp
         IndirectSimulation.cpp
         IndirectSimulationTab.cpp
-        IndirectSpectrumSelectionPresenter.cpp
         IndirectSpectrumSelectionView.cpp
         IndirectSqw.cpp
         IndirectSymmetrise.cpp
@@ -164,7 +163,6 @@ set(
         IndirectSettingsView.h
         IndirectSimulation.h
         IndirectSimulationTab.h
-        IndirectSpectrumSelectionPresenter.h
         IndirectSpectrumSelectionView.h
         IndirectSqw.h
         IndirectSymmetrise.h

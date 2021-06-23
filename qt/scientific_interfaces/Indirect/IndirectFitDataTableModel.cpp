@@ -113,9 +113,9 @@ std::vector<std::pair<std::string, size_t>> IndirectFitDataTableModel::getResolu
 void IndirectFitDataTableModel::setResolution(const std::string &name, WorkspaceID workspaceID) {
   if (!name.empty() && doesExistInADS(name)) {
     const auto resolution = ads_instance.retrieveWS<Mantid::API::MatrixWorkspace>(name);
-    if (m_resolutions->size() > index.value) {
-      m_resolutions->at(index.value) = resolution;
-    } else if (m_resolutions->size() == index.value) {
+    if (m_resolutions->size() > workspaceID.value) {
+      m_resolutions->at(workspaceID.value) = resolution;
+    } else if (m_resolutions->size() == workspaceID.value) {
       m_resolutions->emplace_back(resolution);
     } else {
       throw std::out_of_range("Provided resolution index '" + std::to_string(workspaceID.value) +

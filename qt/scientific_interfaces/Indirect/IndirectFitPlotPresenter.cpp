@@ -70,7 +70,7 @@ void IndirectFitPlotPresenter::handleSelectedFitDataChanged(WorkspaceID workspac
 void IndirectFitPlotPresenter::handlePlotSpectrumChanged(WorkspaceIndex spectrum) {
   setActiveSpectrum(spectrum);
   updatePlots();
-  emit plotSpectrumChanged(spectrum);
+  emit plotSpectrumChanged();
 }
 
 void IndirectFitPlotPresenter::watchADS(bool watch) { m_view->watchADS(watch); }

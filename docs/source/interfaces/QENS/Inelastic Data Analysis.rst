@@ -14,7 +14,8 @@ The majority of the functions used within this interface can be used with both
 reduced files (*_red.nxs*) and workspaces (*_red*) created using the Indirect Data
 Reduction interface or using :math:`S(Q, \omega)` files (*_sqw.nxs*) and
 workspaces (*_sqw*) created using either the Indirect Data Reduction interface or
-taken from a bespoke algorithm or auto reduction.
+taken from a bespoke algorithm or auto reduction. Any file can be used by disabling
+the suffix filter through the :ref:`settings <interface-indirect-settings>`.
 
 Four of the available tabs are QENS fitting interfaces and share common features and
 layout. These tabs are documented in :ref:`QENS Fitting <QENS-fitting-ref>`.

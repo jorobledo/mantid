@@ -634,6 +634,56 @@ public:
     return shape_sptr;
   }
 
+  // void testRotateTaperedGuideandCuboid() {
+
+  //   // algebra line is essential
+  //   std::string xmlShape = ' \
+  //       <cuboid id="inner"> \
+  //           <height val="2"/> \
+  //           <width val="2"/> \
+  //           <depth val="5"/> \
+  //           <centre x="1.0" y="1.0" z="5"/> \
+  //           <axis x="0" y="0" z="1"/> \
+  //           <rotate x="45" y="0" z="0" /> \
+  //       </cuboid> \
+  //       <tapered-guide id="Guide"> \
+  //           <aperture-start height="2.0" width="2.0" /> \
+  //           <length val="3.0" /> \
+  //           <aperture-end height="4.0" width="4.0" /> \
+  //           <centre x="1.0" y="1.0" z="1.0" /> \
+  //           <axis x="0.0" y="0.0" z="1.0" /> \
+  //           <rotate x="45" y="0" z="0" /> \
+  //       </tapered-guide> \
+  //       <algebra val="inner:Guide"/> \
+  //       '
+
+  //       auto shape_sptr = getObject(xmlShape); // should return empty object
+
+  //   TS_ASSERT(!shape_sptr->isValid(V3D(0.0, 0.0, 1)));
+  // }
+
+  // std::shared_ptr<CSGObject> getObject(const std::string &xmlShape) {
+  //   std::string shapeXML = "<type name=\"userShape\"> " + xmlShape + " </type>";
+
+  //   // Set up the DOM parser and parse xml string
+  //   DOMParser pParser;
+  //   Poco::AutoPtr<Document> pDoc = pParser.parseString(shapeXML);
+
+  //   // Get pointer to root element
+  //   Element *pRootElem = pDoc->documentElement();
+
+  //   // convert into a Geometry object
+  //   ShapeFactory sFactory;
+  //   auto shape_sptr = sFactory.createShape(pRootElem);
+  //   shape_sptr->shapeInfo()
+
+  //       GETMESHFROM THE SHAPE CAN PROBABLY DO THIS DIRECTLY IN CPP RATHER THAN
+  //           PYTHON mesh = val.sample().getShape().getMesh()
+
+  //                             boost::python::object expectedMesh =
+
+  // }
+
 private:
   std::string inputFile;
 };

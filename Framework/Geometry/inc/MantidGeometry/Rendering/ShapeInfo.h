@@ -116,6 +116,8 @@ public:
   void setHollowCylinder(const Kernel::V3D &centreBottomBase, const Kernel::V3D &symmetryAxis, double innerRadius,
                          double outerRadius, double height);
   bool operator==(const ShapeInfo &other);
+
+  Kernel::V3D getCentre();
 };
 
 MANTID_GEOMETRY_DLL std::ostream &operator<<(std::ostream &os, const ShapeInfo::GeometryShape shape);

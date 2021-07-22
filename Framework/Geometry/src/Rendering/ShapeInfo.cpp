@@ -150,6 +150,46 @@ std::ostream &operator<<(std::ostream &os, const ShapeInfo::GeometryShape shape)
   return os;
 }
 
+Kernel::V3D ShapeInfo::getCentre() {
+
+  std::vector<V3D> allEightPoints;
+  V3D avgOfPoints = {0, 0, 0};
+  switch (m_shape) {
+  case GeometryShape::CUBOID:
+    allEightPoints[0] = m_points[0];
+    allEightPoints[1] = m_points[3];
+    allEightPoints[2] = m_points[3] + m_points[1];
+    allEightPoints[3] = m_points[1];
+    allEightPoints[4] = m_points[2];
+    allEightPoints[5] = m_points[2] + m_points[3];
+    allEightPoints[6] = m_points[2] + m_points[3] + m_points[1];
+    allEightPoints[7] = m_points[1] + m_points[2];
+    for (auto &n : m_points)
+      avgOfPoints += n;
+    return avgOfPoints / 8;
+    break;
+  case GeometryShape::HEXAHEDRON:
+    for (auto &n : m_points)
+      avgOfPoints += n;
+    return avgOfPoints / 8;
+    break;
+  case GeometryShape::SPHERE:
+    return m_points.front();
+    break;
+  case GeometryShape::CYLINDER:
+    return m_points.front();
+    break;
+  case GeometryShape::CONE:
+    return m_points.front();
+    break;
+  case GeometryShape::HOLLOWCYLINDER:
+    return m_points.front();
+    break;
+  default:
+    return {};
+  }
+}
+
 } // namespace detail
 } // namespace Geometry
 } // namespace Mantid

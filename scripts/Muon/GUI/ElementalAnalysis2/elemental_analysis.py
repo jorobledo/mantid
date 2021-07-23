@@ -19,9 +19,13 @@ from Muon.GUI.ElementalAnalysis2.context.context import ElementalAnalysisContext
 from Muon.GUI.ElementalAnalysis2.load_widget.load_widget import LoadWidget
 from Muon.GUI.ElementalAnalysis2.grouping_widget.ea_grouping_widget import EAGroupingTabWidget
 from Muon.GUI.ElementalAnalysis2.auto_widget.ea_auto_widget import EAAutoTabWidget
+from Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_widget import EACorrectionTabWidget
 from mantidqt.utils.observer_pattern import GenericObserver, GenericObservable, GenericObserverWithArgPassing
 from Muon.GUI.Common.plotting_dock_widget.plotting_dock_widget import PlottingDockWidget
 from Muon.GUI.ElementalAnalysis2.plotting_widget.EA_plot_widget import EAPlotWidget
+
+
+
 
 
 class ElementalAnalysisGui(QtWidgets.QMainWindow):
@@ -104,6 +108,7 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
         self.grouping_tab_widget = EAGroupingTabWidget(self.context)
         self.fitting_tab = QtWidgets.QLineEdit("fitting")
         self.auto_tab = EAAutoTabWidget(self.context)
+        self.correction_tab = EACorrectionTabWidget(self.context)
 
     def setup_tabs(self):
         """
@@ -115,6 +120,7 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
         self.tabs.addTabWithOrder(self.grouping_tab_widget.group_tab_view, 'Grouping')
         self.tabs.addTabWithOrder(self.auto_tab.auto_tab_view, 'Automatic')
         self.tabs.addTabWithOrder(self.fitting_tab, 'Fitting')
+        self.tabs.addTabWithOrder(self.correction_tab.correction_tab_view, "Corrections")
 
     def closeEvent(self, event):
         self.removeDockWidget(self.dockable_plot_widget_window)

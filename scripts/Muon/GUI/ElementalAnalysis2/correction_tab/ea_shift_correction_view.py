@@ -5,8 +5,9 @@
 #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
 # SPDX - License - Identifier: GPL - 3.0 +
 from qtpy import QtWidgets
-
 from Muon.GUI.Common import message_box
+
+DEFAULT_SHIFT = 0
 
 
 class EAShiftCorrectionTabView(QtWidgets.QWidget):
@@ -15,6 +16,7 @@ class EAShiftCorrectionTabView(QtWidgets.QWidget):
         super(EAShiftCorrectionTabView, self).__init__(parent=parent)
         self.shift_label = QtWidgets.QLabel(" Shift (KeV) : ", parent=self)
         self.shift_lineedit = QtWidgets.QLineEdit(parent=self)
+        self.shift_lineedit.setText(str(DEFAULT_SHIFT))
         self.apply_shift_button = QtWidgets.QPushButton(" Apply shift ", parent=self)
         self.horizontal_layout = QtWidgets.QHBoxLayout()
         self.horizontal_layout.addWidget(self.shift_label)

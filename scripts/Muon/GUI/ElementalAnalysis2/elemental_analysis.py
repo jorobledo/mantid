@@ -152,6 +152,8 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
             self.grouping_tab_widget.group_tab_presenter.loadObserver)
         self.load_widget.load_widget.loadNotifier.add_subscriber(
             self.auto_tab.auto_tab_presenter.update_view_observer)
+        self.load_widget.load_widget.loadNotifier.add_subscriber(
+            self.correction_tab.correction_tab_presenter.update_view_observer)
 
     def setup_gui_variable_observers(self):
         self.context.gui_context.gui_variables_notifier.add_subscriber(

@@ -18,6 +18,8 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
         self.horizontal_layout2 = QtWidgets.QHBoxLayout()
         self.horizontal_layout3 = QtWidgets.QHBoxLayout()
         self.setup_widget_layout()
+        self.setup_initial_state()
+        self.setup_active_elements()
 
     def setup_widget_layout(self):
         self.add_efficiency_checkbox = QtWidgets.QCheckBox(parent=self)
@@ -45,6 +47,22 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
         self.vertical_layout.addLayout(self.horizontal_layout3)
         self.setLayout(self.vertical_layout)
 
+    def setup_active_elements(self):
+        self.default_efficiency_checkbox.clicked.connect(self.on_default_efficiency_checkbox_changed)
+
+    def setup_initial_state(self):
+        self.show_efficiency_file_widgets(False)
+        self.add_efficiency_checkbox.setChecked(False)
+        self.default_efficiency_checkbox.setChecked(True)
+
+    def show_efficiency_file_widgets(self, state):
+        self.efficiency_file_label.setVisible(state)
+        self.efficiency_file_button.setVisible(state)
+
+    def on_default_efficiency_checkbox_changed(self):
+        state = self.default_efficiency_checkbox.isChecked()
+        self.show_efficiency_file_widgets(not state)
+
     def warning_popup(self, message):
         message_box.warning(str(message), parent=self)
 
@@ -69,3 +87,6 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
 
     def calculate_efficiency_slot(self, slot):
         self.calculate_efficiency_button.clicked.connect(slot)
+
+    def set_efficiency_data_file_label_text(self, filename):
+        self.efficiency_file_label.setText(filename)

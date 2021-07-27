@@ -11,6 +11,9 @@ from Muon.GUI.ElementalAnalysis2.correction_tab.ea_absorption_correction_view im
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_efficiency_correction_view import EAEfficiencyCorrectionTabView
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_calibration_correction_view import EACalibrationCorrectionTabView
 
+DEFAULT_MINIMUM_ENERGY = 100
+DEFAULT_MAXIMUM_ENERGY = 1000
+
 
 class EACorrectionTabView(QtWidgets.QWidget):
 
@@ -33,8 +36,10 @@ class EACorrectionTabView(QtWidgets.QWidget):
 
         self.energy_start_label = QtWidgets.QLabel("Minimum energy (KeV):")
         self.energy_start_line_edit = QtWidgets.QLineEdit(self)
+        self.energy_start_line_edit.setText(str(DEFAULT_MINIMUM_ENERGY))
         self.energy_end_label = QtWidgets.QLabel("Maximum energy (KeV):")
         self.energy_end_line_edit = QtWidgets.QLineEdit(self)
+        self.energy_end_line_edit.setText(str(DEFAULT_MAXIMUM_ENERGY))
         self.horizontal_layout2 = QtWidgets.QHBoxLayout()
         self.horizontal_layout2.addWidget(self.energy_start_label)
         self.horizontal_layout2.addWidget(self.energy_start_line_edit)

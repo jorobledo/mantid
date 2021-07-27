@@ -64,7 +64,7 @@ class EACorrectionTabPresenter:
         params = self.view.efficiency_view.get_efficiency_parameters()
         if not params["use default efficiencies"]:
             if not params["detector filepath"]:
-                self.view.warning_popup("No filepath given")
+                self.view.warning_popup("Filepath for detector_efficiency data file must be given")
                 return
         return params
 
@@ -108,6 +108,10 @@ class EACorrectionTabPresenter:
 
     def get_initial_parameters(self):
         params = self.view.get_initial_parameters()
+        if params["group_name"] == "; ":
+            self.view.warning_popup("No workspace selected")
+            return None
+
         try:
             params["energy_start"] = float(params["energy_start"])
             params["energy_end"] = float(params["energy_end"])
@@ -118,30 +122,34 @@ class EACorrectionTabPresenter:
         if params["energy_end"] < params["energy_start"]:
             self.view.warning_popup("Maximum energy must be less than Minimum energy")
             return None
+        return params
 
     def handle_apply_correction_button_clicked(self):
-        print("correcting data")
         all_parameters = {}
         initial_params = self.get_initial_parameters()
         if initial_params is None:
             return
         all_parameters["initial"] = initial_params
+
         if self.view.calibration_view.apply_calibration():
             calibration_params = self.get_calibration_parameters()
             if calibration_params is None:
                 return
+            all_parameters["calibration"] = calibration_params
 
         if self.view.efficiency_view.apply_efficiency():
             efficiency_params = self.get_efficiency_parameters()
             if efficiency_params is None:
                 return
+            all_parameters["efficiency"] = efficiency_params
 
         if self.view.absorption_view.apply_absorption():
             absorption_params = self.get_absorption_parameters()
             if absorption_params is None:
                 return
+            all_parameters["absorption"] = absorption_params
 
         if len(all_parameters.keys()) == 1:
             self.view.warning_popup("No corrections selected")
             return
-        self.model.calculate_corrections(all_parameters)
+        self.model.handle_calculate_corrections(all_parameters)

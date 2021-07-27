@@ -4,7 +4,7 @@
 #   NScD Oak Ridge National Laboratory, European Spallation Source,
 #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
 # SPDX - License - Identifier: GPL - 3.0 +
-from qtpy import QtWidgets
+from qtpy import QtWidgets, QtCore
 
 from Muon.GUI.Common import message_box
 
@@ -16,36 +16,46 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
         self.vertical_layout = QtWidgets.QVBoxLayout()
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
         self.horizontal_layout2 = QtWidgets.QHBoxLayout()
-        self.horizontal_layout3 = QtWidgets.QHBoxLayout()
         self.setup_widget_layout()
         self.setup_initial_state()
         self.setup_active_elements()
 
     def setup_widget_layout(self):
-        self.add_efficiency_checkbox = QtWidgets.QCheckBox(parent=self)
-        self.add_efficiency_label = QtWidgets.QLabel(" Add efficiencies to corrections ", parent=self)
-        self.default_efficiency_checkbox = QtWidgets.QCheckBox(parent=self)
-        self.default_efficiency_label = QtWidgets.QLabel(" Use default detector efficiency ", parent=self)
+        self.group = QtWidgets.QGroupBox("Efficiency corrections")
+        self.group.setFlat(False)
+        self.setStyleSheet("QGroupBox {border: 1px solid grey;border-radius: 10px;margin-top: 1ex; margin-right: 0ex}"
+                           "QGroupBox:title {"
+                           'subcontrol-origin: margin;'
+                           "padding: 0 3px;"
+                           'subcontrol-position: top center;'
+                           'padding-top: 0px;'
+                           'padding-bottom: 0px;'
+                           "padding-right: 10px;"
+                           ' color: grey; }')
 
-        self.horizontal_layout1.addWidget(self.add_efficiency_checkbox)
-        self.horizontal_layout1.addWidget(self.add_efficiency_label)
-        self.horizontal_layout1.addWidget(self.default_efficiency_checkbox)
-        self.horizontal_layout1.addWidget(self.default_efficiency_label)
+        self.add_efficiency_checkbox = QtWidgets.QCheckBox(self)
+        self.add_efficiency_label = QtWidgets.QLabel(" Add efficiencies to corrections ", self)
+        self.default_efficiency_checkbox = QtWidgets.QCheckBox(self)
+        self.default_efficiency_label = QtWidgets.QLabel(" Use default detector efficiency ", self)
 
-        self.efficiency_file_button = QtWidgets.QPushButton(" Select efficiency data file ", parent=self)
-        self.efficiency_file_label = QtWidgets.QLabel("", parent=self)
+        self.horizontal_layout1.addWidget(self.add_efficiency_checkbox, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout1.addWidget(self.add_efficiency_label, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout1.insertStretch(-1, 1)
+        self.horizontal_layout1.addWidget(self.default_efficiency_checkbox, alignment=QtCore.Qt.AlignRight)
+        self.horizontal_layout1.addWidget(self.default_efficiency_label, alignment=QtCore.Qt.AlignRight)
+
+        self.efficiency_file_button = QtWidgets.QPushButton(" Select efficiency data file ", self)
+        self.efficiency_file_label = QtWidgets.QLabel("", self)
 
         self.horizontal_layout2.addWidget(self.efficiency_file_button)
         self.horizontal_layout2.addWidget(self.efficiency_file_label)
 
-        self.calculate_efficiency_button = QtWidgets.QPushButton(" Calculate efficiency corrections ", parent=self)
-
-        self.horizontal_layout3.addWidget(self.calculate_efficiency_button)
-
         self.vertical_layout.addLayout(self.horizontal_layout1)
         self.vertical_layout.addLayout(self.horizontal_layout2)
-        self.vertical_layout.addLayout(self.horizontal_layout3)
-        self.setLayout(self.vertical_layout)
+        self.group.setLayout(self.vertical_layout)
+        self.widget_layout = QtWidgets.QVBoxLayout(self)
+        self.widget_layout.addWidget(self.group)
+        self.setLayout(self.widget_layout)
 
     def setup_active_elements(self):
         self.default_efficiency_checkbox.clicked.connect(self.on_default_efficiency_checkbox_changed)
@@ -67,26 +77,19 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
         message_box.warning(str(message), parent=self)
 
     def get_efficiency_parameters(self):
-        params = {"Add_efficiencies": self.add_efficiency_checkbox.checkState()}
+        params = {}
         use_default = self.default_efficiency_checkbox.checkState()
-        if use_default:
-            params["use default efficiencies"] = use_default
-        else:
-            filepath = self.default_efficiency_label.text()
-            if filepath:
-                params["use default efficiencies"] = use_default
-                params["detector filepath"] = filepath
-            else:
-                self.warning_popup("Filepath must be given")
-                return
-
+        params["use default efficiencies"] = use_default
+        if not use_default:
+            filepath = self.efficiency_file_label.text()
+            params["detector filepath"] = filepath
         return params
 
     def select_detector_efficiency_file_slot(self, slot):
         self.efficiency_file_button.clicked.connect(slot)
 
-    def calculate_efficiency_slot(self, slot):
-        self.calculate_efficiency_button.clicked.connect(slot)
-
     def set_efficiency_data_file_label_text(self, filename):
         self.efficiency_file_label.setText(filename)
+
+    def apply_efficiency(self):
+        return self.add_efficiency_checkbox.checkState()

@@ -10,3 +10,7 @@ class EACorrectionTabModel:
 
     def __init__(self, context):
         self.context = context
+        self.group_context = context.group_context
+
+    def calculate_corrections(self, parameters):
+        print("in model")

@@ -4,12 +4,12 @@
 #   NScD Oak Ridge National Laboratory, European Spallation Source,
 #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
 # SPDX - License - Identifier: GPL - 3.0 +
-from qtpy import QtWidgets
+from qtpy import QtWidgets, QtCore
 
 from Muon.GUI.Common import message_box
 
 SHAPE_TYPE_COLUMNS = {"None": [], "Disk": ["Radius (cm)", "Thickness (cm)"], "Sphere": ["Radius (cm)"],
-                      "Cuboid": ["Length (cm)", "Width (cm)", "Thickness (cm)"]}
+                      "Flat Plate": ["Height (cm)", "Width (cm)", "Thickness (cm)"]}
 MUON_PROFILE_SPECIFIERS = ["Muon depth", "Muon implantation workspace"]
 DEFAULT_MUON_DEPTH = 0
 DEFAULT_MUON_RANGE = 0
@@ -21,7 +21,7 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(EAAbsorptionCorrectionTabView, self).__init__(parent=parent)
-        self.shape_table = QtWidgets.QTableWidget(parent=self)
+        self.shape_table = QtWidgets.QTableWidget(self)
         self.shape_table.setMaximumHeight(50)
         self.vertical_layout = QtWidgets.QVBoxLayout()
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
@@ -41,55 +41,70 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         size_policy.setHorizontalStretch(0)
         size_policy.setVerticalStretch(0)
 
+        self.group = QtWidgets.QGroupBox("Absorption corrections")
+        self.group.setFlat(False)
+        self.setStyleSheet("QGroupBox {border: 1px solid grey;border-radius: 10px;margin-top: 1ex; margin-right: 0ex}"
+                           "QGroupBox:title {"
+                           'subcontrol-origin: margin;'
+                           "padding: 0 3px;"
+                           'subcontrol-position: top center;'
+                           'padding-top: 0px;'
+                           'padding-bottom: 0px;'
+                           "padding-right: 10px;"
+                           ' color: grey; }')
+        self.add_absorption_checkbox = QtWidgets.QCheckBox(self)
+        self.add_absorption_label = QtWidgets.QLabel(" Add absorption to corrections ", self)
+        self.horizontal_layout1.addWidget(self.add_absorption_checkbox, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout1.addWidget(self.add_absorption_label, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout1.insertStretch(-1, 1)
+
         self.shapes_label = QtWidgets.QLabel(" Geometry type: ", self)
-        self.shapes_combobox = QtWidgets.QComboBox(parent=self)
+        self.shapes_combobox = QtWidgets.QComboBox(self)
         self.shapes_label.setSizePolicy(size_policy)
-        self.horizontal_layout1.addWidget(self.shapes_label)
-        self.horizontal_layout1.addWidget(self.shapes_combobox)
+        self.horizontal_layout2.addWidget(self.shapes_label)
+        self.horizontal_layout2.addWidget(self.shapes_combobox)
 
         self.absorption_coefficient_file_button = QtWidgets.QPushButton(" Select absorption coefficient data file ",
                                                                         self)
         self.absorption_coefficient_file_label = QtWidgets.QLabel("", self)
         self.absorption_coefficient_file_button.setSizePolicy(size_policy)
-        self.horizontal_layout2.addWidget(self.absorption_coefficient_file_button)
-        self.horizontal_layout2.addWidget(self.absorption_coefficient_file_label)
+        self.horizontal_layout3.addWidget(self.absorption_coefficient_file_button)
+        self.horizontal_layout3.addWidget(self.absorption_coefficient_file_label)
 
         self.use_default_checkbox = QtWidgets.QCheckBox(self)
         self.use_default_label = QtWidgets.QLabel(" Use default detector setting? ", self)
-        self.horizontal_layout3.addWidget(self.use_default_checkbox)
-        self.horizontal_layout3.addWidget(self.use_default_label)
+        self.horizontal_layout4.addWidget(self.use_default_checkbox, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout4.addWidget(self.use_default_label, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout4.insertStretch(-1, 1)
 
         self.detector_distance_label = QtWidgets.QLabel(" Distance (cm)", self)
         self.detector_distance_lineedit = QtWidgets.QLineEdit(self)
         self.detector_angle_label = QtWidgets.QLabel(" Angle in degrees ", self)
         self.detector_angle_lineedit = QtWidgets.QLineEdit(self)
-        self.horizontal_layout4.addWidget(self.detector_distance_label)
-        self.horizontal_layout4.addWidget(self.detector_distance_lineedit)
-        self.horizontal_layout4.addWidget(self.detector_angle_label)
-        self.horizontal_layout4.addWidget(self.detector_angle_lineedit)
+        self.horizontal_layout5.addWidget(self.detector_distance_label)
+        self.horizontal_layout5.addWidget(self.detector_distance_lineedit)
+        self.horizontal_layout5.addWidget(self.detector_angle_label)
+        self.horizontal_layout5.addWidget(self.detector_angle_lineedit)
 
-        self.muon_profile_specifier_label = QtWidgets.QLabel(" Specify muon profle by: ", self)
+        self.muon_profile_specifier_label = QtWidgets.QLabel(" Specify muon profle by:", self)
         self.muon_profile_specifier_label.setSizePolicy(size_policy)
         self.muon_profile_specifier_combobox = QtWidgets.QComboBox(self)
-        self.horizontal_layout5.addWidget(self.muon_profile_specifier_label)
-        self.horizontal_layout5.addWidget(self.muon_profile_specifier_combobox)
+        self.horizontal_layout6.addWidget(self.muon_profile_specifier_label)
+        self.horizontal_layout6.addWidget(self.muon_profile_specifier_combobox)
 
         self.muon_depth_label = QtWidgets.QLabel(" Average muon depth (mm)", self)
         self.muon_depth_lineedit = QtWidgets.QLineEdit(self)
         self.muon_range_label = QtWidgets.QLabel(" Range of muons (mm)", self)
         self.muon_range_lineedit = QtWidgets.QLineEdit(self)
-        self.horizontal_layout6.addWidget(self.muon_depth_label)
-        self.horizontal_layout6.addWidget(self.muon_depth_lineedit)
-        self.horizontal_layout6.addWidget(self.muon_range_label)
-        self.horizontal_layout6.addWidget(self.muon_range_lineedit)
+        self.horizontal_layout7.addWidget(self.muon_depth_label)
+        self.horizontal_layout7.addWidget(self.muon_depth_lineedit)
+        self.horizontal_layout7.addWidget(self.muon_range_label)
+        self.horizontal_layout7.addWidget(self.muon_range_lineedit)
 
         self.muon_workspace_label = QtWidgets.QLabel(" Muon profile workspace ", self)
         self.muon_workspace_lineedit = QtWidgets.QLineEdit(self)
-        self.horizontal_layout7.addWidget(self.muon_workspace_label)
-        self.horizontal_layout7.addWidget(self.muon_workspace_lineedit)
-
-        self.calculate_absorption_button = QtWidgets.QPushButton("Calculate absorption correction")
-        self.horizontal_layout8.addWidget(self.calculate_absorption_button)
+        self.horizontal_layout8.addWidget(self.muon_workspace_label)
+        self.horizontal_layout8.addWidget(self.muon_workspace_lineedit)
 
         self.vertical_layout.addLayout(self.horizontal_layout1)
         self.vertical_layout.addWidget(self.shape_table)
@@ -99,7 +114,11 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         self.vertical_layout.addLayout(self.horizontal_layout5)
         self.vertical_layout.addLayout(self.horizontal_layout6)
         self.vertical_layout.addLayout(self.horizontal_layout7)
-        self.setLayout(self.vertical_layout)
+        self.vertical_layout.addLayout(self.horizontal_layout8)
+        self.group.setLayout(self.vertical_layout)
+        self.widget_layout = QtWidgets.QVBoxLayout(self)
+        self.widget_layout.addWidget(self.group)
+        self.setLayout(self.widget_layout)
 
     def setup_active_elements(self):
         self.use_default_checkbox.clicked.connect(self.on_default_detector_checbox_changed)
@@ -149,11 +168,54 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
     def warning_popup(self, message):
         message_box.warning(str(message), parent=self)
 
-    def create_table(self):
-        pass
+    def get_absorption_parameters(self):
+        params = {}
+        params.update(self.get_shape_parameters())
+        params.update(self.get_detector_settings_parameters())
+        params.update(self.get_muon_profile_parameters())
 
-    def calculate_absorption_slot(self, slot):
-        self.calculate_absorption_button.clicked.connect(slot)
+        params["Absorption_coefficient_filepath"] = self.absorption_coefficient_file_label.text()
+        return params
+
+    def get_detector_settings_parameters(self):
+        params = {}
+        use_detector_setting = self.use_default_checkbox.checkState()
+        params["use_default_detector_settings"] = use_detector_setting
+        if not use_detector_setting:
+            params["detector_distance"] = self.detector_distance_lineedit.text()
+            params["detector_angle"] = self.detector_angle_lineedit.text()
+        return params
+
+    def get_muon_profile_parameters(self):
+        params = {}
+        specifier = self.muon_profile_specifier_combobox.currentText()
+        params["muon_profile_specifier"] = specifier
+        if specifier == "Muon depth":
+            params["muon_depth"] = self.muon_depth_lineedit.text()
+            params["muon_range"] = self.muon_range_lineedit.text()
+        elif specifier == "Muon implantation workspace":
+            params["muon_implantation_workspace"] = self.muon_workspace_lineedit.text()
+        return params
+
+    def get_shape_parameters(self):
+        params = {}
+        shape_type = self.shapes_combobox.currentText()
+        params["Geometry"] = shape_type
+        shape_parameters = {}
+        if shape_type == "Disk":
+            shape_parameters["shape_type"] = "Cylinder"
+            shape_parameters["Radius"] = self.shape_table.cellWidget(0, 0).text()
+            shape_parameters["Height"] = self.shape_table.cellWidget(0, 1).text()
+        elif shape_type == "Flat Plate":
+            shape_parameters["shape_type"] = "FlatPlate"
+            shape_parameters["Height"] = self.shape_table.cellWidget(0, 0).text()
+            shape_parameters["Width"] = self.shape_table.cellWidget(0, 1).text()
+            shape_parameters["Thickness"] = self.shape_table.cellWidget(0, 2).text()
+        elif shape_type == "Sphere":
+            shape_parameters["shape_type"] = "Sphere"
+            shape_parameters["Radius"] = self.shape_table.cellWidget(0, 0).text()
+        params["shape_parameters"] = shape_parameters
+        return params
 
     def select_absorption_coefficient_file_slot(self, slot):
         self.absorption_coefficient_file_button.clicked.connect(slot)
@@ -178,3 +240,9 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         header.setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         header.hide()
         self.shape_table.insertRow(0)
+        for i in range(len(columns)):
+            lineedit = QtWidgets.QLineEdit()
+            self.shape_table.setCellWidget(0, i, lineedit)
+
+    def apply_absorption(self):
+        return self.add_absorption_checkbox.checkState()

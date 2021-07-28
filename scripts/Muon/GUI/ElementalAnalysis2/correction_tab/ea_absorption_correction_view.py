@@ -107,8 +107,8 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         self.horizontal_layout8.addWidget(self.muon_workspace_lineedit)
 
         self.vertical_layout.addLayout(self.horizontal_layout1)
-        self.vertical_layout.addWidget(self.shape_table)
         self.vertical_layout.addLayout(self.horizontal_layout2)
+        self.vertical_layout.addWidget(self.shape_table)
         self.vertical_layout.addLayout(self.horizontal_layout3)
         self.vertical_layout.addLayout(self.horizontal_layout4)
         self.vertical_layout.addLayout(self.horizontal_layout5)
@@ -203,16 +203,16 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         params["Geometry"] = shape_type
         shape_parameters = {}
         if shape_type == "Disk":
-            shape_parameters["shape_type"] = "Cylinder"
+            shape_parameters["Shape"] = "Cylinder"
             shape_parameters["Radius"] = self.shape_table.cellWidget(0, 0).text()
             shape_parameters["Height"] = self.shape_table.cellWidget(0, 1).text()
         elif shape_type == "Flat Plate":
-            shape_parameters["shape_type"] = "FlatPlate"
+            shape_parameters["Shape"] = "FlatPlate"
             shape_parameters["Height"] = self.shape_table.cellWidget(0, 0).text()
             shape_parameters["Width"] = self.shape_table.cellWidget(0, 1).text()
-            shape_parameters["Thickness"] = self.shape_table.cellWidget(0, 2).text()
+            shape_parameters["Thick"] = self.shape_table.cellWidget(0, 2).text()
         elif shape_type == "Sphere":
-            shape_parameters["shape_type"] = "Sphere"
+            shape_parameters["Shape"] = "Sphere"
             shape_parameters["Radius"] = self.shape_table.cellWidget(0, 0).text()
         params["shape_parameters"] = shape_parameters
         return params

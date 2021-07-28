@@ -8,6 +8,8 @@ from mantidqt.utils.observer_pattern import GenericObserver
 from qtpy.QtWidgets import QFileDialog
 from Muon.GUI.Common.ADSHandler.ADS_calls import check_if_workspace_exist
 
+MINIMUM_DETECTOR_DEFINED_ENERGY_FOR_EFFICIENCY = {"Detector 1": 0, "Detector 2": 60, "Detector 3": 25, "Detector 4": 20}
+
 
 class EACorrectionTabPresenter:
 
@@ -76,7 +78,7 @@ class EACorrectionTabPresenter:
         try:
             shape_parameters = params["shape_parameters"]
             for key in shape_parameters:
-                if key == "shape_type":
+                if key == "Shape":
                     continue
                 shape_parameters[key] = float(shape_parameters[key])
         except ValueError:
@@ -141,6 +143,17 @@ class EACorrectionTabPresenter:
             efficiency_params = self.get_efficiency_parameters()
             if efficiency_params is None:
                 return
+            """
+                Efficiency is not well defined at lower energies and users are warned if selected minimum energy is
+                less than threshold energy but corrections are still applied
+            """
+            detector = self.context.group_context[initial_params["group_name"]].detector
+            energy_start = initial_params["energy_start"]
+            min_energy = MINIMUM_DETECTOR_DEFINED_ENERGY_FOR_EFFICIENCY[detector]
+            if energy_start < min_energy:
+                self.view.warning_popup(f"Efficiencies for {detector} below {min_energy} KeV is not defined well so "
+                                        f"corrected data may be incorrect")
+
             all_parameters["efficiency"] = efficiency_params
 
         if self.view.absorption_view.apply_absorption():
@@ -149,6 +162,7 @@ class EACorrectionTabPresenter:
                 return
             all_parameters["absorption"] = absorption_params
 
+        # if no corrections are selected function returns without calling model
         if len(all_parameters.keys()) == 1:
             self.view.warning_popup("No corrections selected")
             return

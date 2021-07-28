@@ -19,7 +19,9 @@ if(ENABLE_WORKBENCH)
   add_subdirectory(mantidqt)
 
   # Setup dependency chain
+  if (NOT STANDALONE_FRAMEWORK)
   add_dependencies(mantidqt PythonInterface)
+  endif()
 
   if(ENABLE_WORKBENCH)
     # Configure resources data in place for ease of development. The output file

@@ -20,7 +20,7 @@ set(_header_depends
 )
 
 list(APPEND common_link_libs ${CORE_MANTIDLIBS} ${POCO_LIBRARIES}
-     PythonInterfaceCore
+     Mantid::PythonInterfaceCore
 )
 
 # Wrapper module linked against Qt5
@@ -38,7 +38,7 @@ if(ENABLE_WORKBENCH)
               Qt5::Widgets
               Qt5::Gui
               Qt5::Qscintilla
-              API
+              Mantid::API
     INSTALL_DIR ${WORKBENCH_SITE_PACKAGES}/mantidqt
     LINUX_INSTALL_RPATH "\$ORIGIN/.."
     OSX_INSTALL_RPATH "@loader_path/.."

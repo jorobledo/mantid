@@ -59,7 +59,9 @@ add_custom_command(OUTPUT ${_scripts_pth_dest}
                    DEPENDS ${_scripts_pth_src}
                    COMMENT "Generating scripts .pth file")
 add_custom_target(ScriptsDotPth ALL DEPENDS ${_scripts_pth_dest})
+if(NOT STANDALONE_FRAMEWORK)
 add_dependencies(PythonInterface ScriptsDotPth)
+endif()
 
 # install copy
 set(_scripts_pth_install

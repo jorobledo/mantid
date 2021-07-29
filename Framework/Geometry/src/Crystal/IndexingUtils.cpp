@@ -23,6 +23,7 @@
 #include <cmath>
 
 using namespace Mantid::Geometry;
+using namespace Mantid;
 using Mantid::Kernel::DblMatrix;
 using Mantid::Kernel::Matrix;
 using Mantid::Kernel::Quat;

@@ -15,7 +15,10 @@ class EACalibrationCorrectionTabView(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(EACalibrationCorrectionTabView, self).__init__(parent=parent)
+        self.holder_widget = QtWidgets.QWidget(self)
         self.setup_widget_layout()
+        self.add_calibration_checkbox.clicked.connect(self.on_calibration_checkbox_changed)
+        self.on_calibration_checkbox_changed()
 
     def setup_widget_layout(self):
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
@@ -33,7 +36,7 @@ class EACalibrationCorrectionTabView(QtWidgets.QWidget):
                            "padding-right: 10px;"
                            ' color: grey; }')
         self.add_calibration_checkbox = QtWidgets.QCheckBox(self)
-        self.add_calibration_label = QtWidgets.QLabel(" Add calibration change to corrections ", self)
+        self.add_calibration_label = QtWidgets.QLabel(" Apply calibration change to corrections ", self)
         self.horizontal_layout1.addWidget(self.add_calibration_checkbox, alignment=QtCore.Qt.AlignLeft)
         self.horizontal_layout1.addWidget(self.add_calibration_label, alignment=QtCore.Qt.AlignLeft)
         self.horizontal_layout1.insertStretch(-1, 1)
@@ -49,9 +52,10 @@ class EACalibrationCorrectionTabView(QtWidgets.QWidget):
         self.horizontal_layout2.addWidget(self.gradient_lineedit)
         self.horizontal_layout2.addWidget(self.shift_label)
         self.horizontal_layout2.addWidget(self.shift_lineedit)
+        self.holder_widget.setLayout(self.horizontal_layout2)
 
         self.vertical_layout.addLayout(self.horizontal_layout1)
-        self.vertical_layout.addLayout(self.horizontal_layout2)
+        self.vertical_layout.addWidget(self.holder_widget)
         self.group.setLayout(self.vertical_layout)
         self.widget_layout = QtWidgets.QVBoxLayout(self)
         self.widget_layout.addWidget(self.group)
@@ -59,6 +63,10 @@ class EACalibrationCorrectionTabView(QtWidgets.QWidget):
 
     def warning_popup(self, message):
         message_box.warning(str(message), parent=self)
+
+    def on_calibration_checkbox_changed(self):
+        state = self.add_calibration_checkbox.checkState()
+        self.holder_widget.setVisible(state)
 
     def get_calibration_parameters(self):
         params = {}

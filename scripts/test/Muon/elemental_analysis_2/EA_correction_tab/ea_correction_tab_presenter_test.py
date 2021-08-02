@@ -58,10 +58,26 @@ class EACorrectionTabPresenterTest(unittest.TestCase):
         self.assertEqual(params, params)
 
     def test_get_absorption_parameters_with_invalid_parameters(self):
-        pass
+        params = {'Geometry': 'Sphere', 'shape_parameters': {'Shape': 'Sphere', 'Radius': 1.0},
+                  'use_default_detector_settings': 2, 'muon_profile_specifier': 'Muon implantation workspace',
+                  "muon_implantation_workspace": "muon_profile",
+                  'Absorption_coefficient_filepath': 'C:/Users/bux39319/Documents/Absorptiondata/Carbon.dat'}
+        self.view.absorption_view.get_absorption_parameters.return_value = params
+        self.presenter.get_absorption_parameters()
+
+        self.view.absorption_view.get_absorption_parameters.assert_called_once()
+        self.view.warning_popup.assert_called_once_with("Muon implantation workspace does not exist")
 
     def test_get_absorption_parameters_with_valid_parameters(self):
-        pass
+        params = {'Geometry': 'Sphere', 'shape_parameters': {'Shape': 'Sphere', 'Radius': 1.0},
+                  'use_default_detector_settings': 2, 'muon_profile_specifier': 'Muon depth', 'muon_depth': 0.3,
+                  'muon_range': 0.1,
+                  'Absorption_coefficient_filepath': 'C:/Users/bux39319/Documents/Absorptiondata/Carbon.dat'}
+        self.view.absorption_view.get_absorption_parameters.return_value = params
+        self.presenter.get_absorption_parameters()
+
+        self.view.absorption_view.get_absorption_parameters.assert_called_once()
+        self.view.warning_popup.assert_not_called()
 
     def test_handle_apply_correction_button_clicked(self):
         initial_parameters = {"group_name": "Mock_workspace", "energy_start": 30, "energy_end": 100}
@@ -90,8 +106,9 @@ class EACorrectionTabPresenterTest(unittest.TestCase):
 
     def test_handle_apply_correction_button_clicked_with_invalid_start_energy(self):
         initial_parameters = {"group_name": "Mock_workspace", "energy_start": 30, "energy_end": 100}
+        efficiency_params = {"use default efficiencies": True}
         self.presenter.get_calibration_parameters = mock.Mock(return_value="Calibration")
-        self.presenter.get_efficiency_parameters = mock.Mock(return_value="Efficiency")
+        self.presenter.get_efficiency_parameters = mock.Mock(return_value=efficiency_params)
         self.presenter.get_absorption_parameters = mock.Mock(return_value="Absorption")
         self.view.calibration_view.apply_calibration.return_value = False
         self.view.efficiency_view.apply_efficiency.return_value = True
@@ -110,7 +127,7 @@ class EACorrectionTabPresenterTest(unittest.TestCase):
         self.presenter.get_efficiency_parameters.assert_called_once()
         self.presenter.get_absorption_parameters.assert_called_once()
         self.model.handle_calculate_corrections.assert_called_once_with({"initial": initial_parameters,
-                                                                         "efficiency": "Efficiency",
+                                                                         "efficiency": efficiency_params,
                                                                          "absorption": "Absorption"})
 
     def test_handle_apply_correction_button_clicked_when_no_correction_selected(self):
@@ -161,12 +178,11 @@ class EACorrectionTabPresenterTest(unittest.TestCase):
         self.view.set_absorption_coefficient_data_file_label_text.assert_not_called()
 
     def test_update_view(self):
-        self.context.group_context.group_names = ["mock; detector 1", "mock; detector 2", "test; detector 3",
-                                                  "test; detector 4"]
+        selected_groups = ["mock; detector 1", "mock; detector 2", "test; detector 3", "test; detector 4"]
+        self.context.group_context.selected_groups = selected_groups
         self.presenter.update_view()
 
-        self.view.add_workspace_to_view.assert_called_once_with({"mock": ["detector 1", "detector 2"],
-                                                                 "test": ["detector 3", "detector 4"]})
+        self.view.add_workspace_to_view.assert_called_once_with(selected_groups)
 
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ from Muon.GUI.Common import message_box
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_absorption_correction_view import EAAbsorptionCorrectionTabView
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_efficiency_correction_view import EAEfficiencyCorrectionTabView
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_calibration_correction_view import EACalibrationCorrectionTabView
+from Muon.GUI.Common.data_selectors.cyclic_data_selector_view import CyclicDataSelectorView
 
 DEFAULT_MINIMUM_ENERGY = 100
 DEFAULT_MAXIMUM_ENERGY = 1000
@@ -22,16 +23,13 @@ class EACorrectionTabView(QtWidgets.QWidget):
         self.calibration_view = EACalibrationCorrectionTabView(parent=self)
         self.efficiency_view = EAEfficiencyCorrectionTabView(parent=self)
         self.absorption_view = EAAbsorptionCorrectionTabView(parent=self)
+        self.data_selector = CyclicDataSelectorView(parent=self)
         self.setup_widget_view()
-        self.setup_active_elements()
 
     def setup_widget_view(self):
         self.calculate_button = QtWidgets.QPushButton("Apply corrections", self)
-        self.group_combobox = QtWidgets.QComboBox(self)
-        self.detector_combobox = QtWidgets.QComboBox(self)
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
-        self.horizontal_layout1.addWidget(self.group_combobox)
-        self.horizontal_layout1.addWidget(self.detector_combobox)
+        self.horizontal_layout1.addWidget(self.data_selector)
         self.horizontal_layout1.addWidget(self.calculate_button)
 
         self.energy_start_label = QtWidgets.QLabel("Minimum energy (KeV):")
@@ -55,23 +53,8 @@ class EACorrectionTabView(QtWidgets.QWidget):
 
         self.setLayout(self.vertical_layout)
 
-    def setup_active_elements(self):
-        self.group_combobox.currentIndexChanged.connect(self.on_group_combobox_changed)
-
     def add_workspace_to_view(self, workspaces):
-        self.group_combobox.clear()
-        self.detector_combobox.clear()
-        self.workspaces_in_view = workspaces
-        self.group_combobox.addItems(sorted(list(self.workspaces_in_view)))
-        self.on_group_combobox_changed()
-
-    def on_group_combobox_changed(self):
-        self.detector_combobox.clear()
-        group_workspace = self.group_combobox.currentText()
-        if not group_workspace:
-            return
-        detectors = self.workspaces_in_view[group_workspace]
-        self.detector_combobox.addItems(detectors)
+        self.data_selector.update_dataset_names_combo_box(workspaces)
 
     def warning_popup(self, message):
         message_box.warning(str(message), parent=self)
@@ -93,9 +76,7 @@ class EACorrectionTabView(QtWidgets.QWidget):
 
     def get_initial_parameters(self):
         params = {}
-        run = self.group_combobox.currentText()
-        detector = self.detector_combobox.currentText()
-        group_name = "; ".join([run, detector])
+        group_name = self.data_selector.current_dataset_name
         params["group_name"] = group_name
         params["energy_start"] = self.energy_start_line_edit.text()
         params["energy_end"] = self.energy_end_line_edit.text()

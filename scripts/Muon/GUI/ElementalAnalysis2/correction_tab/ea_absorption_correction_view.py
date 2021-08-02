@@ -23,6 +23,8 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         super(EAAbsorptionCorrectionTabView, self).__init__(parent=parent)
         self.shape_table = QtWidgets.QTableWidget(self)
         self.shape_table.setMaximumHeight(50)
+        self.holder_widget = QtWidgets.QWidget(self)
+        self.holder_widget_layout = QtWidgets.QVBoxLayout()
         self.vertical_layout = QtWidgets.QVBoxLayout()
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
         self.horizontal_layout2 = QtWidgets.QHBoxLayout()
@@ -53,7 +55,7 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
                            "padding-right: 10px;"
                            ' color: grey; }')
         self.add_absorption_checkbox = QtWidgets.QCheckBox(self)
-        self.add_absorption_label = QtWidgets.QLabel(" Add absorption to corrections ", self)
+        self.add_absorption_label = QtWidgets.QLabel(" Apply absorption to corrections ", self)
         self.horizontal_layout1.addWidget(self.add_absorption_checkbox, alignment=QtCore.Qt.AlignLeft)
         self.horizontal_layout1.addWidget(self.add_absorption_label, alignment=QtCore.Qt.AlignLeft)
         self.horizontal_layout1.insertStretch(-1, 1)
@@ -106,15 +108,19 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         self.horizontal_layout8.addWidget(self.muon_workspace_label)
         self.horizontal_layout8.addWidget(self.muon_workspace_lineedit)
 
+        self.holder_widget_layout.addLayout(self.horizontal_layout2)
+        self.holder_widget_layout.addWidget(self.shape_table)
+        self.holder_widget_layout.addLayout(self.horizontal_layout3)
+        self.holder_widget_layout.addLayout(self.horizontal_layout4)
+        self.holder_widget_layout.addLayout(self.horizontal_layout5)
+        self.holder_widget_layout.addLayout(self.horizontal_layout6)
+        self.holder_widget_layout.addLayout(self.horizontal_layout7)
+        self.holder_widget_layout.addLayout(self.horizontal_layout8)
+
+        self.holder_widget.setLayout(self.holder_widget_layout)
+
         self.vertical_layout.addLayout(self.horizontal_layout1)
-        self.vertical_layout.addLayout(self.horizontal_layout2)
-        self.vertical_layout.addWidget(self.shape_table)
-        self.vertical_layout.addLayout(self.horizontal_layout3)
-        self.vertical_layout.addLayout(self.horizontal_layout4)
-        self.vertical_layout.addLayout(self.horizontal_layout5)
-        self.vertical_layout.addLayout(self.horizontal_layout6)
-        self.vertical_layout.addLayout(self.horizontal_layout7)
-        self.vertical_layout.addLayout(self.horizontal_layout8)
+        self.vertical_layout.addWidget(self.holder_widget)
         self.group.setLayout(self.vertical_layout)
         self.widget_layout = QtWidgets.QVBoxLayout(self)
         self.widget_layout.addWidget(self.group)
@@ -124,6 +130,7 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         self.use_default_checkbox.clicked.connect(self.on_default_detector_checbox_changed)
         self.muon_profile_specifier_combobox.currentIndexChanged.connect(self.on_muon_profile_specifier_changed)
         self.shapes_combobox.currentIndexChanged.connect(self.on_shape_type_changed)
+        self.add_absorption_checkbox.clicked.connect(self.on_absorption_checkbox_changed)
 
     def setup_initial_state(self):
         self.shapes_combobox.addItems(list(SHAPE_TYPE_COLUMNS))
@@ -137,6 +144,8 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         self.detector_angle_lineedit.setText(str(DEFAULT_ANGLE))
         self.muon_depth_lineedit.setText(str(DEFAULT_MUON_DEPTH))
         self.muon_range_lineedit.setText(str(DEFAULT_MUON_RANGE))
+
+        self.on_absorption_checkbox_changed()
 
     def show_detector_setting_widgets(self, state):
         self.detector_distance_label.setVisible(state)
@@ -164,6 +173,10 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
     def on_default_detector_checbox_changed(self):
         state = self.use_default_checkbox.isChecked()
         self.show_detector_setting_widgets(not state)
+
+    def on_absorption_checkbox_changed(self):
+        state = self.add_absorption_checkbox.checkState()
+        self.holder_widget.setVisible(state)
 
     def warning_popup(self, message):
         message_box.warning(str(message), parent=self)

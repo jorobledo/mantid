@@ -26,15 +26,8 @@ class EACorrectionTabPresenter:
         self.view.calculate_corrections_slot(self.handle_apply_correction_button_clicked)
 
     def update_view(self):
-        group_names = self.context.group_context.group_names
-        workspaces_to_add = {}
-        for group in group_names:
-            run, detector = [x.strip() for x in group.split(";")]
-            if run not in workspaces_to_add:
-                workspaces_to_add[run] = []
-
-            workspaces_to_add[run].append(detector)
-        self.view.add_workspace_to_view(workspaces_to_add)
+        group_names = self.context.group_context.selected_groups
+        self.view.add_workspace_to_view(group_names)
 
     def handle_select_efficiency_data_file_button_clicked(self):
         filename = QFileDialog.getOpenFileName()
@@ -110,7 +103,7 @@ class EACorrectionTabPresenter:
 
     def get_initial_parameters(self):
         params = self.view.get_initial_parameters()
-        if params["group_name"] == "; ":
+        if not params["group_name"]:
             self.view.warning_popup("No workspace selected")
             return None
 
@@ -150,7 +143,7 @@ class EACorrectionTabPresenter:
             detector = self.context.group_context[initial_params["group_name"]].detector
             energy_start = initial_params["energy_start"]
             min_energy = MINIMUM_DETECTOR_DEFINED_ENERGY_FOR_EFFICIENCY[detector]
-            if energy_start < min_energy:
+            if energy_start < min_energy and efficiency_params["use default efficiencies"]:
                 self.view.warning_popup(f"Efficiencies for {detector} below {min_energy} KeV is not defined well so "
                                         f"corrected data may be incorrect")
 

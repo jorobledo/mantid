@@ -12,7 +12,7 @@ from mantidqt.utils.observer_pattern import GenericObservable
 from mantid.simpleapi import ExtractSingleSpectrum, ConjoinWorkspaces, CropWorkspace, RenameWorkspace, ScaleX, \
     EvaluateFunction, Divide, CreateWorkspace, SetSample, SetSampleMaterial, XrayAbsorptionCorrection
 
-EXTRACTED_SPECTRUM_SUFFIX = "_EA_spectrum_"
+EXTRACTED_SPECTRUM_SUFFIX = "EA_spectrum_"
 CORRECTIONS_SUFFIX = "_EA_CORRECTED_DATA"
 EFFICIENCY_WORKSPACE_NAME = "EA_Efficiency_workspace"
 MUON_IMPLANTATION_WORKSPACE_NAME = "EA_Implantation_workspace"
@@ -78,6 +78,11 @@ class EACorrectionTabModel:
     def handle_calculation_error(self, error):
         message_box.warning("ERROR: " + str(error), None)
         self.calculation_finished_notifier.notify_subscribers()
+        for i in range(3):
+            remove_ws_if_present(EXTRACTED_SPECTRUM_SUFFIX + str(i+1))
+        remove_ws_if_present(MUON_IMPLANTATION_WORKSPACE_NAME)
+        remove_ws_if_present(XRAY_ABSORPTION_WORKSPACE)
+        remove_ws_if_present(EFFICIENCY_WORKSPACE_NAME)
 
     def split_and_crop_workspace(self, params):
         """ switch to getting from EAGroup
@@ -89,7 +94,7 @@ class EACorrectionTabModel:
         xmax = params["energy_end"]
         workspace_names = []
         for i in range(3):
-            output_name = workspace_name + EXTRACTED_SPECTRUM_SUFFIX + str(i + 1)
+            output_name = EXTRACTED_SPECTRUM_SUFFIX + str(i + 1)
             ExtractSingleSpectrum(InputWorkspace=workspace_name, OutputWorkspace=output_name, WorkspaceIndex=i)
             CropWorkspace(InputWorkspace=output_name, OutputWorkspace=output_name, XMin=xmin, XMax=xmax)
             workspace_names.append(output_name)
@@ -174,6 +179,7 @@ class EACorrectionTabModel:
         else:
             # shape parameters in dict form are given in cm
             SetSample(InputWorkspace=workspace_name, Geometry=shape_parameters)
+        # A chemical formula has to be given or SetSampleMaterial algorithm  will fail and has no bearing on calculation
         SetSampleMaterial(InputWorkspace=workspace_name, ChemicalFormula="Au",
                           XRayAttenuationProfile=params["Absorption_coefficient_filepath"])
 

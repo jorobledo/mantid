@@ -12,7 +12,7 @@ from mantidqt.utils.observer_pattern import GenericObservable
 from mantid.simpleapi import ExtractSingleSpectrum, ConjoinWorkspaces, CropWorkspace, RenameWorkspace, ScaleX, \
     EvaluateFunction, Divide, CreateWorkspace, SetSample, SetSampleMaterial, XrayAbsorptionCorrection
 
-EXTRACTED_SPECTRUM_SUFFIX = "EA_spectrum_"
+EXTRACTED_SPECTRUM_PREFIX = "EA_spectrum_"
 CORRECTIONS_SUFFIX = "_EA_CORRECTED_DATA"
 EFFICIENCY_WORKSPACE_NAME = "EA_Efficiency_workspace"
 MUON_IMPLANTATION_WORKSPACE_NAME = "EA_Implantation_workspace"
@@ -41,6 +41,7 @@ class EACorrectionTabModel:
         self.group_context = context.group_context
         self.calculation_started_notifier = GenericObservable()
         self.calculation_finished_notifier = GenericObservable()
+        self.is_calculating = False
 
     @staticmethod
     def gaussian(xvals, centre, sigma, height=1):
@@ -59,7 +60,7 @@ class EACorrectionTabModel:
                 self.apply_absorption_corrections(name, parameters["absorption"], group_name)
         output_name = group_name + CORRECTIONS_SUFFIX
         self.join_workspaces(workspace_names, output_name)
-        self.handle_correction_successful(group_name, output_name)
+        self.handle_correction_done(group_name, output_name)
 
     def handle_calculate_corrections(self, parameters):
         self.corrections_model = ThreadModelWrapper(lambda: self.calculate_corrections(parameters))
@@ -71,30 +72,31 @@ class EACorrectionTabModel:
 
     def handle_calculation_started(self):
         self.calculation_started_notifier.notify_subscribers()
+        self.is_calculating = True
 
     def calculation_success(self):
         self.calculation_finished_notifier.notify_subscribers()
+        self.is_calculating = False
 
     def handle_calculation_error(self, error):
         message_box.warning("ERROR: " + str(error), None)
         self.calculation_finished_notifier.notify_subscribers()
+        # removes any workspaces created while applying corrections
         for i in range(3):
-            remove_ws_if_present(EXTRACTED_SPECTRUM_SUFFIX + str(i+1))
+            remove_ws_if_present(EXTRACTED_SPECTRUM_PREFIX + str(i+1))
         remove_ws_if_present(MUON_IMPLANTATION_WORKSPACE_NAME)
         remove_ws_if_present(XRAY_ABSORPTION_WORKSPACE)
         remove_ws_if_present(EFFICIENCY_WORKSPACE_NAME)
 
     def split_and_crop_workspace(self, params):
-        """ switch to getting from EAGroup
+
         group_name = params["group_name"]
-        workspace_name = self.group_context[group_name].get_counts_workspace()
-        """
-        workspace_name = params["group_name"]
+        workspace_name = self.group_context[group_name].get_counts_workspace_for_run()
         xmin = params["energy_start"]
         xmax = params["energy_end"]
         workspace_names = []
         for i in range(3):
-            output_name = EXTRACTED_SPECTRUM_SUFFIX + str(i + 1)
+            output_name = EXTRACTED_SPECTRUM_PREFIX + str(i + 1)
             ExtractSingleSpectrum(InputWorkspace=workspace_name, OutputWorkspace=output_name, WorkspaceIndex=i)
             CropWorkspace(InputWorkspace=output_name, OutputWorkspace=output_name, XMin=xmin, XMax=xmax)
             workspace_names.append(output_name)
@@ -185,8 +187,8 @@ class EACorrectionTabModel:
 
     def create_muon_implantation_workspace(self, depth, muon_range):
         """
-            muon implantation wokspace is assumed to be a guassian with an mean that is the depth and sigma
-             that is the range. gaussian is evaluated from mean - 3*sigma to mean + 3*sigma
+            muon implantation workspace is assumed to be a guassian with an mean that is the depth and sigma
+            that is the range. gaussian is evaluated from mean - 3*sigma to mean + 3*sigma
         """
         start = depth - (3 * muon_range)
         stop = depth + (3 * muon_range)
@@ -200,8 +202,8 @@ class EACorrectionTabModel:
             y_data = y_data[1:]
         CreateWorkspace(OutputWorkspace=MUON_IMPLANTATION_WORKSPACE_NAME, DataX=x_data, DataY=y_data)
 
-    def handle_correction_successful(self, group_name, output_name):
+    def handle_correction_done(self, group_name, output_name):
         group = self.group_context[group_name]
         group_workspace = retrieve_ws(group.run_number)
         group_workspace.addWorkspace(retrieve_ws(output_name))
-        # group.update_corrected_workspace(output_name)
+        group.update_corrected_workspace(output_name)

@@ -30,6 +30,7 @@ class EAGroup(object):
         self._counts_workspace_rebin = None
         self._peak_table = None
         self._matches_table = None
+        self._corrected_workspace = None
         self.update_counts_workspace(str(group_name))
         self.error_notifier = None
 
@@ -48,6 +49,9 @@ class EAGroup(object):
                 for table in matches_table.getNames():
                     remove_ws_if_present(table)
                 remove_ws_if_present(self.get_matches_table())
+
+            if self.is_corrected_workspace_present():
+                remove_ws_if_present(self.get_corrected_workspace())
 
         except Exception as error:
             """
@@ -121,11 +125,17 @@ class EAGroup(object):
     def update_matches_table(self, table):
         self._matches_table = MuonWorkspaceWrapper(table)
 
+    def update_corrected_workspace(self, workspace):
+        self._corrected_workspace = MuonWorkspaceWrapper(workspace)
+
     def get_peak_table(self):
         return self._peak_table.workspace_name
 
     def get_matches_table(self):
         return self._matches_table.workspace_name
+
+    def get_corrected_workspace(self):
+        return self._corrected_workspace.workspace_name
 
     def is_peak_table_present(self):
         return bool(self._peak_table)
@@ -135,6 +145,9 @@ class EAGroup(object):
 
     def is_rebinned_workspace_present(self):
         return bool(self._counts_workspace_rebin)
+
+    def is_corrected_workspace_present(self):
+        return bool(self._corrected_workspace)
 
     def remove_rebinned_workspace(self):
         self._counts_workspace_rebin = None
@@ -146,3 +159,6 @@ class EAGroup(object):
 
     def remove_matches_group(self):
         self._matches_table = None
+
+    def remove_corrected_workspace(self):
+        self._corrected_workspace = None

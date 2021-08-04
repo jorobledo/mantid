@@ -10,10 +10,12 @@ from mantidqt.utils.observer_pattern import GenericObservable
 from Muon.GUI.ElementalAnalysis2.context.context import REBINNED_VARIABLE_WS_SUFFIX, REBINNED_FIXED_WS_SUFFIX
 from Muon.GUI.ElementalAnalysis2.auto_widget.ea_auto_tab_model import PEAKS_WS_SUFFIX, REFITTED_PEAKS_WS_SUFFIX,\
     MATCH_GROUP_WS_SUFFIX, ERRORS_WS_SUFFIX
+from Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_model import CORRECTIONS_SUFFIX
 
 
 INVALID_STRINGS_FOR_GROUP_NAMES = [REBINNED_VARIABLE_WS_SUFFIX, REBINNED_FIXED_WS_SUFFIX, PEAKS_WS_SUFFIX,
-                                   REFITTED_PEAKS_WS_SUFFIX, ERRORS_WS_SUFFIX, MATCH_GROUP_WS_SUFFIX]
+                                   REFITTED_PEAKS_WS_SUFFIX, ERRORS_WS_SUFFIX, MATCH_GROUP_WS_SUFFIX,
+                                   CORRECTIONS_SUFFIX]
 
 
 def get_default_grouping(loadedData, error_notifier=None):
@@ -133,7 +135,10 @@ class EAGroupContext(object):
         for group in self._groups:
             if group.name == group_name:
                 self._groups.remove(group)
-                return
+                break
+        if group_name in self._selected_groups:
+            self._selected_groups.remove(group_name)
+            return
 
     @staticmethod
     def get_detector_and_run_from_workspace_name(workspace_name):
@@ -150,7 +155,8 @@ class EAGroupContext(object):
         handles removing workspace from group
         :param workspace_name : name of workspace removed
         """
-        for name in [REBINNED_FIXED_WS_SUFFIX, REBINNED_VARIABLE_WS_SUFFIX, PEAKS_WS_SUFFIX, MATCH_GROUP_WS_SUFFIX]:
+        for name in [REBINNED_FIXED_WS_SUFFIX, REBINNED_VARIABLE_WS_SUFFIX, PEAKS_WS_SUFFIX, MATCH_GROUP_WS_SUFFIX,
+                     CORRECTIONS_SUFFIX]:
             if workspace_name.endswith(name):
                 group_name = workspace_name.replace(name, "")
                 group = self[group_name]
@@ -167,3 +173,6 @@ class EAGroupContext(object):
 
                 elif workspace_name.endswith(MATCH_GROUP_WS_SUFFIX):
                     group.remove_matches_group()
+
+                elif workspace_name.endswith(CORRECTIONS_SUFFIX):
+                    group.remove_corrected_workspace()

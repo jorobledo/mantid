@@ -16,6 +16,7 @@ class EACalibrationCorrectionTabView(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(EACalibrationCorrectionTabView, self).__init__(parent=parent)
         self.holder_widget = QtWidgets.QWidget(self)
+
         self.setup_widget_layout()
         self.add_calibration_checkbox.clicked.connect(self.on_calibration_checkbox_changed)
         self.on_calibration_checkbox_changed()

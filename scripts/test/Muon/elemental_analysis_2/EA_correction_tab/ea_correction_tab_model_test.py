@@ -172,21 +172,32 @@ class EACorrectionTabModelTest(unittest.TestCase):
     @mock.patch("Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_model.ExtractSingleSpectrum")
     @mock.patch("Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_model.CropWorkspace")
     def test_split_and_crop_workspace(self, mock_crop, mock_extract):
-        params = {"group_name": "mock_group", "energy_start": 50, "energy_end": 1000}
+        group_name = "mock_group"
+        mock_get_item = mock.Mock()
+        mock_group = mock.Mock()
+        mock_group.get_counts_workspace_for_run.return_value = group_name
+        mock_get_item.return_value = mock_group
+        self.context.group_context.__getitem__ = mock_get_item
+
+        params = {"group_name": group_name, "energy_start": 50, "energy_end": 1000}
         xmin = params["energy_start"]
         xmax = params["energy_end"]
         workspace_name = self.model.split_and_crop_workspace(params)
+
         correct_workspace_names = []
-        # Algorithm are called 3 times as there are 3 spectrums in workspace
-        for i in range(3):
+        # Algorithms are called 3 times as there are 3 spectrums in workspace
+        number_of_spectrums = 3
+        for i in range(number_of_spectrums):
             output_name = EXTRACTED_SPECTRUM_SUFFIX + str(i + 1)
             correct_workspace_names.append(output_name)
-            mock_extract.assert_any_call(InputWorkspace=params["group_name"], OutputWorkspace=output_name,
+            mock_extract.assert_any_call(InputWorkspace=group_name, OutputWorkspace=output_name,
                                          WorkspaceIndex=i)
             mock_crop.assert_any_call(InputWorkspace=output_name, OutputWorkspace=output_name, XMin=xmin, XMax=xmax)
-        self.assertEqual(mock_crop.call_count, 3)
-        self.assertEqual(mock_extract.call_count, 3)
+        self.assertEqual(mock_crop.call_count, number_of_spectrums)
+        self.assertEqual(mock_extract.call_count, number_of_spectrums)
         self.assertEqual(workspace_name, correct_workspace_names)
+        mock_group.get_counts_workspace_for_run.assert_called_once()
+        mock_get_item.assert_called_once_with(group_name)
 
     @mock.patch("Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_model.CreateWorkspace")
     @mock.patch("Muon.GUI.ElementalAnalysis2.correction_tab.ea_correction_tab_model.np.loadtxt")

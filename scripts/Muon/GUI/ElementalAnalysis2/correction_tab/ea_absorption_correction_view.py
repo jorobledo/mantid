@@ -254,8 +254,8 @@ class EAAbsorptionCorrectionTabView(QtWidgets.QWidget):
         header.hide()
         self.shape_table.insertRow(0)
         for i in range(len(columns)):
-            lineedit = QtWidgets.QLineEdit()
-            self.shape_table.setCellWidget(0, i, lineedit)
+            line_edit = QtWidgets.QLineEdit()
+            self.shape_table.setCellWidget(0, i, line_edit)
 
     def apply_absorption(self):
         return self.add_absorption_checkbox.checkState()

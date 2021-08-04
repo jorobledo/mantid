@@ -53,7 +53,7 @@ class EAEfficiencyCorrectionTabView(QtWidgets.QWidget):
         self.specify_efficiency_label.setSizePolicy(size_policy)
         self.specify_efficiency_combobox = QtWidgets.QComboBox(self)
 
-        self.horizontal_layout2.addWidget(self.specify_efficiency_label, alignment=QtCore.Qt.AlignLeft)
+        self.horizontal_layout2.addWidget(self.specify_efficiency_label)
         self.horizontal_layout2.addWidget(self.specify_efficiency_combobox)
 
         self.efficiency_file_button = QtWidgets.QPushButton(" Select efficiency data file ", self)

@@ -25,9 +25,6 @@ from Muon.GUI.Common.plotting_dock_widget.plotting_dock_widget import PlottingDo
 from Muon.GUI.ElementalAnalysis2.plotting_widget.EA_plot_widget import EAPlotWidget
 
 
-
-
-
 class ElementalAnalysisGui(QtWidgets.QMainWindow):
     """
     The Elemental Analysis 2.0 interface.
@@ -138,6 +135,8 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
 
         self.disable_notifier.add_subscriber(self.auto_tab.auto_tab_presenter.disable_tab_observer)
 
+        self.disable_notifier.add_subscriber(self.correction_tab.correction_tab_view.disable_observer)
+
     def setup_enable_notifier(self):
         self.enable_notifier.add_subscriber(self.load_widget.load_widget.enable_observer)
 
@@ -146,6 +145,8 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
         self.enable_notifier.add_subscriber(self.grouping_tab_widget.grouping_table_view.enable_table_observer)
 
         self.enable_notifier.add_subscriber(self.auto_tab.auto_tab_presenter.enable_tab_observer)
+
+        self.enable_notifier.add_subscriber(self.correction_tab.correction_tab_view.enable_observer)
 
     def setup_load_observers(self):
         self.load_widget.load_widget.loadNotifier.add_subscriber(
@@ -189,6 +190,8 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
 
         self.auto_tab.auto_tab_presenter.model.calculation_finished_notifier.add_subscriber(self.enable_observer)
 
+        self.correction_tab.correction_tab_model.calculation_finished_notifier.add_subscriber(self.enable_observer)
+
     def setup_group_calculation_disable_notifier(self):
         self.load_widget.run_widget.disable_notifier.add_subscriber(self.disable_observer)
 
@@ -199,6 +202,8 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
 
         self.auto_tab.auto_tab_presenter.model.calculation_started_notifier.add_subscriber(self.disable_observer)
 
+        self.correction_tab.correction_tab_model.calculation_started_notifier.add_subscriber(self.disable_observer)
+
     def setup_update_view_notifier(self):
         self.context.update_view_from_model_notifier.add_subscriber(
             self.grouping_tab_widget.group_tab_presenter.update_view_from_model_observer)
@@ -206,3 +211,5 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
             self.auto_tab.auto_tab_presenter.update_view_observer)
         self.context.update_view_from_model_notifier.add_subscriber(
             self.load_widget.load_widget.update_view_from_model_observer)
+        self.context.update_view_from_model_notifier.add_subscriber(
+            self.correction_tab.correction_tab_presenter.update_view_observer)

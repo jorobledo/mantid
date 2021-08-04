@@ -67,6 +67,8 @@ class ElementalAnalysisContext(object):
 
     def remove_workspace(self, workspace):
         # required as the renameHandler returns a name instead of a workspace.
+        if type(workspace) == str:
+            return
         workspace_name = str(workspace)
         if workspace_name not in self.group_context.group_names:
             self.group_context.remove_workspace_from_group(workspace_name)

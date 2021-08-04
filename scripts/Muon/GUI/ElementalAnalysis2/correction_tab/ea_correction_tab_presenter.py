@@ -19,6 +19,7 @@ class EACorrectionTabPresenter:
         self.context = context
         self.update_view_observer = GenericObserver(self.update_view)
         self.setup_buttons()
+        self.update_view()
 
     def setup_buttons(self):
         self.view.select_effieciency_file_slot(self.handle_select_efficiency_data_file_button_clicked)
@@ -28,6 +29,12 @@ class EACorrectionTabPresenter:
     def update_view(self):
         group_names = self.context.group_context.selected_groups
         self.view.add_workspace_to_view(group_names)
+        if len(self.context.group_context.selected_groups) == 0:
+            if not self.model.is_calculating:
+                self.view.disable_tab()
+        else:
+            if not self.model.is_calculating:
+                self.view.enable_tab()
 
     def handle_select_efficiency_data_file_button_clicked(self):
         filename = QFileDialog.getOpenFileName()

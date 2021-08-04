@@ -11,6 +11,7 @@ from Muon.GUI.ElementalAnalysis2.correction_tab.ea_absorption_correction_view im
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_efficiency_correction_view import EAEfficiencyCorrectionTabView
 from Muon.GUI.ElementalAnalysis2.correction_tab.ea_calibration_correction_view import EACalibrationCorrectionTabView
 from Muon.GUI.Common.data_selectors.cyclic_data_selector_view import CyclicDataSelectorView
+from mantidqt.utils.observer_pattern import GenericObserver, GenericObservable
 
 DEFAULT_MINIMUM_ENERGY = 100
 DEFAULT_MAXIMUM_ENERGY = 1000
@@ -24,10 +25,27 @@ class EACorrectionTabView(QtWidgets.QWidget):
         self.efficiency_view = EAEfficiencyCorrectionTabView(parent=self)
         self.absorption_view = EAAbsorptionCorrectionTabView(parent=self)
         self.data_selector = CyclicDataSelectorView(parent=self)
+        self.data_selector.set_data_combo_box_label("Select group")
+        self.data_selector.set_data_combo_box_label_width(100)
+        self.disable_notifier = GenericObservable()
+        self.enable_notifier = GenericObservable()
+
+        self.disable_observer = GenericObserver(self.disable_tab)
+        self.enable_observer = GenericObserver(self.enable_tab)
         self.setup_widget_view()
 
+    def disable_tab(self):
+        self.setEnabled(False)
+
+    def enable_tab(self):
+        self.setEnabled(True)
+
     def setup_widget_view(self):
+        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        size_policy.setHorizontalStretch(0)
+        size_policy.setVerticalStretch(0)
         self.calculate_button = QtWidgets.QPushButton("Apply corrections", self)
+        self.calculate_button.setSizePolicy(size_policy)
         self.horizontal_layout1 = QtWidgets.QHBoxLayout()
         self.horizontal_layout1.addWidget(self.data_selector)
         self.horizontal_layout1.addWidget(self.calculate_button)

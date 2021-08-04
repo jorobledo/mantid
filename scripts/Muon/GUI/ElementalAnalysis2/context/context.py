@@ -145,8 +145,7 @@ class ElementalAnalysisContext(MuonContext):
     def show_all_groups(self):
         pass
 
-    def get_workspace_names_for(self, runs: str, groups: list, fit_to_raw: bool,
-                                simultaneous_fitting_mode: bool = False) -> list:
+    def get_workspace_names_for(self, runs: str, groups: list, simultaneous_fitting_mode: bool = False) -> list:
         """Returns the workspace names of the loaded data for the provided runs and groups/pairs."""
         if simultaneous_fitting_mode:
             return self.get_workspace_names_for_simultaneous_fit(runs, groups)

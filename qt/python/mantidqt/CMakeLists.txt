@@ -22,9 +22,9 @@ set(_header_depends
 list(APPEND common_link_libs ${CORE_MANTIDLIBS} ${POCO_LIBRARIES}
      Mantid::PythonInterfaceCore
 )
-
+message("WORKBNCH SITEPACKAGES ${WORKBENCH_SITE_PACKAGES}")
 # Wrapper module linked against Qt5
-if(ENABLE_WORKBENCH)
+if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
   mtd_add_sip_module(
     MODULE_NAME _commonqt5
     TARGET_NAME mantidqt_commonqt5

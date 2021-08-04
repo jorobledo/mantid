@@ -9,7 +9,7 @@ if(USE_PYTHON_DYNAMIC_LIB)
 endif()
 
 # Wrapper module linked against Qt5
-if(ENABLE_WORKBENCH)
+if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
   mtd_add_sip_module(
     MODULE_NAME _iconsqt5
     TARGET_NAME mantidqt_iconsqt5

@@ -177,9 +177,6 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
         self.context.gui_context.gui_variables_notifier.add_subscriber(
             self.grouping_tab_widget.group_tab_presenter.gui_variables_observer)
 
-        self.fitting_tab.fitting_tab_presenter.selected_fit_results_changed.add_subscriber(
-            self.plot_widget.fit_mode.plot_selected_fit_observer)
-
     def setup_grouping_changed_observers(self):
         self.grouping_tab_widget.grouping_table_widget.data_changed_notifier.add_subscriber(
             self.auto_tab.auto_tab_presenter.group_change_observer)
@@ -252,3 +249,6 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
 
         self.fitting_tab.fitting_tab_presenter.spectrum_changed_notifier.add_subscriber(
             self.plot_widget.fit_mode.fit_spectrum_changed_observer)
+
+        self.fitting_tab.fitting_tab_presenter.selected_fit_results_changed.add_subscriber(
+            self.plot_widget.fit_mode.plot_selected_fit_observer)

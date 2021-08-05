@@ -39,8 +39,8 @@ class EAPlotFitPanePresenter(EAPlotDataPanePresenter):
         raw = self._view.is_raw_plot()
         with_diff = self._view.is_plot_diff()
         plot_type = self._view.get_plot_type()
+        self._current_fit_info = fit_information_list
         if fit_information_list:
-            self._current_fit_info = fit_information_list
             for fit_information in fit_information_list:
                 fit = fit_information.fit
                 fit_workspaces, fit_indices = self._model.get_fit_workspace_and_indices(fit, with_diff)
@@ -74,6 +74,7 @@ class EAPlotFitPanePresenter(EAPlotDataPanePresenter):
             self.handle_plot_selected_fits(self._current_fit_info)
 
     def handle_data_updated(self, autoscale=True, hold_on=False):
+        self._update_tile_plot()
         self.handle_plot_selected_fits(self._current_fit_info, autoscale)
 
     def handle_remove_plot_guess(self):

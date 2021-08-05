@@ -249,3 +249,6 @@ class ElementalAnalysisGui(QtWidgets.QMainWindow):
 
         self.fitting_tab.fitting_tab_presenter.update_plot_guess_notifier.add_subscriber(
             self.plot_widget.fit_mode.update_plot_guess_observer)
+
+        self.fitting_tab.fitting_tab_presenter.spectrum_changed_notifier.add_subscriber(
+            self.plot_widget.fit_mode.fit_spectrum_changed_observer)

@@ -4,7 +4,8 @@
 #   NScD Oak Ridge National Laboratory, European Spallation Source,
 #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
 # SPDX - License - Identifier: GPL - 3.0 +
-from Muon.GUI.ElementalAnalysis2.plotting_widget.EA_plotting_pane.EA_plot_data_pane_model import SPECTRA_INDICES
+from Muon.GUI.ElementalAnalysis2.plotting_widget.EA_plotting_pane.EA_plot_data_pane_model import SPECTRA_INDICES, \
+    INVERSE_SPECTRA_INDICES
 from Muon.GUI.ElementalAnalysis2.plotting_widget.EA_plotting_pane.EA_plot_data_pane_presenter import \
     EAPlotDataPanePresenter
 from mantidqt.utils.observer_pattern import GenericObserver, GenericObserverWithArgPassing
@@ -18,10 +19,12 @@ class EAPlotFitPanePresenter(EAPlotDataPanePresenter):
         self._current_fit_info = None
         self._view.enable_tile_plotting_options()
         self._view.on_plot_diff_checkbox_changed(self.plot_diff_changed)
+        self.view.hide_plot_type()
 
         self.plot_selected_fit_observer = GenericObserverWithArgPassing(self.handle_plot_selected_fits)
         self.remove_plot_guess_observer = GenericObserver(self.handle_remove_plot_guess)
         self.update_plot_guess_observer = GenericObserver(self.handle_update_plot_guess)
+        self.fit_spectrum_changed_observer = GenericObserverWithArgPassing(self.handle_fit_spectrum_changed)
 
     def plot_diff_changed(self):
         self.handle_plot_selected_fits(self._current_fit_info)
@@ -80,3 +83,8 @@ class EAPlotFitPanePresenter(EAPlotDataPanePresenter):
     def handle_update_plot_guess(self):
         if self.context.fitting_context.guess_workspace_name is not None and self.context.fitting_context.plot_guess:
             self._figure_presenter.plot_guess_workspace(self.context.fitting_context.guess_workspace_name)
+
+    def handle_fit_spectrum_changed(self, spectrum_index):
+        spectrum_name = INVERSE_SPECTRA_INDICES[spectrum_index]
+        self.view.set_plot_type(spectrum_name)
+        self.handle_data_type_changed()

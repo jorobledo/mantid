@@ -86,6 +86,7 @@ class EAPlotWidget(object):
         old_plot_mode = self._current_plot_mode
         self._current_plot_mode = self.presenter.get_plot_mode
         selection, x_range, auto, y_range, errors = self.plotting_canvas_widgets[old_plot_mode].get_quick_edit_info
+        print(selection)
         self.plotting_canvas_widgets[self._current_plot_mode].set_quick_edit_info(selection, x_range, auto, y_range,
                                                                                   errors)
         self.presenter.hide(old_plot_mode)

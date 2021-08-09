@@ -377,17 +377,17 @@ fi
 ###############################################################################
 # Build step
 ###############################################################################
-if [[ ${DO_BUILD_CODE} == true ]]; then
-    ${CMAKE_EXE} --build . -- -j${BUILD_THREADS:?}
-    ${CMAKE_EXE} --build . --target AllTests -- -j${BUILD_THREADS:?}
-fi
+#if [[ ${DO_BUILD_CODE} == true ]]; then
+#    ${CMAKE_EXE} --build . -- -j${BUILD_THREADS:?}
+#    ${CMAKE_EXE} --build . --target AllTests -- -j${BUILD_THREADS:?}
+#fi
 
 ###############################################################################
 # Static analysis builds or stop here
 ###############################################################################
-if [[ $USE_CLANG ]] && [[ ${JOB_NAME} == *clang_tidy* ]]; then
-    exit 0
-fi
+#if [[ $USE_CLANG ]] && [[ ${JOB_NAME} == *clang_tidy* ]]; then
+#    exit 0
+#fi
 
 ###############################################################################
 # Run the unit tests

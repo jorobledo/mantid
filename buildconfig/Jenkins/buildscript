@@ -377,17 +377,17 @@ fi
 ###############################################################################
 # Build step
 ###############################################################################
-#if [[ ${DO_BUILD_CODE} == true ]]; then
-#    ${CMAKE_EXE} --build . -- -j${BUILD_THREADS:?}
+if [[ ${DO_BUILD_CODE} == true ]]; then
+    ${CMAKE_EXE} --build . -- -j${BUILD_THREADS:?}
 #    ${CMAKE_EXE} --build . --target AllTests -- -j${BUILD_THREADS:?}
-#fi
+fi
 
 ###############################################################################
 # Static analysis builds or stop here
 ###############################################################################
-#if [[ $USE_CLANG ]] && [[ ${JOB_NAME} == *clang_tidy* ]]; then
-#    exit 0
-#fi
+if [[ $USE_CLANG ]] && [[ ${JOB_NAME} == *clang_tidy* ]]; then
+    exit 0
+fi
 
 ###############################################################################
 # Run the unit tests
@@ -417,7 +417,8 @@ userprops_file=$userconfig_dir/Mantid.user.properties
 echo MultiThreaded.MaxCores=2 > $userprops_file
 
 if [[ ${DO_UNITTESTS} == true ]]; then
-    run_with_xvfb $CTEST_EXE --repeat-until-fail 500 --no-compress-output -R "widget|view|qt" -j${BUILD_THREADS:?} --output-on-failure
+    run_with_xvfb $CTEST_EXE --no-compress-output -R "widget|view|qt" -j${BUILD_THREADS:?} --schedule-random --output-on-failure
+#    run_with_xvfb $CTEST_EXE --repeat-until-fail 500 --no-compress-output -R "widget|view|qt" -j${BUILD_THREADS:?} --output-on-failure
     terminate_xvfb_sessions
 fi
 

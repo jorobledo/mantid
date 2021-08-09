@@ -1,8 +1,6 @@
 # This file manages building/installation of the mantidqt and mantidqtpython
 # Python wrappers.
 
-include(PythonPackageTargetFunctions)
-
 # mantidqt
 if(ENABLE_MANTIDQT)
   if(APPLE)

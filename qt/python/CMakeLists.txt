@@ -4,7 +4,7 @@
 include(PythonPackageTargetFunctions)
 
 # mantidqt
-if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
+if(ENABLE_MANTIDQT)
   if(APPLE)
     set(_install_lib_dirs)
     if(ENABLE_WORKBENCH)
@@ -19,11 +19,11 @@ if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
   add_subdirectory(mantidqt)
 
   # Setup dependency chain
-  if (NOT STANDALONE_FRAMEWORK)
+  if (NOT USE_SYSTEM_FRAMEWORK)
   add_dependencies(mantidqt PythonInterface)
   endif()
 
-  if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
+  if(ENABLE_MANTIDQT)
     # Configure resources data in place for ease of development. The output file
     # is added to the toplevel gitignore
     set(_qrc_file ${CMAKE_CURRENT_LIST_DIR}/resources.qrc)
@@ -94,7 +94,7 @@ if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
       mantidqt/widgets/embedded_find_replace_dialog/test/test_embedded_find_replace_dialog_presenter.py
   )
 
-  if(ENABLE_WORKBENCH OR ENABLE_MANTIDQT)
+  if(ENABLE_MANTIDQT)
     # ctest target for widgets that only get tested in qt5, because they are
     # only used in the workbench
     set(PYTHON_WIDGET_QT5_ONLY_TESTS

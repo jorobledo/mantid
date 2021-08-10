@@ -24,7 +24,6 @@ list(APPEND common_link_libs ${CORE_MANTIDLIBS} ${POCO_LIBRARIES}
 )
 
 # Wrapper module linked against Qt5
-if(ENABLE_MANTIDQT)
   mtd_add_sip_module(
     MODULE_NAME _commonqt5
     TARGET_NAME mantidqt_commonqt5
@@ -44,7 +43,6 @@ if(ENABLE_MANTIDQT)
     OSX_INSTALL_RPATH "@loader_path/.."
     FOLDER Qt5
   )
-endif()
 
 add_subdirectory(icons)
 add_subdirectory(widgets/instrumentview)

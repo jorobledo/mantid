@@ -2,7 +2,6 @@
 # Python wrappers.
 
 # mantidqt
-if(ENABLE_MANTIDQT)
   if(APPLE)
     set(_install_lib_dirs)
     if(ENABLE_WORKBENCH)
@@ -17,11 +16,10 @@ if(ENABLE_MANTIDQT)
   add_subdirectory(mantidqt)
 
   # Setup dependency chain
-  if (NOT USE_SYSTEM_FRAMEWORK)
+  if (MANTID_FRAMEWORK_LIB STREQUAL "BUILD")
   add_dependencies(mantidqt PythonInterface)
   endif()
 
-  if(ENABLE_MANTIDQT)
     # Configure resources data in place for ease of development. The output file
     # is added to the toplevel gitignore
     set(_qrc_file ${CMAKE_CURRENT_LIST_DIR}/resources.qrc)
@@ -49,7 +47,6 @@ if(ENABLE_MANTIDQT)
         COMMENT "Copying debug PyQt5 to bin/Debug"
       )
     endif()
-  endif()
 
   # Testing
   add_dependencies(GUITests mantidqt)
@@ -92,7 +89,6 @@ if(ENABLE_MANTIDQT)
       mantidqt/widgets/embedded_find_replace_dialog/test/test_embedded_find_replace_dialog_presenter.py
   )
 
-  if(ENABLE_MANTIDQT)
     # ctest target for widgets that only get tested in qt5, because they are
     # only used in the workbench
     set(PYTHON_WIDGET_QT5_ONLY_TESTS
@@ -177,5 +173,3 @@ if(ENABLE_MANTIDQT)
       ${CMAKE_CURRENT_SOURCE_DIR} mantidqt_qt5 ${PYTHON_TEST_FILES}
       ${PYTHON_WIDGET_QT5_ONLY_TESTS}
     )
-  endif()
-endif()

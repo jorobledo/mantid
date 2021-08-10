@@ -9,7 +9,6 @@ if(USE_PYTHON_DYNAMIC_LIB)
 endif()
 
 # Wrapper module linked against Qt5
-if(ENABLE_MANTIDQT)
   mtd_add_sip_module(
     MODULE_NAME _iconsqt5
     TARGET_NAME mantidqt_iconsqt5
@@ -24,7 +23,6 @@ if(ENABLE_MANTIDQT)
     OSX_INSTALL_RPATH "@loader_path/../.."
     FOLDER Qt5
   )
-endif()
 
 if(APPLE AND NOT USE_PYTHON_DYNAMIC_LIB)
 target_link_options(mantidqt_iconsqt5 PRIVATE -Wl,-undefined,dynamic_lookup)

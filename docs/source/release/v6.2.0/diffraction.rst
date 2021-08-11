@@ -18,6 +18,8 @@ New features
 
 Improvements
 ############
+- Documentation added for the group calibration routine for :ref:`PowderDiffractionCalibration <calibration_tofpd_group_calibration-ref>`, as as guidance for general users.
+- The group calibration routine for :ref:`PowderDiffractionCalibration <calibration_tofpd_group_calibration-ref>` is made more generic. Groups are now allowed with dedicated control parameters.
 - :ref:`ConvertDiffCal <algm-ConvertDiffCal-v1>` now optionally updates a previous calibration when converting offsets.
 - :ref:`SCDCalibratePanels <algm-SCDCalibratePanels-v2>` major interface update along with enabling the calibration of T0 and sample position.
 - :ref:`SCDCalibratePanels <algm-SCDCalibratePanels-v2>` minor interface update that allows fine control of bank rotation calibration.
@@ -74,6 +76,7 @@ New features
 - New algorithm :ref:`ApplyInstrumentToPeaks <algm-ApplyInstrumentToPeaks>` to update the instrument of peaks within a PeaksWorkspace.
 - New plotting script that provides diagnostic plots of SCDCalibratePanels output.
 - New plotting script that provides diagnositc plots of SCDCalibratePanels2 on a per panel/bank basis.
+- Exposed :meth:`mantid.api.IPeak.getCol` and :meth:`mantid.api.IPeak.getRow` to python
 - Added two integration methods to :ref:`HB3AIntegrateDetectorPeaks <algm-HB3AIntegrateDetectorPeaks>` for simple cuboid integration with and without fitted background.
 - New algorithm :ref:`ConvertPeaksWorkspace <algm-ConvertPeaksWorkspace>` for quick conversion between PeaksWorkspace and LeanElasticPeaksWorkspace.
 - New definition file for D19 ILL instrument added.
@@ -83,6 +86,7 @@ Improvements
 ############
 - Find detector in peaks will check which det is closer when dealing with peak-in-gap situation for tube-type detectors.
 - Existing :ref:`SCDCalibratePanels <algm-SCDCalibratePanels-v2>` now provides better calibration of panel orientation for flat panel detectors.
+- Existing :ref:`DGSPlanner <dgsplanner-ref>` expanded to support WAND²
 - Existing :ref:`MaskPeaksWorkspace <algm-MaskPeaksWorkspace-v1>` now also supports tube-type detectors used at the CORELLI instrument.
 - Existing :ref:`SCDCalibratePanels <algm-SCDCalibratePanels-v2>` now retains the value of small optimization results instead of zeroing them.
 - Existing :ref:`IntegrateEllipsoids <algm-IntegrateEllipsoids-v1>` now can use a different integrator for satellite peaks.

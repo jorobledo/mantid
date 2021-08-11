@@ -5,6 +5,15 @@ MuSR Changes
 .. contents:: Table of Contents
    :local:
 
+Frequency Domain Analysis
+-------------------------
+
+New Features
+############
+
+- The Frequency Domain Analysis interface now allows you to perform a sequential fit using the Sequential Fitting tab.
+- The Sequential Fitting tab allows you to choose the type of dataset you want to fit.
+
 Muon Analysis
 -------------
 
@@ -45,7 +54,14 @@ Improvements
 - The plotting now has autoscale active by default.
 - Added a table to store phasequads in the phase tab, phasequads also no longer automatically delete themselves
   when new data is loaded
+- Frequency domain analysis can now use groups in :ref:`MuonMaxent <algm-MuonMaxent>` calculations.
 - The labels on the tabs in the GUIs will now show in full
+
+BugFixes
+########
+
+- In frequency domain analysis the phasetables calculated from :ref:`MuonMaxent <algm-MuonMaxent>` can be used for
+  :ref:`PhaseQuad <algm-PhaseQuad>` calculations on the phase tab.
 
 ALC
 ---

@@ -1337,7 +1337,7 @@ class CrystalFieldFit(object):
             # Fit CEF parameters only
             self.model.FixAllPeaks = True
             self.overwrite_fit_properties(0)
-            self.fit_sp('SLSQP')
+            self.fit_sp('Powell')
             self._function = self.model.function
             # Fit peaks only
             for parameter in self._free_cef_parameters:
@@ -1503,31 +1503,28 @@ class CrystalFieldFit(object):
         x0 = []
         cef_positions = []
         fun.setAttributeValue('FixAllPeaks', True)
-        for par_id in range(fun.nParams()):
+        for par_id in [id for id in range(fun.nParams()) if not fun.isFixed(id)]:
             parName = fun.getParamName(par_id)
             if parName in CrystalField.field_parameter_names or parName == "IntensityScaling":
-                if not fun.isFixed(par_id):
-                    x0.append(fun.getParameterValue(par_id))
-                    cef_positions.append(par_id)
-        res = sp.minimize(self._evaluate_cf, x0, args=(fun, cef_positions), method=solver, options={'disp': False, 'maxiter': 25})
+                x0.append(fun.getParameterValue(par_id))
+                cef_positions.append(par_id)
+        res = sp.minimize(self._evaluate_cf, x0, args=(fun.clone(), cef_positions), method=solver)
         if res.success:
             for pos in range(len(cef_positions)):
                 fun.setParameter(cef_positions[pos], res.x[pos])
             self.model.update(fun)
 
     def _evaluate_cf(self, x0, fun, cef_pos):
-        from mantid.simpleapi import EvaluateFunction#, CalculateChiSquared
-        #from mantid.api import mtd
+        from mantid.simpleapi import EvaluateFunction
         for pos in range(len(cef_pos)):
             fun.setParameter(cef_pos[pos], x0[pos])
         res = []
         chi2 = 0.0
-        EvaluateFunction(fun, self._input_workspace, OutputWorkspace='eval')
+        EvaluateFunction(Function=fun, InputWorkspace=self._input_workspace, OutputWorkspace='eval')
         for pos in range(len(cef_pos)):
             res.append(fun.getParameterValue(cef_pos[pos]))
         for index in range(min(len(x0),len(res))):
             chi2 += (res[index] - x0[index])**2
-        #chi2 = CalculateChiSquared(fun, InputWorkspace=self._input_workspace, Inputworkspace_1=mtd['eval'])[1]
         return chi2
 
     def _fit_multi(self):

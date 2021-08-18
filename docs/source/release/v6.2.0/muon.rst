@@ -52,6 +52,7 @@ Improvements
 - It is now possible to do a vertical resize of the plot in Muon Analysis and Frequency Domain Analysis.
 - The plotting has been updated for better stability.
 - The plotting now has autoscale active by default.
+- It is now possible to load nexusV2 files in the GUI.
 - Added a table to store phasequads in the phase tab, phasequads also no longer automatically delete themselves
   when new data is loaded
 - Frequency domain analysis can now use groups in :ref:`MuonMaxent <algm-MuonMaxent>` calculations.
@@ -72,6 +73,8 @@ New Features
 - Added an external plot button to the ALC interface which will plot in workbench the current tab's plot
 - Added a period info button to the ALC interface which displays a table of period information from the loaded runs
   (this is equivalent to the periods button in the Muon Analysis and Frequency Domain Analysis Interfaces)
+- If the sample log has a unit, it will be displayed on the axis of the plot
+- The plots are no longer normalised by bin width
 
 Elemental Analysis
 ------------------
@@ -86,7 +89,10 @@ Algorithms
 Improvements
 ############
 - Updated :ref:`LoadMuonLog <algm-LoadMuonLog>` to read units for most log values.
+- :ref:`LoadMuonNexus <algm-LoadMuonNexus>`, :ref:`LoadMuonNexusV2 <algm-LoadMuonNexusV2>` and :ref:`LoadPSIMuonBin <algm-LoadPSIMuonBin>`
+  have all been updated to return the same outputs. Check their documentation pages for more.
 - It is now possible to exclude a fit range when executing the :ref:`CalculateMuonAsymmetry <algm-CalculateMuonAsymmetry>` algorithm.
+- The :ref:`PlotAsymmetryByLogValue <algm-PlotAsymmetryByLogValue>` algorithm will include the units for the log value (when they are available)
 
 BugFixes
 ############

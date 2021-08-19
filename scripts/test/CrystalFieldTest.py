@@ -1728,7 +1728,7 @@ class CrystalFieldFitTest(unittest.TestCase):
         self.assertAlmostEqual(cf['B20'], 0.359803, 4)
         self.assertAlmostEqual(cf['B22'], 4.01223, 4)
         self.assertAlmostEqual(cf['B40'], -0.0149048, 4)
-        self.assertAlmostEqual(cf['B42'], -0.156895, 4)
+        self.assertAlmostEqual(cf['B42'], -0.156895, 3)
         self.assertAlmostEqual(cf['B44'], -0.121608, 4)
         self.assertAlmostEqual(cf['IntensityScaling'], 0.941805, 4)
         self.assertAlmostEqual(cf.peaks.param[0]['PeakCentre'], 0.0, 8)

@@ -45,6 +45,8 @@ IndirectFitDataPresenter::IndirectFitDataPresenter(IIndirectFitDataModel *model,
 
 IndirectFitDataPresenter::~IndirectFitDataPresenter() { observeReplace(false); }
 
+std::vector<IndirectFitData> *IndirectFitDataPresenter::getFittingData() { return m_model->getFittingData(); }
+
 IIndirectFitDataView const *IndirectFitDataPresenter::getView() const { return m_view; }
 
 void IndirectFitDataPresenter::addWorkspace(const std::string &workspaceName, const std::string &spectra) {
@@ -208,10 +210,6 @@ void IndirectFitDataPresenter::removeSelectedData() {
     m_model->removeDataByIndex(FitDomainIndex(item->row()));
   }
   updateTableFromModel();
-}
-
-std::string IndirectFitDataPresenter::createDisplayName(WorkspaceID workspaceID) const {
-  return m_model->createDisplayName(workspaceID);
 }
 
 std::vector<std::string> IndirectFitDataPresenter::createDisplayNames() const {

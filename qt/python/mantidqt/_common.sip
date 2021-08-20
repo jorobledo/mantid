@@ -1031,6 +1031,10 @@ public:
     void findFiles(bool isModified);
     void isOptional(bool);
     void setLastDirectory(const QString &lastDir);
+    void setUseNativeWidget(bool native);
+    void setProxyModel(QAbstractProxyModel* /Transfer/);
+    void readSettings(const QString &group);
+    void saveSettings(const QString &group);
 
 signals:
     void fileTextChanged(const QString & /*_t1*/);
@@ -1162,4 +1166,38 @@ public:
         double startX = 0.0, double endX = 0.0) /KeywordArgs="All"/;
 
     void openFitScriptGenerator();
+};
+
+// ---------------------------------
+// Muon Period Info
+// ---------------------------------
+
+class MuonPeriodInfo : QWidget {
+%TypeHeaderCode
+#include "MantidQtWidgets/Common/MuonPeriodInfo.h"
+#include "MantidPythonInterface/core/ExtractSharedPtr.h"
+#include <boost/python/object.hpp>
+#include <boost/python/handle.hpp>
+%End
+public:
+    MuonPeriodInfo(QWidget *parent = nullptr) /KeywordArgs="All"/;
+    void clear();
+    void setWidgetTitleRuns(const std::string &title);
+    bool isEmpty() const ;
+    void addInfo(SIP_PYOBJECT);
+    %MethodCode
+    try {
+      using boost::python::extract;
+      using Mantid::PythonInterface::ExtractSharedPtr;
+      sipCpp->addInfo(ExtractSharedPtr<Mantid::API::Workspace>(a0)());
+    } catch(const std::exception & exc) {
+      SIP_BLOCK_THREADS
+      PyErr_SetString(PyExc_RuntimeError, exc.what());
+      SIP_UNBLOCK_THREADS
+      return NULL;
+    } catch(...) {
+      sipRaiseUnknownException();
+      return NULL;
+    }
+    %End
 };

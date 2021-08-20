@@ -65,6 +65,7 @@ class SliceViewerDataView(QWidget):
         self._line_plots = None
         self._image_info_tracker = None
         self._region_selection_on = False
+        self._orig_lims = None
 
         # Dimension widget
         self.dimensions_layout = QGridLayout()
@@ -261,8 +262,6 @@ class SliceViewerDataView(QWidget):
                                     transpose=self.dimensions.transpose,
                                     norm=self.colorbar.get_norm(),
                                     **kwargs)
-        self.on_track_cursor_state_change(self.track_cursor_checked())
-
         # ensure the axes data limits are updated to match the
         # image. For example if the axes were zoomed and the
         # swap dimensions was clicked we need to restore the
@@ -270,6 +269,11 @@ class SliceViewerDataView(QWidget):
         extent = self.image.get_extent()
         self.ax.set_xlim(extent[0], extent[1])
         self.ax.set_ylim(extent[2], extent[3])
+        # Set the original data limits which get passed to the ImageInfoWidget so that
+        # the mouse projection to data space is correct for MDH workspaces when zoomed/changing slices
+        self._orig_lims = self.get_axes_limits()
+
+        self.on_track_cursor_state_change(self.track_cursor_checked())
 
         self.draw_plot()
 
@@ -359,7 +363,7 @@ class SliceViewerDataView(QWidget):
         """
         self.presenter.export_region(limits, cut)
 
-    def update_plot_data(self, data, transposed=False):
+    def update_plot_data(self, data):
         """
         This just updates the plot data without creating a new plot. The extents
         can change if the data has been rebinned.
@@ -367,14 +371,7 @@ class SliceViewerDataView(QWidget):
         if self.nonortho_transform:
             self.image.set_array(data.T.ravel())
         else:
-            # need to update extent and limits of orthog axes when transposed (non orthog limits reset anyway)
-            extent = self.image.get_extent()
             self.image.set_data(data.T)
-            if transposed:
-                extent = (extent[2], extent[3], extent[0], extent[1])
-                self.image.set_extent(extent)
-                self.ax.set_xlim((extent[0], extent[1]))
-                self.ax.set_ylim((extent[2], extent[3]))
         self.colorbar.update_clim()
 
     def track_cursor_checked(self):
@@ -392,7 +389,8 @@ class SliceViewerDataView(QWidget):
         self._image_info_tracker = ImageInfoTracker(image=self.image,
                                                     transform=self.nonortho_transform,
                                                     do_transform=self.nonorthogonal_mode,
-                                                    widget=self.image_info_widget)
+                                                    widget=self.image_info_widget,
+                                                    cursor_transform=self._orig_lims)
 
         if state:
             self._image_info_tracker.connect()

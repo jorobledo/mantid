@@ -15,6 +15,7 @@ set(
   src/GLColor.cpp
   src/GLObject.cpp
   src/InstrumentActor.cpp
+  src/InstrumentDisplay.cpp
   src/InstrumentTreeModel.cpp
   src/InstrumentTreeWidget.cpp
   src/InstrumentWidget.cpp
@@ -26,7 +27,7 @@ set(
   src/InstrumentRenderer.cpp
   src/InstrumentWidgetTab.cpp
   src/InstrumentWidgetTreeTab.cpp
-  src/MantidGLWidget.cpp
+  src/GLDisplay.cpp
   src/MaskBinsData.cpp
   src/OpenGLError.cpp
   src/PanelsSurface.cpp
@@ -71,7 +72,7 @@ set(
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetRenderTab.h
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetTab.h
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetTreeTab.h
-  inc/MantidQtWidgets/InstrumentView/MantidGLWidget.h
+  inc/MantidQtWidgets/InstrumentView/GLDisplay.h
   inc/MantidQtWidgets/InstrumentView/PeakOverlay.h
   inc/MantidQtWidgets/InstrumentView/PlotFitAnalysisPaneView.h
   inc/MantidQtWidgets/InstrumentView/PlotFitAnalysisPanePresenter.h
@@ -101,13 +102,17 @@ set(
   inc/MantidQtWidgets/InstrumentView/DetXMLFile.h
   inc/MantidQtWidgets/InstrumentView/DllOption.h
   inc/MantidQtWidgets/InstrumentView/GLColor.h
+  inc/MantidQtWidgets/InstrumentView/GLDisplay.h
   inc/MantidQtWidgets/InstrumentView/GLObject.h
   inc/MantidQtWidgets/InstrumentView/GridTextureFace.h
 
+  inc/MantidQtWidgets/InstrumentView/IGLDisplay.h
+  inc/MantidQtWidgets/InstrumentView/IStackedLayout.h
+  inc/MantidQtWidgets/InstrumentView/IInstrumentDisplay.h
   inc/MantidQtWidgets/InstrumentView/IQtDisplay.h
-  inc/MantidQtWidgets/InstrumentView/IMantidGLWidget.h
 
   inc/MantidQtWidgets/InstrumentView/InstrumentActor.h
+  inc/MantidQtWidgets/InstrumentView/InstrumentDisplay.h
   inc/MantidQtWidgets/InstrumentView/InstrumentTreeModel.h
   inc/MantidQtWidgets/InstrumentView/InstrumentTreeWidget.h
   inc/MantidQtWidgets/InstrumentView/InstrumentWidget.h
@@ -120,7 +125,6 @@ set(
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetTab.h
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetTreeTab.h
   inc/MantidQtWidgets/InstrumentView/InstrumentWidgetTypes.h
-  inc/MantidQtWidgets/InstrumentView/MantidGLWidget.h
   inc/MantidQtWidgets/InstrumentView/MaskBinsData.h
   inc/MantidQtWidgets/InstrumentView/OpenGLError.h
   inc/MantidQtWidgets/InstrumentView/PanelsSurface.h
@@ -136,6 +140,7 @@ set(
   inc/MantidQtWidgets/InstrumentView/RotationSurface.h
   inc/MantidQtWidgets/InstrumentView/Shape2D.h
   inc/MantidQtWidgets/InstrumentView/Shape2DCollection.h
+  inc/MantidQtWidgets/InstrumentView/StackedLayout.h
   inc/MantidQtWidgets/InstrumentView/QtDisplay.h
   inc/MantidQtWidgets/InstrumentView/UCorrectionDialog.h
   inc/MantidQtWidgets/InstrumentView/UnwrappedCylinder.h
@@ -149,50 +154,6 @@ set(
 set(UI_FILES inc/MantidQtWidgets/InstrumentView/UCorrectionDialog.ui)
 
 # Target
-mtd_add_qt_library(TARGET_NAME MantidQtWidgetsInstrumentView
-                   QT_VERSION 4
-                   SRC
-                     ${SRC_FILES}
-                     ${QT4_SRC_FILES}
-                   MOC
-                     ${MOC_FILES}
-                     ${QT4_MOC_FILES}
-                   NOMOC
-                     ${INC_FILES}
-                     ${QT4_INC_FILES}
-                   UI
-                     ${UI_FILES}
-                   RES
-                     ../../../images/instrumentview.qrc
-                   DEFS
-                     IN_MANTIDQT_INSTRUMENTVIEW
-                   INCLUDE_DIRS
-                     inc
-                     ../../../Framework/DataObjects/inc
-                   SYSTEM_INCLUDE_DIRS
-                     ${Boost_INCLUDE_DIRS}
-                   LINK_LIBS
-                     ${CORE_MANTIDLIBS}
-                     DataObjects
-                     ${POCO_LIBRARIES}
-                     ${Boost_LIBRARIES}
-                     ${PYTHON_LIBRARIES}
-                     ${OPENGL_gl_LIBRARY}
-                     ${OPENGL_glu_LIBRARY}
-                   QT4_LINK_LIBS
-                     Qt4::QtOpenGL
-                     Qwt5
-                   MTD_QT_LINK_LIBS
-                     MantidQtWidgetsCommon
-                     MantidQtWidgetsPlotting
-                   INSTALL_DIR
-                     ${LIB_DIR}
-                   OSX_INSTALL_RPATH
-                     @loader_path/../MacOS
-                     @loader_path/../Frameworks
-                   LINUX_INSTALL_RPATH
-                     "\$ORIGIN/../${LIB_DIR}")
-
 mtd_add_qt_library(TARGET_NAME MantidQtWidgetsInstrumentView
                    QT_VERSION 5
                    SRC

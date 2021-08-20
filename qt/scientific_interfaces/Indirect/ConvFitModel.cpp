@@ -291,10 +291,6 @@ void ConvFitModel::setParameterNameChanges(const IFunction &model, boost::option
       constructParameterNameChanges(model, std::move(backgroundIndex), m_temperature.is_initialized());
 }
 
-std::vector<std::pair<std::string, size_t>> ConvFitModel::getResolutionsForFit() const {
-  return m_fitDataModel->getResolutionsForFit();
-}
-
 } // namespace IDA
 } // namespace CustomInterfaces
 } // namespace MantidQt

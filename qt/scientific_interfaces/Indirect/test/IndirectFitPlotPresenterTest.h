@@ -150,8 +150,8 @@ public:
 private:
   std::string sequentialFitOutputName() const override { return ""; };
   std::string simultaneousFitOutputName() const override { return ""; };
-  std::string singleFitOutputName(WorkspaceID workspaceID, WorkspaceIndex spectrum) const override {
-    UNUSED_ARG(workspaceID);
+  std::string singleFitOutputName(std::string workspaceName, WorkspaceIndex spectrum) const override {
+    UNUSED_ARG(workspaceName);
     UNUSED_ARG(spectrum);
     return "";
   };
@@ -175,7 +175,7 @@ public:
     /// substitute anyway
     m_view = std::make_unique<NiceMock<MockIndirectFitPlotView>>();
     m_fittingModel = std::make_unique<NiceMock<MockIndirectFittingModel>>();
-    m_presenter = std::make_unique<IndirectFitPlotPresenter>(std::move(m_fittingModel.get()), std::move(m_view.get()));
+    m_presenter = std::make_unique<IndirectFitPlotPresenter>(std::move(m_view.get()));
 
     SetUpADSWithWorkspace m_ads("WorkspaceName", createWorkspace(10));
     m_fittingModel->getFitDataModel()->addWorkspace("WorkspaceName", "0-9");
@@ -216,8 +216,7 @@ public:
 
     EXPECT_CALL(*m_fittingModel, getNumberOfWorkspaces()).Times(1).WillRepeatedly(Return(2));
     EXPECT_CALL(*m_view, dataSelectionSize()).Times(1).WillOnce(Return(selectionSize));
-
-    m_presenter->appendLastDataToSelection();
+    m_presenter->appendLastDataToSelection({"WorkspaceName", "WorkspaceName"});
   }
 
   ///----------------------------------------------------------------------
@@ -487,7 +486,7 @@ public:
     Expectation createName2 = EXPECT_CALL(*m_fittingModel, createDisplayName(index2)).Times(1);
     EXPECT_CALL(*m_view, setNameInDataSelection("DisplayName-1", index2)).Times(1).After(createName2);
 
-    m_presenter->appendLastDataToSelection();
+    m_presenter->appendLastDataToSelection({"WorkspaceName", "WorkspaceName"});
   }
 
   void
@@ -502,19 +501,7 @@ public:
     Expectation createName = EXPECT_CALL(*m_fittingModel, createDisplayName(index)).Times(1);
     EXPECT_CALL(*m_view, appendToDataSelection("DisplayName-1")).Times(1).After(createName);
 
-    m_presenter->appendLastDataToSelection();
-  }
-
-  void test_that_updateSelectedDataName_will_update_the_name_in_the_data_selection() {
-    WorkspaceID const index(0);
-
-    ON_CALL(*m_fittingModel, createDisplayName(index)).WillByDefault(Return("DisplayName-1"));
-    ON_CALL(*m_fittingModel, getWorkspace(index)).WillByDefault(Return(m_ads->retrieveWorkspace("WorkspaceName")));
-
-    Expectation createName = EXPECT_CALL(*m_fittingModel, createDisplayName(index)).Times(1);
-    EXPECT_CALL(*m_view, setNameInDataSelection("DisplayName-1", WorkspaceID(0))).Times(1).After(createName);
-
-    m_presenter->updateSelectedDataName();
+    m_presenter->appendLastDataToSelection({"WorkspaceName", "WorkspaceName"});
   }
 
   void test_updateDataSelection_appends_for_each_workspace() {
@@ -532,7 +519,7 @@ public:
     EXPECT_CALL(*m_view, appendToDataSelection("DisplayName-0")).Times(1);
     EXPECT_CALL(*m_view, appendToDataSelection("DisplayName-1")).Times(1);
 
-    m_presenter->updateDataSelection();
+    m_presenter->updateDataSelection({"WorkspaceName", "WorkspaceName"});
   }
 
   void test_updateDataSelection_sets_active_spectra_to_zero() {
@@ -552,7 +539,7 @@ public:
     EXPECT_CALL(*m_view, setPlotSpectrum(WorkspaceIndex{0})).Times(2);
     TS_ASSERT_EQUALS(m_presenter->getActiveWorkspaceIndex(), WorkspaceIndex{0});
 
-    m_presenter->updateDataSelection();
+    m_presenter->updateDataSelection({"WorkspaceName", "WorkspaceName"});
   }
 
   void test_updateAvailableSpectra_uses_minmax_if_spectra_is_continuous() {

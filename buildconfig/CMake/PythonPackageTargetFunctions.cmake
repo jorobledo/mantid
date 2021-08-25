@@ -89,6 +89,7 @@ function(add_python_package pkg_name)
   # install directory is specified here and then --install-scripts=bin
   # --install-lib=lib removes any of the platform/distribution specific install
   # directories so we can have a flat structure
+  if (NOT USE_SETUPPY)
   install(
     CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E env MANTID_VERSION_STR=${_version_str} \
     ${Python_EXECUTABLE} ${_setup_py} install -O1 --single-version-externally-managed \
@@ -121,5 +122,6 @@ function(add_python_package pkg_name)
     install(PROGRAMS ${_setup_py_build_root}/install/bin/${pkg_name}
             DESTINATION ${_parsed_arg_INSTALL_BIN_DIR}
     )
+  endif()
   endif()
 endfunction()

@@ -67,7 +67,12 @@ target_link_libraries(PythonDataObjectsModule
 # Installation settings
 set_target_properties(PythonDataObjectsModule
     PROPERTIES INSTALL_RPATH "${EXT_INSTALL_RPATH};${DL_ORIGIN_TAG}/../kernel/;${DL_ORIGIN_TAG}/../geometry/;${DL_ORIGIN_TAG}/../api/")
+
+
+# if we are using setup.py we don't need to do this
+if (NOT USE_SETUPPY)
 mtd_install_targets(
   TARGETS PythonDataObjectsModule INSTALL_DIRS ${SITE_PACKAGES}/mantid/dataobjects
   ${WORKBENCH_SITE_PACKAGES}/mantid/dataobjects
 )
+endif()
